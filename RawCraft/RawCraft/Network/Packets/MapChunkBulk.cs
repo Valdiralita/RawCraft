@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Storage;
+using RawCraft.Storage;
+using RawCraft.Storage.Map;
 using Ionic.Zlib;
 using Microsoft.Xna.Framework;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class MapChunkBulk
     {
         int count;
-        byte[] CompressedChunks, MetaData;
+        byte[] compressedChunks, metaData;
 
-        public MapChunkBulk(Stream Stream) 
+        public MapChunkBulk(Stream stream)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Map Chunk Bulk (0x38)");
-            count = (int)Reader.ReadUnsignedShort(Stream);
-            CompressedChunks = Reader.ReadData(Stream, Reader.ReadInt(Stream));
-            MetaData = Reader.ReadData(Stream, count * 12);
-            StoreChunks(ZlibStream.UncompressBuffer(CompressedChunks));
+            Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Map Chunk Bulk (0x38)");
+            count = Reader.ReadUnsignedShort(stream);
+            compressedChunks = Reader.ReadData(stream, Reader.ReadInt(stream));
+            metaData = Reader.ReadData(stream, count * 12);
+            StoreChunks(ZlibStream.UncompressBuffer(compressedChunks));
         }
 
         private void StoreChunks(byte[] uncompressed)
@@ -30,26 +29,26 @@ namespace Network.Packet
             for (int i = 0; i < count; i++)
             {
                 int x = 0;
-                x += MetaData[i * 12 + 0];
+                x += metaData[i * 12 + 0];
                 x <<= 8;
-                x += MetaData[i * 12 + 1];
+                x += metaData[i * 12 + 1];
                 x <<= 8;
-                x += MetaData[i * 12 + 2];
+                x += metaData[i * 12 + 2];
                 x <<= 8;
-                x += MetaData[i * 12 + 3];
+                x += metaData[i * 12 + 3];
 
                 int z = 0;
-                z += MetaData[i * 12 + 4];
+                z += metaData[i * 12 + 4];
                 z <<= 8;
-                z += MetaData[i * 12 + 5];
+                z += metaData[i * 12 + 5];
                 z <<= 8;
-                z += MetaData[i * 12 + 6];
+                z += metaData[i * 12 + 6];
                 z <<= 8;
-                z += MetaData[i * 12 + 7];
+                z += metaData[i * 12 + 7];
 
 
                 int sectioncount = 0;
-                ushort bitmask = BitConverter.ToUInt16(MetaData.Skip(i * 12 + 8).Take(2).Reverse().ToArray(), 0);
+                ushort bitmask = BitConverter.ToUInt16(metaData.Skip(i * 12 + 8).Take(2).Reverse().ToArray(), 0);
                 for (int j = 0; j < 15; j++)
                 {
                     if ((bitmask & (0x01 << j)) == 0x01 << j)

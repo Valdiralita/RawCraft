@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class EntityVelocity
     {
-        public EntityVelocity(Stream AESStream)
+        public EntityVelocity(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Velocity (0x1C)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadSignedShort(AESStream);
-            Reader.ReadSignedShort(AESStream);
-            Reader.ReadSignedShort(AESStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadSignedShort(aesStream);
+            Reader.ReadSignedShort(aesStream);
+            Reader.ReadSignedShort(aesStream);
         }
     }
 }

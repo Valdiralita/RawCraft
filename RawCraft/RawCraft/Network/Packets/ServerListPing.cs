@@ -1,32 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net.Sockets;
-using Network;
+﻿using System.Net.Sockets;
+using RawCraft.Storage;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class ServerListPing
     {
-        public ServerListPing(string Server, int Port)
+        public ServerListPing(string server, int port)
         {
-            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            System.Text.ASCIIEncoding PingReceive = new System.Text.ASCIIEncoding();
-            string[] Infos = new string[1];
+            var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            var infos = new string[1];
 
-            socket.Connect(Server, Port);
-            NetworkStream Stream = new NetworkStream(socket);
-            Stream.WriteByte(0xFE);
-            Reader.ReadSignedByte(Stream);
-            Infos[0] = Reader.ReadString(Stream, Reader.ReadUnsignedShort(Stream));
-            Infos = Infos[0].Split('§');
+            socket.Connect(server, port);
+            var stream = new NetworkStream(socket);
+            stream.WriteByte(0xFE);
+            Reader.ReadSignedByte(stream);
+            infos[0] = Reader.ReadString(stream, Reader.ReadUnsignedShort(stream));
+            infos = infos[0].Split('§');
 
-            Storage.Misc.Log.Write("Server Name : " + Infos[0]);
-            Storage.Misc.Log.Write("Online Players : " + Infos[1]);
-            Storage.Misc.Log.Write("Max Players : " + Infos[2]);
+            Misc.Log.Write("Server Name : " + infos[0]);
+            Misc.Log.Write("Online Players : " + infos[1]);
+            Misc.Log.Write("Max Players : " + infos[2]);
             socket.Close();
-        
         }
     }
 }

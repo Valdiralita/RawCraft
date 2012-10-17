@@ -1,120 +1,119 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework.Graphics;
-using Storage;
-using Menu;
+using RawCraft.Menu.BaseClasses;
+using RawCraft.Storage;
 using Microsoft.Xna.Framework;
-using RawCraft;
 
-namespace Menu
+namespace RawCraft.Menu.MainMenu
 {
     class MainMenu
     {
-        Background MainMenuBackground;
-        Button Play, Exit;
-        Sprite Logo;
-        Texture2D BtnTexLeft, BtnTexMid, BtnTexRight, TxtTexLeft, TxtTexMid, TxtTexRight, LogoTexture;
-        Textbox UserName, Server;
-        PWTextbox Password;
-        float zoom = 0;
+        Background mainMenuBackground;
+        Button play, exit;
+        Sprite logo;
+        Texture2D btnTexLeft, btnTexMid, btnTexRight, txtTexLeft, txtTexMid, txtTexRight, logoTexture;
+        Textbox userName, server;
+        PasswordBox password;
+        float zoom;
+
         public MainMenu()
         {
-            LogoTexture = Misc.Content.Load<Texture2D>("logo");
+            logoTexture = Misc.Content.Load<Texture2D>("logo");
 
-            BtnTexLeft = Misc.Content.Load<Texture2D>("ButtonLeft");
-            BtnTexMid = Misc.Content.Load<Texture2D>("ButtonMid");
-            BtnTexRight = Misc.Content.Load<Texture2D>("ButtonRight");
+            btnTexLeft = Misc.Content.Load<Texture2D>("ButtonLeft");
+            btnTexMid = Misc.Content.Load<Texture2D>("ButtonMid");
+            btnTexRight = Misc.Content.Load<Texture2D>("ButtonRight");
 
-            TxtTexLeft = Misc.Content.Load<Texture2D>("TextboxLeft");
-            TxtTexMid = Misc.Content.Load<Texture2D>("TextboxMid");
-            TxtTexRight = Misc.Content.Load<Texture2D>("TextboxRight");
+            txtTexLeft = Misc.Content.Load<Texture2D>("TextboxLeft");
+            txtTexMid = Misc.Content.Load<Texture2D>("TextboxMid");
+            txtTexRight = Misc.Content.Load<Texture2D>("TextboxRight");
 
-            Logo = new Sprite(LogoTexture);
+            logo = new Sprite(logoTexture);
 
-            MainMenuBackground = new Background(Misc.Content.Load<Texture2D>("background"));
+            mainMenuBackground = new Background(Misc.Content.Load<Texture2D>("background"));
 
-            Play = new Button(BtnTexLeft, BtnTexMid, BtnTexRight, 40, Vector2.Zero, "Connect", Misc.BigFont);
-            Exit = new Button(BtnTexLeft, BtnTexMid, BtnTexRight, 40, Vector2.Zero, "Quit Game", Misc.BigFont);
+            play = new Button(btnTexLeft, btnTexMid, btnTexRight, 40, "Connect", Misc.BigFont);
+            exit = new Button(btnTexLeft, btnTexMid, btnTexRight, 40, "Quit Game", Misc.BigFont);
 
-            UserName = new Textbox(TxtTexLeft, TxtTexMid, TxtTexRight, 40, Vector2.Zero, "Username:", Misc.BigFont, Misc.NormalFont);
-            Password = new PWTextbox(TxtTexLeft, TxtTexMid, TxtTexRight, 40, Vector2.Zero, "Password:", Misc.BigFont, Misc.NormalFont);
-            Server = new Textbox(TxtTexLeft, TxtTexMid, TxtTexRight, 100, Vector2.Zero, "Server:", Misc.BigFont, Misc.NormalFont);
+            userName = new Textbox(txtTexLeft, txtTexMid, txtTexRight, 40, Vector2.Zero, "Username:", Misc.BigFont, Misc.NormalFont);
+            password = new PasswordBox(txtTexLeft, txtTexMid, txtTexRight, 40, Vector2.Zero, "Password:", Misc.BigFont, Misc.NormalFont);
+            server = new Textbox(txtTexLeft, txtTexMid, txtTexRight, 100, Vector2.Zero, "Server:", Misc.BigFont, Misc.NormalFont);
 
-            UserName.SetTextLength(16);
-            Password.SetTextLength(64);
-            Server.SetTextLength(32);
+            userName.SetTextLength(16);
+            password.SetTextLength(64);
+            server.SetTextLength(32);
 
             var login = MinecraftUtilities.GetLastLogin();
 
             if (login != null)
             {
-                UserName.SetText(login.Username);
-                Password.SetText(login.Password);
+                userName.SetText(login.Username);
+                password.SetText(login.Password);
             }
         }
 
         public void Update()
         {
-            Play.SetPosition(new Vector2(Misc.Width / 16 * 11 - Play.GetWidth / 2, (float)(Misc.Height - BtnTexMid.Height * 1.5)));
-            Play.Update(Misc.mouseState);
+            play.SetPosition(new Vector2(Misc.Width / 16 * 11 - play.GetWidth / 2, (float)(Misc.Height - btnTexMid.Height * 1.5)));
+            play.Update(Misc.mouseState);
 
-            Exit.SetPosition(new Vector2(Misc.Width / 16 * 5 - Exit.GetWidth / 2, (float)(Misc.Height - BtnTexMid.Height * 1.5)));
-            Exit.Update(Misc.mouseState);
+            exit.SetPosition(new Vector2(Misc.Width / 16 * 5 - exit.GetWidth / 2, (float)(Misc.Height - btnTexMid.Height * 1.5)));
+            exit.Update(Misc.mouseState);
 
-            UserName.SetPosition(new Vector2(Misc.Width / 16 * 5 - UserName.GetWidth / 2, (float)(Misc.Height - BtnTexMid.Height * 4.5)));
-            UserName.Update(Misc.mouseState, Misc.keyboardState);
+            userName.SetPosition(new Vector2(Misc.Width / 16 * 5 - userName.GetWidth / 2, (float)(Misc.Height - btnTexMid.Height * 4.5)));
+            userName.Update(Misc.mouseState, Misc.keyboardState);
 
-            Password.SetPosition(new Vector2(Misc.Width / 16 * 11 - Password.GetWidth / 2, (float)(Misc.Height - BtnTexMid.Height * 4.5)));
-            Password.Update(Misc.mouseState, Misc.keyboardState);
+            password.SetPosition(new Vector2(Misc.Width / 16 * 11 - password.GetWidth / 2, (float)(Misc.Height - btnTexMid.Height * 4.5)));
+            password.Update(Misc.mouseState, Misc.keyboardState);
 
-            Server.SetBtnWidth((Misc.Width - (Misc.Width / 8 * 5 - Exit.GetWidth)) / 8 - 2);
-            Server.SetPosition(new Vector2(Misc.Width / 16 * 5 - Exit.GetWidth / 2, (float)(Misc.Height - BtnTexMid.Height * 3)));
-            Server.Update(Misc.mouseState, Misc.keyboardState);
+            server.SetBtnWidth((Misc.Width - (Misc.Width / 8 * 5 - exit.GetWidth)) / 8 - 2);
+            server.SetPosition(new Vector2(Misc.Width / 16 * 5 - exit.GetWidth / 2, Misc.Height - btnTexMid.Height * 3));
+            server.Update(Misc.mouseState, Misc.keyboardState);
 
-            Logo.SetPosition(new Vector2(Misc.Width / 2 - Logo.GetWidth / 2, Misc.Height / 16 * 4 - Logo.GetHeight / 2));
+            logo.SetPosition(new Vector2(Misc.Width / 2 - logo.GetWidth / 2, Misc.Height / 16 * 4 - logo.GetHeight / 2));
 
-            Password.Update(Misc.mouseState, Misc.keyboardState);
-            Server.Update(Misc.mouseState, Misc.keyboardState);
+            password.Update(Misc.mouseState, Misc.keyboardState);
+            server.Update(Misc.mouseState, Misc.keyboardState);
 
-            if (Exit.isClicked)
+            if (exit.IsClicked)
                 Misc.CurrentGameState = Misc.GameState.Exit;
 
-            if (Play.isClicked)
+            if (play.IsClicked)
             {
-                string server = Server.GetText();
-                if (server.Contains(':'))
+                string serverText = this.server.GetText();
+                if (serverText.Contains(':'))
                 {
-                    Storage.Network.Server = server.Split(':').First();
-                    Storage.Network.Port = (int)Convert.ToUInt16(server.Split(':').Last());
+                    Storage.Network.Server = serverText.Split(':').First();
+                    Storage.Network.Port = (int)Convert.ToUInt16(serverText.Split(':').Last());
                 }
                 else
                 {
-                    Storage.Network.Server = server;
+                    Storage.Network.Server = serverText;
                     Storage.Network.Port = 25565;
                 }
-                Storage.Network.UserName = UserName.GetText();
-                Storage.Network.Password = Password.GetText();
+                Storage.Network.UserName = userName.GetText();
+                Storage.Network.Password = password.GetText();
                 Misc.CurrentGameState = Misc.GameState.InGame;
             }
         }
 
         public void Draw()
         {
-            MainMenuBackground.Draw(Misc.spriteBatch);
+            mainMenuBackground.Draw(Misc.spriteBatch);
 
-            Play.Draw(Misc.spriteBatch);
-            Exit.Draw(Misc.spriteBatch);
+            play.Draw(Misc.spriteBatch);
+            exit.Draw(Misc.spriteBatch);
 
-            UserName.Draw(Misc.spriteBatch);
-            Password.Draw(Misc.spriteBatch);
-            Server.Draw(Misc.spriteBatch);
+            userName.Draw(Misc.spriteBatch);
+            password.Draw(Misc.spriteBatch);
+            server.Draw(Misc.spriteBatch);
 
-            Logo.Draw(Misc.spriteBatch);
+            logo.Draw(Misc.spriteBatch);
 
             zoom += 0.03f;
-            Misc.spriteBatch.DrawString(Misc.NormalFont, "Not finished yet!", new Vector2(950, 250), Color.Yellow, -0.3f, new Vector2(100, 30), 1.5f + (float)Math.Abs(Math.Sin(zoom)) /2, SpriteEffects.None, 0);
+            Misc.spriteBatch.DrawString(Misc.NormalFont, "Not finished yet!", new Vector2(950, 250),
+                Color.Yellow, -0.3f, new Vector2(100, 30), 1.5f + (float)Math.Abs(Math.Sin(zoom)) /2, SpriteEffects.None, 0);
         }
     }
 }

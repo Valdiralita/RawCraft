@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class RemoveEntityEffect
     {
-        public RemoveEntityEffect(Stream AESStream) 
+        public RemoveEntityEffect(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Remove Entity Effect (0x2A)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
         }
     }
 }

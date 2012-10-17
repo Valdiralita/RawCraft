@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class ChangeGameState
     {
-        public ChangeGameState(Stream AESStream) 
+        public ChangeGameState(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Change Game State (0x46)");
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
         }
     }
 }

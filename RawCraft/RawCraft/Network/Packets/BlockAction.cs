@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class BlockAction
     {
-        public BlockAction(Stream AESStream) 
+        public BlockAction(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Block Action (0x36)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadSignedShort(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadSignedShort(AESStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadSignedShort(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadSignedShort(aesStream);
         }
     }
 }

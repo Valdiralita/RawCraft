@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Storage;
 
-namespace Menu
+namespace RawCraft.Menu.BaseClasses
 {
     public class CharacterEventArgs : EventArgs
     {

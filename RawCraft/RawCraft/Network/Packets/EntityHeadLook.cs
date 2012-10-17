@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class EntityHeadLook
     {
-        public EntityHeadLook(Stream AESStream) 
+        public EntityHeadLook(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Head Look (0x23)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
         }
     }
 }

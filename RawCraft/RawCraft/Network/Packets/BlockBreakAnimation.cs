@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class BlockBreakAnimation
     {
-        public BlockBreakAnimation(Stream AESStream) 
+        public BlockBreakAnimation(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Block Break Animation (0x37)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
         }
     }
 }

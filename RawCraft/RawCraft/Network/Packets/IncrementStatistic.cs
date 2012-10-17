@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class IncrementStatistic
     {
-        public IncrementStatistic(Stream AESStream)
+        public IncrementStatistic(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Increment Statistic (0xC8)"); 
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
         }
     }
 }

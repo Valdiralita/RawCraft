@@ -1,17 +1,15 @@
-﻿using System;
-using System.IO;
-using Storage;
+﻿using System.IO;
+using RawCraft.Storage;
 
-namespace Network
+namespace RawCraft.Network
 {
     class Logging
     {
         TextWriter file;
-        string FileName = "log.txt";
+        private const string FileName = "log.txt";
 
         public Logging()
         {
-
             file = new StreamWriter(FileName, true);
         }
 

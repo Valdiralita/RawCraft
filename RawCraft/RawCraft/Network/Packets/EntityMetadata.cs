@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class EntityMetadata
     {
-        public EntityMetadata(Stream AESStream) 
+        public EntityMetadata(Stream aesStream) 
         {
-            Reader.ReadInt(AESStream);
+            Reader.ReadInt(aesStream);
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Metadata (0x28)");
-            Reader.ReadMetaData(AESStream);
+            Reader.ReadMetaData(aesStream);
         }
     }
 }

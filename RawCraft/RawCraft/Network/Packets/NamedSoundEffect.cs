@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class NamedSoundEffect
     {
-        public NamedSoundEffect(Stream AESStream) 
+        public NamedSoundEffect(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Named Sound Effect (0x3E)");
-            Reader.ReadString(AESStream, Reader.ReadSignedShort(AESStream));
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadFloat(AESStream);
-            Reader.ReadSignedByte(AESStream);
+            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadFloat(aesStream);
+            Reader.ReadSignedByte(aesStream);
         }
     }
 }

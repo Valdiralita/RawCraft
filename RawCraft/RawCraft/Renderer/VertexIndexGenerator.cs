@@ -1,12 +1,16 @@
 ﻿#region Using Statements
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Storage;
+using RawCraft.Storage;
+using RawCraft.Storage.Blocks;
+using RawCraft.Storage.Map;
 using System.Collections.Generic;
 using System;
+
 #endregion
 
-namespace Renderer
+namespace RawCraft.Renderer
 {
     static class VertexIndexGenerator
     {

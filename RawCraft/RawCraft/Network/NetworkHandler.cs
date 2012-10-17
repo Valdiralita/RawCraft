@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Net.Sockets;
-using System.Net;
 using System.Threading;
-using Network.Packet;
-using Storage;
+using RawCraft.Network.Encryption;
+using RawCraft.Network.Packets;
+using RawCraft.Storage;
 
-namespace Network
+namespace RawCraft.Network
 {
-    class Network
+    class NetworkHandler
     {
+        // TODO: Make this not the worst thing ever
+
         private Stream stream;
-        private byte PacketIDbuffer;
+        private byte packetIDbuffer;
 
         public void NetThread()
         {
@@ -22,10 +21,10 @@ namespace Network
                 Misc.Log = new Logging();
             Misc.Log.Write("Network Thread running");
 
-            SessionIDreq sessionID = new SessionIDreq(Storage.Network.UserName, Storage.Network.Password);
+            SessionIDRequest sessionID = new SessionIDRequest(Storage.Network.UserName, Storage.Network.Password);
             sessionID.SendRequest();
 
-            SharedSecretGen SharedSecret = new SharedSecretGen(); //random byte[16] gen
+            SharedSecretGenerator SharedSecret = new SharedSecretGenerator(); //random byte[16] gen
 
             Timer PositionUpdater = new Timer(new TimerCallback(NetworkSender), null, Timeout.Infinite, 50); //create position updater
 
@@ -38,7 +37,7 @@ namespace Network
 
             while (Storage.Misc.isConnected)
             {
-                switch (PacketIDbuffer = (byte)stream.ReadByte())
+                switch (packetIDbuffer = (byte)stream.ReadByte())
                 {
                     case 0x00:
                         KeepAlive keepAlive = new KeepAlive(stream);
@@ -213,7 +212,7 @@ namespace Network
                         PlayerAbilities playerAbilities = new PlayerAbilities(stream);
                         break;
                     case 0xCB:
-                        Tabcomplete tabcomplete = new Tabcomplete(stream);
+                        TabComplete tabcomplete = new TabComplete(stream);
                         break;
                     case 0xFA:
                         PluginMessage pluginMessage = new PluginMessage(stream);
@@ -235,8 +234,8 @@ namespace Network
                         DisconnectKick disconnectKick = new DisconnectKick(stream, PositionUpdater, NetworkSocket);
                         break;
                     default:
-                        Misc.Log.Write("We got a Unknown Packet (" + PacketIDbuffer + ")from the Server. This should not happen: Error in Packet parser");
-                        throw new Exception("We got a Unknown Packet (" + PacketIDbuffer + ")from the Server. This should not happen: Error in Packet parser");
+                        Misc.Log.Write("We got a Unknown Packet (" + packetIDbuffer + ")from the Server. This should not happen: Error in Packet parser");
+                        throw new Exception("We got a Unknown Packet (" + packetIDbuffer + ")from the Server. This should not happen: Error in Packet parser");
                 }
             }
             Misc.Log.Write("Your connection to the server has been terminated.");

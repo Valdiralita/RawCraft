@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class SpawnExperienceOrb
     {
-        public SpawnExperienceOrb(Stream AESStream)
+        public SpawnExperienceOrb(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Experience Orb (0x1A)"); 
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadSignedShort(AESStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadSignedShort(aesStream);
         }
     }
 }

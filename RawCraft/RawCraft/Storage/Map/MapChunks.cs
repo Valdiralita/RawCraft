@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
-using Renderer;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using Microsoft.Xna.Framework;
 
-namespace Storage
+namespace RawCraft.Storage.Map
 {
     static class MapChunks
     {

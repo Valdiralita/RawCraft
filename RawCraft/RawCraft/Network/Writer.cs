@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 
-namespace Network
+namespace RawCraft.Network
 {
     static class Writer
     {
         public static byte[] StringToByteArray(string str) //unused
         {
-            return new System.Text.ASCIIEncoding().GetBytes(str);
+            return Encoding.ASCII.GetBytes(str);
         }
 
         //todo: generic stream writer?

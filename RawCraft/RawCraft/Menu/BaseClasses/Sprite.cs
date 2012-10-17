@@ -1,46 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Storage;
 
-namespace Menu
+namespace RawCraft.Menu.BaseClasses
 {
     class Sprite
     {
-        Vector2 Position;
-        Texture2D Texture;
+        Vector2 position;
+        Texture2D texture;
 
         public Sprite(Texture2D tex)
         {
-            Texture = tex;
+            texture = tex;
         }
 
         public void SetTexture(Texture2D tex)
         {
-            Texture = tex;
+            texture = tex;
         }
 
         public void SetPosition(Vector2 pos)
         {
-            Position = pos;
+            position = pos;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, Color.White);
+            spriteBatch.Draw(texture, position, Color.White);
         }
 
         public int GetWidth
         {
-            get { return Texture.Width; }
+            get { return texture.Width; }
         }
 
         public int GetHeight
         {
-            get { return Texture.Height; }
+            get { return texture.Height; }
         }
     }
 }

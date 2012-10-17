@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using Storage;
+using RawCraft.Storage;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class EncryptionKeyResponse
     {
@@ -17,31 +14,31 @@ namespace Network.Packet
 
         public void Get()
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Encryption Key Response (0xFC)");
+            Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Encryption Key Response (0xFC)");
 
             Reader.ReadData(stream, Reader.ReadSignedShort(stream));
             Reader.ReadData(stream, Reader.ReadSignedShort(stream));
 
-            Storage.Misc.Log.Write("========== Enabling encryption ==========");
+            Misc.Log.Write("========== Enabling encryption ==========");
 
             Misc.isConnected = true;
         }
 
-        public void Send(byte[] enc_sharedsecret, byte[] token)
+        public void Send(byte[] encodedSharedSecret, byte[] token)
         {
-            byte[] helper = new byte[2] { 0, 128 }; // remove this
+            var helper = new byte[2] { 0, 128 }; // remove this
 
-            MemoryStream MemStream = new MemoryStream();
-            MemStream.WriteByte(0xFC);
-            MemStream.Write(helper, 0, 2);
-            MemStream.Write(enc_sharedsecret, 0, enc_sharedsecret.Length);
-            MemStream.Write(helper, 0, 2);
-            MemStream.Write(token, 0, token.Length);
+            var memStream = new MemoryStream();
+            memStream.WriteByte(0xFC);
+            memStream.Write(helper, 0, 2);
+            memStream.Write(encodedSharedSecret, 0, encodedSharedSecret.Length);
+            memStream.Write(helper, 0, 2);
+            memStream.Write(token, 0, token.Length);
 
-            byte[] Packet = MemStream.ToArray();
+            byte[] packet = memStream.ToArray();
 
-            stream.Write(Packet, 0, Packet.Length);
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " Sending: 0xFC Packet");
+            stream.Write(packet, 0, packet.Length);
+            Misc.Log.Write(DateTime.Now.TimeOfDay + " Sending: 0xFC Packet");
         }
     }
 }

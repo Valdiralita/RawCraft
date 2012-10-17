@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
-    class Tabcomplete
+    class TabComplete
     {
-        public Tabcomplete(Stream AESStream)
+        public TabComplete(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Tab-complete (0xCB)"); 
-            Reader.ReadString(AESStream, Reader.ReadSignedShort(AESStream));
+            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
         }
     }
 }

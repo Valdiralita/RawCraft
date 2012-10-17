@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
 using System.Text;
 using System.IO;
 
-namespace Network
+namespace RawCraft.Network
 {
     public static class Reader
     {
+        // TODO: Just copy Craft.Net's code for this
+
         public static short ReadSignedShort(Stream stream)
         {
             short SignedShort;

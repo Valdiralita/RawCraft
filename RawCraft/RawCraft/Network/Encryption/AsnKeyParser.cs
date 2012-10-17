@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 
-namespace CSInteropKeys
+namespace RawCraft.Network.Encryption
 {
     class AsnKeyParser
     {

@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class SpawnPainting
     {
-        public SpawnPainting(Stream AESStream) 
+        public SpawnPainting(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Painting (0x19)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadString(AESStream, Reader.ReadSignedShort(AESStream));
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
         }
     }
 }

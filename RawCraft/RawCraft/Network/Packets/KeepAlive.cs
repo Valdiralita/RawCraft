@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class KeepAlive
     {
-        static byte[] PacketID = new byte[1] { 0x00 };
+        static byte[] packetID = new byte[1] { 0x00 };
 
         public KeepAlive(Stream stream)
         {
@@ -16,9 +14,9 @@ namespace Network.Packet
             Send(stream, Reader.ReadData(stream, 4));
         }
 
-        private void Send(Stream Stream, byte[] KeepAliveID)
+        private void Send(Stream stream, byte[] keepAliveID)
         {
-            Stream.Write(PacketID.Concat(KeepAliveID).ToArray(), 0, 5);
+            stream.Write(packetID.Concat(keepAliveID).ToArray(), 0, 5);
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " Sending back KeepAlive!");
         }
     }

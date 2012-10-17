@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class ItemData
     {
-        public ItemData(Stream AESStream)
+        public ItemData(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Item Data (0x83)"); 
-            Reader.ReadSignedShort(AESStream);
-            Reader.ReadSignedShort(AESStream);
-            Reader.ReadData(AESStream, Reader.ReadUnsignedByte(AESStream));
+            Reader.ReadSignedShort(aesStream);
+            Reader.ReadSignedShort(aesStream);
+            Reader.ReadData(aesStream, Reader.ReadUnsignedByte(aesStream));
         }
     }
 }
