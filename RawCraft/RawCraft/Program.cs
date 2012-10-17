@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using System.IO;
+using Ionic.Zip;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace RawCraft
 {
@@ -11,12 +13,6 @@ namespace RawCraft
         /// </summary>
         static void Main(string[] args)
         {
-            // Attempt to get texture pack
-            if (File.Exists(Path.Combine(MinecraftUtilities.DotMinecraft, "bin", "minecraft.jar")))
-            {
-                
-            }
-
             using (Main game = new Main())
             {
                 game.Run();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ionic.Zip;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -70,9 +71,31 @@ namespace RawCraft
         protected override void LoadContent()
         {
             //TerrainEM = Misc.Content.Load<Texture2D>("terrainEM");
-            Terrain = Misc.Content.Load<Texture2D>("terrain");
             Misc.NormalFont = Misc.Content.Load<SpriteFont>("NormalFont");
             Misc.BigFont = Misc.Content.Load<SpriteFont>("BigFont");
+
+            if (File.Exists("terrain.png"))
+                Terrain = Texture2D.FromStream(GraphicsDevice, File.Open("terrain.png", FileMode.Open));
+            else
+            {
+                if (File.Exists(Path.Combine(MinecraftUtilities.DotMinecraft, "bin", "minecraft.jar")))
+                {
+                    using (var file = new ZipFile(Path.Combine(MinecraftUtilities.DotMinecraft, "bin", "minecraft.jar")))
+                    {
+                        if (file.ContainsEntry("terrain.png"))
+                        {
+                            var ms = new MemoryStream();
+                            file["terrain.png"].Extract(ms);
+                            ms.Seek(0, SeekOrigin.Begin);
+                            Terrain = Texture2D.FromStream(GraphicsDevice, ms);
+                        }
+                        else
+                            throw new FileNotFoundException("Missing terrain.png!");
+                    }
+                }
+                else
+                    throw new FileNotFoundException("Missing terrain.png!");
+            }
         }
 
         protected override void UnloadContent()
