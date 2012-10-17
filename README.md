@@ -2,13 +2,17 @@
 
 RawCraft is a 3rd party Minecraft client written in C# with XNA.
 
+## Texture Packs
+
+If you provide a "terrain.png" file in the same directory as RawCraft.exe, it will be used. If you do not,
+RawCraft will attempt to extract one from your Minecraft installation. If it fails to find your Minecraft
+install, and you do not provide terrain.png yourself, RawCraft will fail to launch.
+
 ## Building from Source
 
 You must first install [Microsoft.NET 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=17851) and
 [XNA 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=23714). Then, add
 "C:\Windows\Microsoft.NET\Framework\v4.0.30319" to your PATH.
-
-Extract terrain.png from Minecraft or a texture pack and copy it to RawCraft/RawCraftContent/terrain.png.
 
 For the best possible experience, you may also wish to install [this font](). If you do not wish to, edit
 the <FontName> xml tag in RawCraft/RawCraftContent/*.spritefont.
