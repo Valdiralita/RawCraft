@@ -1,23 +1,10 @@
-﻿#region File Description
-//-----------------------------------------------------------------------------
-// GeometricPrimitive.cs
-//
-// Microsoft XNA Community Game Platform
-// Copyright (C) Microsoft Corporation. All rights reserved.
-//-----------------------------------------------------------------------------
-#endregion
-
-#region Using Statements
-
-using System;
+﻿using System;
 using Microsoft.Xna.Framework.Graphics;
 using RawCraft.Storage;
 
-#endregion
-
 namespace RawCraft.Renderer
 {
-    public class Mesh : IDisposable
+    public class Mesh
     {
         #region Fields
 
@@ -29,7 +16,6 @@ namespace RawCraft.Renderer
 
         public Mesh(VertexPositionNormalTexture[] vertices, int[] indices)
         {
-
             vertexBuffer = new VertexBuffer(Misc.graphics, typeof(VertexPositionNormalTexture), vertices.Length, BufferUsage.None);
             vertexBuffer.SetData(vertices);
 
@@ -51,33 +37,13 @@ namespace RawCraft.Renderer
                 indexBuffer.SetData(indices);
             }
             IndicesCount = indices.Length;
-
         }
 
         ~Mesh()
         {
-            Dispose(false);
+            vertexBuffer.Dispose();
+            indexBuffer.Dispose();
         }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (vertexBuffer != null)
-                    vertexBuffer.Dispose();
-
-                if (indexBuffer != null)
-                    indexBuffer.Dispose();
-            }
-        }
-
-        #region Draw
 
         public void Draw()
         {
@@ -90,7 +56,5 @@ namespace RawCraft.Renderer
                 Misc.effect.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, IndicesCount, 0, IndicesCount / 3);
             }
         }
-
-        #endregion
     }
 }

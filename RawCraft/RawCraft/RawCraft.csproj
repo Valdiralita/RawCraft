@@ -127,7 +127,6 @@
     <Compile Include="Renderer\RenderFIFO.cs" />
     <Compile Include="Renderer\VertexIndexGenerator.cs" />
     <Compile Include="Renderer\Mesh.cs" />
-    <Compile Include="Renderer\VertexPositionNormal.cs" />
     <Compile Include="Menu\BaseClasses\Background.cs" />
     <Compile Include="Menu\BaseClasses\Button.cs" />
     <Compile Include="Menu\BaseClasses\PasswordBox.cs" />
