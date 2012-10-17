@@ -1,0 +1,14 @@
+bin/
+obj/
+*.user
+*.userprefs
+*.cachefile
+*.suo
+*.pidb
+_ReSharper*/
+TestResults/
+*.mdf
+*.psess
+*.vsp
+terrain.png
+Thumbs.db
