@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Storage;
 using Menu;
 using Microsoft.Xna.Framework;
+using RawCraft;
 
 namespace Menu
 {
@@ -45,10 +46,13 @@ namespace Menu
             Password.SetTextLength(64);
             Server.SetTextLength(32);
 
-            UserName.SetText(Storage.Network.UserName);
-            Password.SetText(Storage.Network.Password);
-            Server.SetText(Storage.Network.Server);
+            var login = MinecraftUtilities.GetLastLogin();
 
+            if (login != null)
+            {
+                UserName.SetText(login.Username);
+                Password.SetText(login.Password);
+            }
         }
 
         public void Update()
@@ -71,28 +75,28 @@ namespace Menu
 
             Logo.SetPosition(new Vector2(Misc.Width / 2 - Logo.GetWidth / 2, Misc.Height / 16 * 4 - Logo.GetHeight / 2));
 
+            Password.Update(Misc.mouseState, Misc.keyboardState);
+            Server.Update(Misc.mouseState, Misc.keyboardState);
+
             if (Exit.isClicked)
                 Misc.CurrentGameState = Misc.GameState.Exit;
 
             if (Play.isClicked)
+            {
+                string server = Server.GetText();
+                if (server.Contains(':'))
+                {
+                    Storage.Network.Server = server.Split(':').First();
+                    Storage.Network.Port = (int)Convert.ToUInt16(server.Split(':').Last());
+                }
+                else
+                {
+                    Storage.Network.Server = server;
+                    Storage.Network.Port = 25565;
+                }
+                Storage.Network.UserName = UserName.GetText();
+                Storage.Network.Password = Password.GetText();
                 Misc.CurrentGameState = Misc.GameState.InGame;
-
-            Password.Update(Misc.mouseState, Misc.keyboardState);
-            Server.Update(Misc.mouseState, Misc.keyboardState);
-
-            Storage.Network.UserName = UserName.GetText();
-            Storage.Network.Password = Password.GetText();
-            string server = Server.GetText();
-
-            if (server.Contains(':'))
-            {
-                Storage.Network.Server = server.Split(':').First();
-                Storage.Network.Port = (int)Convert.ToUInt16(server.Split(':').Last());
-            }
-            else
-            {
-                Storage.Network.Server = server;
-                Storage.Network.Port = 25565;
             }
         }
 
