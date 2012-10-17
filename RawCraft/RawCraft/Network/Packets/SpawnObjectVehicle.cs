@@ -1,27 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class SpawnObjectVehicle
     {
-        public SpawnObjectVehicle(Stream AESStream) 
+        public SpawnObjectVehicle(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Object/Vehicle (0x17)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            int ThrowerID = Reader.ReadInt(AESStream);
-            if (ThrowerID != 0)
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            int throwerID = Reader.ReadInt(aesStream); // TODO: This is not correctly done
+            if (throwerID != 0)
             {
-                Reader.ReadSignedShort(AESStream);
-                Reader.ReadSignedShort(AESStream);
-                Reader.ReadSignedShort(AESStream);
+                Reader.ReadSignedShort(aesStream);
+                Reader.ReadSignedShort(aesStream);
+                Reader.ReadSignedShort(aesStream);
             }
         }
     }

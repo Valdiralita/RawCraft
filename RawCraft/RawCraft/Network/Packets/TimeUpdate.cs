@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class TimeUpdate
     {
-        public TimeUpdate(Stream AESStream)
+        public TimeUpdate(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Time Update (0x04)");
-            Reader.ReadLong(AESStream);
+            Reader.ReadLong(aesStream);
         }
     }
 }

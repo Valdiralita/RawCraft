@@ -1,43 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Storage
+﻿namespace RawCraft.Storage.Blocks
 {
     class Block
     {
-        private bool Transparent, Multitex, Metadata, Entity;
+        private bool transparent, multitex, metadata, entity;
 
         public Block()
         {
-            Transparent = false;
-            Multitex = false;
-            Metadata = false;
+            transparent = false;
+            multitex = false;
+            metadata = false;
         }
 
         public bool IsTransparent
         {
-            get { return Transparent; }
-            set { Transparent = value; }
+            get { return transparent; }
+            set { transparent = value; }
         }
 
         public bool IsMultitex
         {
-            get { return Multitex; }
-            set { Multitex = value; }
+            get { return multitex; }
+            set { multitex = value; }
         }
 
         public bool HasMetadata
         {
-            get { return Metadata; }
-            set { Metadata = value; }
+            get { return metadata; }
+            set { metadata = value; }
         }
 
         public bool IsEntity
         {
-            get { return Entity; }
-            set { Entity = value; }
+            get { return entity; }
+            set { entity = value; }
         }
     }
 }

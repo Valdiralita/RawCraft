@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class UpdateSign
     {
-        public UpdateSign(Stream AESStream)
+        public UpdateSign(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Update Sign (0x82)"); 
-            Reader.ReadInt(AESStream);
-            Reader.ReadSignedShort(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadString(AESStream, Reader.ReadSignedShort(AESStream));
-            Reader.ReadString(AESStream, Reader.ReadSignedShort(AESStream));
-            Reader.ReadString(AESStream, Reader.ReadSignedShort(AESStream));
-            Reader.ReadString(AESStream, Reader.ReadSignedShort(AESStream));
+            Reader.ReadInt(aesStream);
+            Reader.ReadSignedShort(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
+            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
+            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
+            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
         }
     }
 }

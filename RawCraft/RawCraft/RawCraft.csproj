@@ -136,7 +136,7 @@
     <Compile Include="Menu\MainMenu\MainMenu.cs" />
     <Compile Include="Menu\BaseClasses\Sprite.cs" />
     <Compile Include="Network\Logging.cs" />
-    <Compile Include="Network\Encryption\SessionIDreq.cs" />
+    <Compile Include="Network\Encryption\SessionIDRequest.cs" />
     <Compile Include="Network\Encryption\SharedSecretGen.cs" />
     <Compile Include="Network\Packets\ClientStatuses.cs" />
     <Compile Include="Network\Packets\EncryptionKeyRequest.cs" />
@@ -201,7 +201,7 @@
     <Compile Include="Network\Packets\IncrementStatistic.cs" />
     <Compile Include="Network\Packets\PlayerListItem.cs" />
     <Compile Include="Network\Packets\PlayerAbilities.cs" />
-    <Compile Include="Network\Packets\Tabcomplete.cs" />
+    <Compile Include="Network\Packets\TabComplete.cs" />
     <Compile Include="Network\Packets\PluginMessage.cs" />
     <Compile Include="Network\Packets\DisconnectKick.cs" />
     <Compile Include="Renderer\Camera.cs" />

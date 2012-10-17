@@ -1,29 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RawCraft.Storage;
 
-namespace Storage
+namespace RawCraft.Renderer
 {
     class Camera
     {
         public Vector3 CameraPosition;
         public float MoveSpeed;
         public Matrix ViewMatrix, ProjectionMatrix;
-        Matrix RotationMatrix;
-        float RotateSpeed;
-        int OldX, OldY;
+        Matrix rotationMatrix;
+        float rotateSpeed;
+        int oldX, oldY;
         int centerX;
         int centerY;
 
         public Camera(float moveSpeed, float rotateSpeed, GraphicsDevice device)
         {
-            CameraPosition = new Vector3((float)Storage.Player.X, (float)Storage.Player.Stance, (float)Storage.Player.Z);
+            CameraPosition = new Vector3((float)Player.X, (float)Player.Stance, (float)Player.Z);
             MoveSpeed = moveSpeed;
-            RotateSpeed = rotateSpeed;
+            this.rotateSpeed = rotateSpeed;
 
             ViewMatrix = Matrix.CreateLookAt(CameraPosition, Vector3.Zero, Vector3.Forward);
             ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(60f), device.Viewport.AspectRatio, 0.3f, 10000f);
@@ -69,8 +67,8 @@ namespace Storage
 
             MouseState mState = Mouse.GetState();
 
-            Player.Yaw -= RotateSpeed * (mState.X - OldX) * 2;
-            Player.Pitch -= RotateSpeed * (mState.Y - OldY) * 2;
+            Player.Yaw -= rotateSpeed * (mState.X - oldX) * 2;
+            Player.Pitch -= rotateSpeed * (mState.Y - oldY) * 2;
 
             if (Math.Abs(Player.Pitch) > 1.57)
                 Player.Pitch = (float)(1.57 * Math.Sign(Player.Pitch));
@@ -86,21 +84,21 @@ namespace Storage
         private void ResetMousePos()
         {
             Mouse.SetPosition(centerX, centerY);
-            OldX = centerX;
-            OldY = centerY;
+            oldX = centerX;
+            oldY = centerY;
         }
 
         private void UpdateMatrices()
         {
-            RotationMatrix = Matrix.CreateRotationX(Player.Pitch) * Matrix.CreateRotationY(Player.Yaw);
-            Vector3 TransformedReference = Vector3.Transform(new Vector3(0, 0, -1), RotationMatrix); // 0 0 -1
+            rotationMatrix = Matrix.CreateRotationX(Player.Pitch) * Matrix.CreateRotationY(Player.Yaw);
+            Vector3 TransformedReference = Vector3.Transform(new Vector3(0, 0, -1), rotationMatrix); // 0 0 -1
             Vector3 lookAt = TransformedReference + CameraPosition;
             ViewMatrix = Matrix.CreateLookAt(CameraPosition, lookAt, Vector3.Up);
         }
 
         private void move(Vector3 v)
         {
-            v = Vector3.Transform(v, RotationMatrix);
+            v = Vector3.Transform(v, rotationMatrix);
             Player.X = Player.X + v.X;
             Player.Y = Player.Y + v.Y;
             Player.Stance = Player.Y + 1.5f;

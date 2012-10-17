@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class CreativeInventoryAction
     {
-        public CreativeInventoryAction(Stream AESStream)
+        public CreativeInventoryAction(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Creative Inventory Action (0x6B)");
-            Reader.ReadSignedShort(AESStream);
-            Reader.ReadSlot(AESStream);
+            Reader.ReadSignedShort(aesStream);
+            Reader.ReadSlot(aesStream);
         }
     }
 }

@@ -1,9 +1,3 @@
-using System;
-using System.Threading;
-using System.IO;
-using Ionic.Zip;
-using Microsoft.Xna.Framework.Graphics;
-
 namespace RawCraft
 {
     static class Program
@@ -13,10 +7,8 @@ namespace RawCraft
         /// </summary>
         static void Main(string[] args)
         {
-            using (Main game = new Main())
-            {
+            using (var game = new Main())
                 game.Run();
-            }
         }
     }
 }

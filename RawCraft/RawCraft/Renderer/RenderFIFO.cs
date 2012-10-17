@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Collections.Concurrent;
-using Storage;
+using RawCraft.Storage;
+using RawCraft.Storage.Map;
 using System.Threading;
 using Microsoft.Xna.Framework;
 
-namespace Renderer
+namespace RawCraft.Renderer
 {
     class RenderFIFO
     {

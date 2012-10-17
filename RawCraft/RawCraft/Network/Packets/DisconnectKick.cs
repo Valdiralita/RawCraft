@@ -1,24 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Net.Sockets;
 using System.IO;
-using Storage;
+using RawCraft.Storage;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class DisconnectKick
     {
-        public DisconnectKick(Stream AESStream, Timer PositionUpdater, Socket NetworkSocket)
+        public DisconnectKick(Stream aesStream, Timer positionUpdater, Socket networkSocket)
         {
             Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Disconnect/Kick (0xFF)");
-            Misc.Log.Write("We got kicked due to: " + Reader.ReadString(AESStream, Reader.ReadUnsignedShort(AESStream)));
-            PositionUpdater.Dispose();
-            AESStream.Close();
-            NetworkSocket.Disconnect(false);
-            Storage.Misc.isConnected = false;
+            Misc.Log.Write("We got kicked due to: " + Reader.ReadString(aesStream, Reader.ReadUnsignedShort(aesStream)));
+            positionUpdater.Dispose();
+            aesStream.Close();
+            networkSocket.Disconnect(false);
+            Misc.isConnected = false;
         }
     }
 }

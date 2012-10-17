@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets 
 {
     class SetSlot
     {
-        public SetSlot(Stream AESStream) 
+        public SetSlot(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Set Slot (0x67)");
-            Reader.ReadSignedByte(AESStream);
-            Reader.ReadSignedShort(AESStream);
-            Reader.ReadSlot(AESStream);
+            Reader.ReadSignedByte(aesStream);
+            Reader.ReadSignedShort(aesStream);
+            Reader.ReadSlot(aesStream);
         }
     }
 }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
+﻿using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class ClientStatuses
     {
@@ -14,8 +10,8 @@ namespace Network.Packet
         {
             this.stream = stream;
         }
+
         public void Send(byte payload)
-                  
         {
             stream.Write(new byte[2] { 0xCD, payload }, 0, 2);
         }

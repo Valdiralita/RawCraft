@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class SetWindowItems
     {
-        public SetWindowItems(Stream AESStream) 
+        public SetWindowItems(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Set Window Items (0x68)");
-            Reader.ReadSignedByte(AESStream);
-            int Slots = Reader.ReadSignedShort(AESStream);
+            Reader.ReadSignedByte(aesStream);
+            int slots = Reader.ReadSignedShort(aesStream);
 
-            for (int i = 0; i < Slots; i++)
-            {
-                Reader.ReadSlot(AESStream);
-            }
+            for (int i = 0; i < slots; i++)
+                Reader.ReadSlot(aesStream);
         }
     }
 }

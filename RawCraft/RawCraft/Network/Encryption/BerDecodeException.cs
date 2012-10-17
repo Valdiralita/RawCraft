@@ -3,10 +3,10 @@ using System.Text;
 using System.Security.Permissions;
 using System.Runtime.Serialization;
 
-namespace CSInteropKeys
+namespace RawCraft.Network.Encryption
 {
     [Serializable]
-    public sealed class BerDecodeException : Exception, ISerializable
+    public sealed class BerDecodeException : Exception
     {
         private int m_position;
         public int Position
