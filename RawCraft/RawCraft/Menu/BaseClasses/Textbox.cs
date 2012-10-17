@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Storage;
 
-namespace Menu
+namespace RawCraft.Menu.BaseClasses
 {
     class Textbox : Button
     {
@@ -17,12 +12,12 @@ namespace Menu
         protected SpriteFont TextboxNameFont;
         protected Vector2 NamePosition;
 
-        public Textbox(Texture2D left, Texture2D mid, Texture2D right, int width, Vector2 pos, string text, SpriteFont BigFont, SpriteFont NormalFont)
-            : base(left, mid, right, width, pos, "", BigFont)
+        public Textbox(Texture2D left, Texture2D mid, Texture2D right, int width,
+            Vector2 pos, string text, SpriteFont BigFont, SpriteFont NormalFont) : base(left, mid, right, width, "", BigFont)
         {
             TextboxNameFont = NormalFont;
             TextboxName = text;
-            EventInput.CharEntered += new CharEnteredHandler(UpdateText);
+            EventInput.CharEntered += UpdateText;
         }
 
         protected void UpdateText(object sender, CharacterEventArgs e)
@@ -53,38 +48,23 @@ namespace Menu
             return Text;
         }
 
-       // private void ButtonPressed(object sender, EventArgs e)
-       // {
-       //     Text += sender.ToString();
-       // }
-
         public virtual void Update(MouseState mouse, KeyboardState keyboard)
         {
-            base.Hitbox = new Rectangle((int)Position.X, (int)Position.Y, (int)(TexLeft.Width + TexMid.Width * BtnWidth + TexRight.Width), (int)TexMid.Height);
+            Hitbox = new Rectangle((int)Position.X, (int)Position.Y,
+                TexLeft.Width + TexMid.Width * BtnWidth + TexRight.Width, TexMid.Height);
             HitboxMouse = new Rectangle(mouse.X, mouse.Y, 1, 1);
 
-            if (HasFocus)
-            {
-                BtnColor = new Color(255, 255, 255, 255);
-            }
-            else
-            {
-                BtnColor = new Color(180, 180, 180, 255);
-            }
+            BtnColor = HasFocus ? new Color(255, 255, 255, 255) : new Color(180, 180, 180, 255);
 
-            if (HitboxMouse.Intersects(base.Hitbox))
+            if (HitboxMouse.Intersects(Hitbox))
             {
                 if (mouse.LeftButton == ButtonState.Pressed)
-                {
                     HasFocus = true;
-                }
             }
             else
             {
                 if (mouse.LeftButton == ButtonState.Pressed)
-                {
                     HasFocus = false;
-                }
             }
             NamePosition = Position + new Vector2(0, -TextboxNameFont.MeasureString(TextboxName).Y);
             TextPosition = Position + new Vector2(Hitbox.Width / 2, Hitbox.Height / 2) - ButtonFont.MeasureString(Text) / 2;

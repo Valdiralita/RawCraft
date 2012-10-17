@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class BlockChange
     {
-        public BlockChange(Stream AESStream) 
+        public BlockChange(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Block Change (0x35)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedShort(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedShort(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
         }
     }
 }

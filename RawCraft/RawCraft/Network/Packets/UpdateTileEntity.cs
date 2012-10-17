@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class UpdateTileEntity
     {
-        public UpdateTileEntity(Stream AESStream)
+        public UpdateTileEntity(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Update Tile Entity (0x84)"); 
-            Reader.ReadInt(AESStream);
-            Reader.ReadSignedShort(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadData(AESStream, Reader.ReadSignedShort(AESStream));
+            Reader.ReadInt(aesStream);
+            Reader.ReadSignedShort(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadData(aesStream, Reader.ReadSignedShort(aesStream));
         }
     }
 }

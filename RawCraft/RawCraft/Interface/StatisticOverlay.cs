@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Storage;
+﻿using Microsoft.Xna.Framework;
+using RawCraft.Interface.BaseClasses;
+using RawCraft.Storage;
 using Microsoft.Xna.Framework.Graphics;
-using RawCraft.Interface;
 
-namespace Interface
+namespace RawCraft.Interface
 {
     class StatisticOverlay : TextOverlay
     {
         FPSCounter counter;
-        public StatisticOverlay(SpriteFont font, Vector2 vec)
-            : base(font, vec)
+        public StatisticOverlay(SpriteFont font, Vector2 vec) : base(font, vec)
         {
         }
 

@@ -9,7 +9,7 @@ namespace RawCraft.Interface
 {
     class FPSCounter
     {
-        int fps = 0, fpscounter = 0, time = 0, drawtime = 0;
+        int fps, fpscounter, time, drawtime;
         Stopwatch stop;
         GameTime gameTime;
 

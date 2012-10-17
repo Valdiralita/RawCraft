@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Security.Cryptography;
 
-namespace Network
+namespace RawCraft.Network.Encryption
 {
-    class SharedSecretGen
+    class SharedSecretGenerator
     {
-        private byte[] Secret = new byte[16];
-        Random random;
+        private byte[] secret = new byte[16];
 
-        public SharedSecretGen()
+        public SharedSecretGenerator()
         {
-            random = new Random();
-            random.NextBytes(Secret);
+            RandomNumberGenerator rng = new RNGCryptoServiceProvider();
+            rng.GetBytes(secret);
         }
 
         public byte[] Get
         {
-            get { return Secret; }
+            get { return secret; }
         }
     }
 }

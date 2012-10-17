@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class SetExperience
     {
-        public SetExperience(Stream AESStream)
+        public SetExperience(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Set Experience (0x2B)");
-            Reader.ReadFloat(AESStream);
-            Reader.ReadSignedShort(AESStream);
-            Reader.ReadSignedShort(AESStream);
+            Reader.ReadFloat(aesStream);
+            Reader.ReadSignedShort(aesStream);
+            Reader.ReadSignedShort(aesStream);
         }
     }
 }

@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Ionic.Zlib;
-using Storage;
 using System.IO;
- 
-namespace Network.Packet
+
+namespace RawCraft.Network.Packets
 {
     class MapChunk
     {
-        public MapChunk(Stream AESStream) 
+        public MapChunk(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Map Chunks (0x33)");
-            int ChunkSize;
-            Store_Chunk(Reader.ReadInt(AESStream), Reader.ReadInt(AESStream), Reader.ReadUnsignedByte(AESStream), Reader.ReadUnsignedShort(AESStream), Reader.ReadSignedShort(AESStream), ChunkSize = Reader.ReadInt(AESStream), ZlibStream.UncompressBuffer(Reader.ReadData(AESStream, ChunkSize)));
+            int chunkSize;
+            Store_Chunk(Reader.ReadInt(aesStream), Reader.ReadInt(aesStream),
+                Reader.ReadUnsignedByte(aesStream), Reader.ReadUnsignedShort(aesStream),
+                Reader.ReadSignedShort(aesStream), chunkSize = Reader.ReadInt(aesStream),
+                ZlibStream.UncompressBuffer(Reader.ReadData(aesStream, chunkSize)));
         }
 
         private void Store_Chunk(int ChunkX, int ChunkZ, byte GroundUp, ushort PrimBit, short AddBit, int Size, byte[] UncompressedChunkData)

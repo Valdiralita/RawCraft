@@ -1,29 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using RawCraft.Network.Encryption;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class EncryptionKeyRequest
     {
         byte[] encryptedToken, encryptedSharedSecret;
 
-        public EncryptionKeyRequest(Stream stream, byte[] SharedSecret,string SessionID, string Username)
+        public EncryptionKeyRequest(Stream stream, byte[] sharedSecret, string sessionID, string username)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Encryption Key Request (0xFD)");
 
-            string ServerID = Reader.ReadString(stream, Reader.ReadSignedShort(stream));
-            byte[] PublicKey = Reader.ReadData(stream, Reader.ReadSignedShort(stream));
-            byte[] Token = Reader.ReadData(stream, Reader.ReadSignedShort(stream));
+            string serverID = Reader.ReadString(stream, Reader.ReadSignedShort(stream));
+            byte[] publicKey = Reader.ReadData(stream, Reader.ReadSignedShort(stream));
+            byte[] token = Reader.ReadData(stream, Reader.ReadSignedShort(stream));
 
-            encryptedToken = EncryptSHA1.RSAEnc(Token, PublicKey);
-            encryptedSharedSecret = EncryptSHA1.RSAEnc(SharedSecret, PublicKey);
-            byte[] data = Encoding.UTF8.GetBytes(ServerID).Concat(SharedSecret).Concat(PublicKey).ToArray();
+            encryptedToken = EncryptSHA1.RSAEnc(token, publicKey);
+            encryptedSharedSecret = EncryptSHA1.RSAEnc(sharedSecret, publicKey);
+            byte[] data = Encoding.UTF8.GetBytes(serverID).Concat(sharedSecret).Concat(publicKey).ToArray();
             string serverSHAHash = EncryptSHA1.JavaHexDigest(data);
 
-            Authentication.HTTPRequest(Username, SessionID, serverSHAHash);
+            Authentication.Authentication.HTTPRequest(username, sessionID, serverSHAHash);
         }
 
         public byte[] GetEncToken()

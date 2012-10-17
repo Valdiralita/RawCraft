@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class UseBed
     {
-        public UseBed(Stream AESStream)
+        public UseBed(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Use Bed (0x11)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadInt(AESStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadInt(aesStream);
         }
     }
 }

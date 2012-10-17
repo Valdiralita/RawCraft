@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class EntityLookRelativeMove
     {
-        public EntityLookRelativeMove(Stream AESStream) 
+        public EntityLookRelativeMove(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Look and Relative Move (0x21)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
         }
     }
 }

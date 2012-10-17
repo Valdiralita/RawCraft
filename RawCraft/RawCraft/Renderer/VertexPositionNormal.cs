@@ -8,11 +8,13 @@
 #endregion
 
 #region Using Statements
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 #endregion
 
-namespace Renderer
+namespace RawCraft.Renderer
 {
     /// <summary>
     /// Custom vertex type for vertices that have just a

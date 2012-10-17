@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Storage;
 using System.IO;
+using RawCraft.Storage;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class SpawnPosition
     {
-        public SpawnPosition(Stream AESStream)
+        public SpawnPosition(Stream aesStream)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Position (0x06) (see compass)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-            Reader.ReadInt(AESStream);
-
-
+            Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Position (0x06) (see compass)");
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadInt(aesStream);
         }
     }
 }

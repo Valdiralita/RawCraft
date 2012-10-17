@@ -1,37 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Net;
 using System.IO;
-using Storage;
+using RawCraft.Storage;
 
-namespace Network
+namespace RawCraft.Network.Authentication
 {
     class Authentication
     {
-        public static string HTTPRequest(string PlayerName, string SessionID, string hash)
+        private const string loginUrl = "http://session.minecraft.net/game/joinserver.jsp?user={0}&sessionId={1}&serverId={2}";
+
+        public static string HTTPRequest(string playerName, string sessionID, string hash)
         {
-            byte[] Buffer = new byte[32];
-            string HTTPResponse = "";
+            var buffer = new byte[32];
+            string httpResponse = "";
             try
             {
-                WebRequest request = WebRequest.Create("http://session.minecraft.net/game/joinserver.jsp?user=" + PlayerName + "&sessionId=" + SessionID + "&serverId=" + hash);
-                HttpWebResponse response = (HttpWebResponse)
+                var request = WebRequest.Create(string.Format(loginUrl, playerName, sessionID, hash));
+                var response = (HttpWebResponse)
                 request.GetResponse();
                 Stream resStream = response.GetResponseStream();
 
-                int count = resStream.Read(Buffer, 0, Buffer.Length);
-                HTTPResponse = Encoding.ASCII.GetString(Buffer, 0, count);
+                int count = resStream.Read(buffer, 0, buffer.Length);
+                httpResponse = Encoding.ASCII.GetString(buffer, 0, count);
 
-                Misc.Log.Write("HTTP response was: '" + HTTPResponse + "'");
+                Misc.Log.Write("HTTP response was: '" + httpResponse + "'");
             }
             catch
             {
                 Misc.Log.Write("Could not connect to minecraft.net server. Connecting in offline mode.");
             }
 
-            return HTTPResponse;
+            return httpResponse;
         }
     }
 }

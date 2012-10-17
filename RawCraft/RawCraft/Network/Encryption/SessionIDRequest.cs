@@ -1,37 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System.Net;
 using System.IO;
-using Storage;
+using RawCraft.Storage;
 
-namespace Network
+namespace RawCraft.Network.Encryption
 {
-    class SessionIDreq
+    class SessionIDRequest
     {
-        string Username, Password;
+        private const string loginUrl = "https://login.minecraft.net?user={0}&password={1}&version=13";
+
+        string username, password;
         public string SessionID;
 
-        public SessionIDreq(string username, string pw)
+        public SessionIDRequest(string username, string password)
         {
-            Username = username;
-            Password = pw;
+            this.username = username;
+            this.password = password;
         }
 
         public void SendRequest()
         {
-            byte[] Buffer = new byte[128];
+            var buffer = new byte[128];
 
             try
             {
-                WebRequest request = WebRequest.Create("https://login.minecraft.net?user=" + Username + "&password=" + Password + "&version=13");
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                Stream stream = response.GetResponseStream();
+                var request = WebRequest.Create(string.Format(loginUrl, username, password));
+                var response = (HttpWebResponse)request.GetResponse();
+                var stream = response.GetResponseStream();
 
-                string[] responseParts = new string[4];
+                var responseParts = new string[4];
 
-                string responseString = Encoding.ASCII.GetString(Buffer, 0, stream.Read(Buffer, 0, Buffer.Length));
+                string responseString = Encoding.ASCII.GetString(buffer, 0, stream.Read(buffer, 0, buffer.Length));
                 if (!responseString.Contains(':'))
                 {
                     Misc.Log.Write("Bad login, bad password");

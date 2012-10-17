@@ -1,33 +1,31 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Ionic.Zip;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using System.Threading;
-using System.Collections.ObjectModel;
-using Network;
-using Storage;
+using RawCraft.Interface;
+using RawCraft.Menu.BaseClasses;
+using RawCraft.Menu.MainMenu;
+using RawCraft.Renderer;
+using RawCraft.Storage;
+using RawCraft.Storage.Blocks;
+using RawCraft.Storage.Map;
 using Renderer;
-using Interface;
-using Menu;
 using System.IO;
+using RawCraft.Network;
 
 namespace RawCraft
 {
-    public class Main : Microsoft.Xna.Framework.Game
+    public class Main : Game
     {
         GraphicsDeviceManager graphics;
         //Slotbar Slotbar;
-        Thread NetworkThread, Render;
+        Thread networkThread, render;
         Camera camera;
-        StatisticOverlay Statistics;
-        Texture2D Terrain; // TerrainEM;
+        StatisticOverlay statistics;
+        Texture2D terrain; // TerrainEM;
         MainMenu mainMenu;
         DepthStencilState depthState, depthStateOff;
 
@@ -37,13 +35,13 @@ namespace RawCraft
             Misc.Content = Content;
             Misc.Content.RootDirectory = "Content";
             Window.AllowUserResizing = true;
-            this.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged); //resize function
+            Window.ClientSizeChanged += Window_ClientSizeChanged; //resize function
         }
 
         protected override void Initialize()
         {
             VertexPositions.Initialize();
-            Menu.EventInput.Initialize(this.Window);
+            EventInput.Initialize(Window);
             Blocks.InitialzizeBlocks();
 
             graphics.PreferredBackBufferWidth = Misc.Width;
@@ -52,7 +50,7 @@ namespace RawCraft
 
             if (!Misc.VSync)
             {
-                this.IsFixedTimeStep = false;
+                IsFixedTimeStep = false;
                 graphics.SynchronizeWithVerticalRetrace = false;
             }
             graphics.ApplyChanges();
@@ -62,7 +60,7 @@ namespace RawCraft
             //Slotbar = new Slotbar(Window.ClientBounds.Width, Window.ClientBounds.Height);
             Misc.spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Statistics = new StatisticOverlay(Misc.NormalFont, new Vector2(48, 48));
+            statistics = new StatisticOverlay(Misc.NormalFont, new Vector2(48, 48));
             mainMenu = new MainMenu();
 
             InitializeEffect();
@@ -70,12 +68,11 @@ namespace RawCraft
 
         protected override void LoadContent()
         {
-            //TerrainEM = Misc.Content.Load<Texture2D>("terrainEM");
             Misc.NormalFont = Misc.Content.Load<SpriteFont>("NormalFont");
             Misc.BigFont = Misc.Content.Load<SpriteFont>("BigFont");
 
             if (File.Exists("terrain.png"))
-                Terrain = Texture2D.FromStream(GraphicsDevice, File.Open("terrain.png", FileMode.Open));
+                terrain = Texture2D.FromStream(GraphicsDevice, File.Open("terrain.png", FileMode.Open));
             else
             {
                 if (File.Exists(Path.Combine(MinecraftUtilities.DotMinecraft, "bin", "minecraft.jar")))
@@ -87,7 +84,7 @@ namespace RawCraft
                             var ms = new MemoryStream();
                             file["terrain.png"].Extract(ms);
                             ms.Seek(0, SeekOrigin.Begin);
-                            Terrain = Texture2D.FromStream(GraphicsDevice, ms);
+                            terrain = Texture2D.FromStream(GraphicsDevice, ms);
                         }
                         else
                             throw new FileNotFoundException("Missing terrain.png!");
@@ -98,10 +95,6 @@ namespace RawCraft
             }
         }
 
-        protected override void UnloadContent()
-        {
-        }
-
         protected override void Update(GameTime gameTime)
         {
             Misc.keyboardState = Keyboard.GetState();
@@ -110,41 +103,31 @@ namespace RawCraft
             switch (Misc.CurrentGameState)
             {
                 case Misc.GameState.Exit:
-                    {
-                        CloseGame();
-                        break;
-                    }
+                    CloseGame();
+                    break;
                 case Misc.GameState.MainMenu:
-                    {
-                        mainMenu.Update();
-                        IsMouseVisible = true;
-                        break;
-                    }
+                    mainMenu.Update();
+                    IsMouseVisible = true;
+                    break;
                 case Misc.GameState.Options:
-                    {
                         break;
-                    }
                 case Misc.GameState.NoInterface:
                 case Misc.GameState.InGame:
+                    if (networkThread == null)
+                        Connect();
+                    IsMouseVisible = false;
+                    camera.Update();
+
+                    Misc.effect.Parameters["View"].SetValue(camera.ViewMatrix);
+
+                    if (Misc.keyboardState.IsKeyDown(Keys.Escape))
                     {
-                        if (NetworkThread == null)
-                            Connect();
-
-                        IsMouseVisible = false;
-                        camera.Update();
-
-                        Misc.effect.Parameters["View"].SetValue(camera.ViewMatrix);
-
-                        if (Misc.keyboardState.IsKeyDown(Keys.Escape))
-                        {
-                            Disconnect();
-                            Misc.CurrentGameState = Misc.GameState.MainMenu;
-                        }
-
-                        break;
+                        Disconnect();
+                        Misc.CurrentGameState = Misc.GameState.MainMenu;
                     }
+                    break;
             }
-            Statistics.UpdateText(gameTime);
+            statistics.UpdateText(gameTime);
 
             base.Update(gameTime);
         }
@@ -156,42 +139,34 @@ namespace RawCraft
             switch (Misc.CurrentGameState)
             {
                 case Misc.GameState.MainMenu:
-                    {
-                        Misc.spriteBatch.Begin();
-                        mainMenu.Draw();
-                        Misc.spriteBatch.End();
+                    Misc.spriteBatch.Begin();
+                    mainMenu.Draw();
+                    Misc.spriteBatch.End();
 
-                        break;
-                    }
+                    break;
                 // case Misc.GameState.Options:
                 //     {
                 //         break;
                 //     }
                 // case Misc.GameState.NoInterface:
                 case Misc.GameState.InGame:
-                    {
-                        ApplyEffects();
+                    ApplyEffects();
 
-                        Misc.graphics.DepthStencilState = depthState;
+                    Misc.graphics.DepthStencilState = depthState;
                         
-                        foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Chunks)
-                        {
-                            item.Value.DrawOpaque();
-                        }
+                    foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Chunks)
+                        item.Value.DrawOpaque();
 
-                        Misc.graphics.DepthStencilState = depthStateOff;
+                    Misc.graphics.DepthStencilState = depthStateOff;
 
-                        foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Chunks)
-                        {
-                            item.Value.DrawWater();
-                        }
+                    foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Chunks)
+                        item.Value.DrawWater();
 
-                        break;
-                    }
+                    break;
             }
 
             Misc.spriteBatch.Begin();
-            Statistics.Draw();
+            statistics.Draw();
             Misc.spriteBatch.End();
 
             base.Draw(gameTime);
@@ -199,13 +174,10 @@ namespace RawCraft
 
         private void ApplyEffects()
         {
-            Misc.effect.Parameters["vecViewPos"].SetValue(new Vector3((float)Storage.Player.X, (float)Storage.Player.Y, (float)Storage.Player.Z));
+            Misc.effect.Parameters["vecViewPos"].SetValue(new Vector3((float)Player.X, (float)Player.Y, (float)Player.Z));
             Misc.graphics.SamplerStates[0] = SamplerState.PointClamp;
             Misc.graphics.SamplerStates[1] = SamplerState.PointClamp;
-           // Misc.graphics.BlendState = BlendState.Opaque;
-
-
-           
+            // Misc.graphics.BlendState = BlendState.Opaque;
         }
 
         private void InitializeEffect()
@@ -225,10 +197,7 @@ namespace RawCraft
             Misc.effect = Content.Load<Effect>("Effect");
             Misc.effect.Parameters["World"].SetValue(Matrix.CreateTranslation(new Vector3(0, 0, 0)));
             Misc.effect.Parameters["Projection"].SetValue(camera.ProjectionMatrix);
-            Misc.effect.Parameters["entSkin1"].SetValue(Terrain);
-
-          
-            //Misc.effect.Parameters["entSkin2"].SetValue(TerrainEM);
+            Misc.effect.Parameters["entSkin1"].SetValue(terrain);
 
             Misc.effect.Parameters["vecSunDir"].SetValue(new Vector3(1, 5, 2));
             //Misc.effect.Parameters["vecAmbient"].SetValue(new Vector3(150f / 255, 150f / 255, 150f / 255));
@@ -238,38 +207,37 @@ namespace RawCraft
             // RasterizerState rs = new RasterizerState(); //reduce triangles 
             // rs.CullMode = CullMode.CullCounterClockwiseFace;
             // Misc.effect.GraphicsDevice.RasterizerState = rs; // call it every frame
-
         }
 
         private void Connect()
         {
             TextureCoordinates.InitializeTextures();
 
-            NetworkThread = new Thread(new Network.Network().NetThread);
-            NetworkThread.Start();
+            networkThread = new Thread(new NetworkHandler().NetThread);
+            networkThread.Start();
 
-            Render = new Thread(new RenderFIFO().MeshGenerateThread);
-            Render.Start();
+            render = new Thread(new RenderFIFO().MeshGenerateThread);
+            render.Start();
         }
 
         public void CloseGame()
         {
             Disconnect();
-            this.Exit();
+            Exit();
         }
 
         public void Disconnect() // does not work!
         {
-            if (Render != null)
+            if (render != null)
             {
-                Render.Abort(); //nothing to do here
-                Render = null;
+                render.Abort(); //nothing to do here
+                render = null;
             }
 
-            if (NetworkThread != null)
+            if (networkThread != null)
             {
-                NetworkThread.Abort(); //maybe send a 0xFF
-                NetworkThread = null;
+                networkThread.Abort(); //maybe send a 0xFF
+                networkThread = null;
             }
 
             MapChunks.Disconnect();
@@ -283,6 +251,5 @@ namespace RawCraft
             graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
             //Slotbar = new Slotbar(Window.ClientBounds.Width, Window.ClientBounds.Height);
         }
-
     }
 }

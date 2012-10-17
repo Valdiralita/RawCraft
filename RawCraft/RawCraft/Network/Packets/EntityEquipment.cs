@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class EntityEquipment
     {
-
-        public EntityEquipment(Stream AESStream)
+        public EntityEquipment(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Equipment (0x05)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadSignedShort(AESStream);
+            Reader.ReadInt(aesStream);
+            Reader.ReadSignedShort(aesStream);
 
-            Reader.ReadSlot(AESStream);
+            Reader.ReadSlot(aesStream);
         }
     }
 }

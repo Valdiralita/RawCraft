@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
-namespace Network.Packet
+namespace RawCraft.Network.Packets
 {
     class RespawnPacket
     {
-        public RespawnPacket(Stream AESStream)
+        public RespawnPacket(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Respawn (0x09)");
-            Reader.ReadInt(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadUnsignedByte(AESStream);
-            Reader.ReadSignedShort(AESStream);
-            Reader.ReadString(AESStream, Reader.ReadSignedShort(AESStream));
+            Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadSignedShort(aesStream);
+            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
         }
     }
 }

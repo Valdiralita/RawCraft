@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using RawCraft.Renderer;
 using Renderer;
-using Microsoft.Xna.Framework;
 
-namespace Storage
+namespace RawCraft.Storage.Map
 {
     public class Chunk
     {
