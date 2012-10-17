@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using RawCraft.Storage;
 using RawCraft.Storage.Blocks;
 using RawCraft.Storage.Map;
-using Renderer;
 using System.Collections.Generic;
 using System;
 

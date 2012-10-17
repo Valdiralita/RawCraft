@@ -12,7 +12,6 @@ using RawCraft.Renderer;
 using RawCraft.Storage;
 using RawCraft.Storage.Blocks;
 using RawCraft.Storage.Map;
-using Renderer;
 using System.IO;
 using RawCraft.Network;
 

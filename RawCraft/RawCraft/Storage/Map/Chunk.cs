@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using RawCraft.Renderer;
-using Renderer;
 
 namespace RawCraft.Storage.Map
 {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using RawCraft.Interface.BaseClasses;
+using RawCraft.Renderer;
 using RawCraft.Storage;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -25,7 +26,7 @@ namespace RawCraft.Interface
                 "\nZ: " + Player.Z +
                 "\nPitch: " + Player.Pitch +
                 "\nYaw: " + Player.Yaw +
-                "\nRenderQueue: " + Renderer.RenderFIFO.Count +
+                "\nRenderQueue: " + RenderFIFO.Count +
                 "\nRender Time: " + Misc.RendertimeCounter.ElapsedMilliseconds);
         }
 
