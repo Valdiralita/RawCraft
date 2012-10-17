@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Storage;
 using Menu;
 using Microsoft.Xna.Framework;
+using RawCraft;
 
 namespace Menu
 {
@@ -45,10 +46,13 @@ namespace Menu
             Password.SetTextLength(64);
             Server.SetTextLength(32);
 
-            UserName.SetText(Storage.Network.UserName);
-            Password.SetText(Storage.Network.Password);
-            Server.SetText(Storage.Network.Server);
+            var login = MinecraftUtilities.GetLastLogin();
 
+            if (login != null)
+            {
+                UserName.SetText(login.Username);
+                Password.SetText(login.Password);
+            }
         }
 
         public void Update()

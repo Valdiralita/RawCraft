@@ -119,6 +119,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\FPSCounter.cs" />
+    <Compile Include="MinecraftUtilities.cs" />
+    <Compile Include="PKCSKeyGenerator.cs" />
     <Compile Include="Renderer\VertexPositions.cs" />
     <Compile Include="Interface\StatisticOverlay.cs" />
     <Compile Include="Interface\BaseClasses\TextOverlay.cs" />
@@ -145,7 +147,6 @@
     <Compile Include="Storage\Blocks\Block.cs" />
     <Compile Include="Storage\Blocks\BlockEnums.cs" />
     <Compile Include="Storage\Blocks\Blocks.cs" />
-    <Compile Include="Storage\Network.cs" />
     <Compile Include="Storage\Blocks\TextureCoordinates.cs" />
     <Compile Include="Network\Packets\TimeUpdate.cs" />
     <Compile Include="Network\Packets\PlayerPositionLook.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="Storage\Network.cs" />
     <Compile Include="Storage\Player.cs" />
   </ItemGroup>
   <ItemGroup>
