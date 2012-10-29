@@ -5,7 +5,7 @@ The current compatible version is 1.4.2
 
 ## Texture Packs
 
-If you provide a "terrain.png" file in the same directory as RawCraft.exe, it will be used. If you do not,
+If you provide a "terrain.png" file in the "Content" directory, it will be used. If you do not,
 RawCraft will attempt to extract one from your Minecraft installation. If it fails to find your Minecraft
 install, and you do not provide terrain.png yourself, RawCraft will fail to launch.
 
@@ -16,7 +16,7 @@ You must first install [Microsoft.NET 4.0](http://www.microsoft.com/en-us/downlo
 "C:\Windows\Microsoft.NET\Framework\v4.0.30319" to your PATH.
 
 For the best possible experience, you may also wish to install
-[this font](http://www.fonts2u.com/minecraft-regular.font). If you do not wish to, edit the \<FontName> xml
+[this font](http://www.fonts2u.com/minecraft-regular.font) which is also included. If you do not wish to, edit the \<FontName> xml
 tag in RawCraft/RawCraftContent/*.spritefont.
 
 Finally, run "msbuild.exe" from the root of the repository to build RawCraft.
