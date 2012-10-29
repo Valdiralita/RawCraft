@@ -9,6 +9,7 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Time Update (0x04)");
             Reader.ReadLong(aesStream);
+            Reader.ReadLong(aesStream);
         }
     }
 }

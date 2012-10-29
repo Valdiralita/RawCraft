@@ -17,7 +17,7 @@ namespace RawCraft.Network.Packets
             var packet = new byte[2 + 2 + username.Length * 2 + 2 + server.Length * 2 + 4];
 
             packet[0] = 0x02; //ID
-            packet[1] = 39;
+            packet[1] = 47;
             packet[3] = Convert.ToByte(username.Length); // int (2 bytes) länge vom folgenden string     
             packet[5 + username.Length * 2] = Convert.ToByte(server.Length);
 

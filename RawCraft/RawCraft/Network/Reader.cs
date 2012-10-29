@@ -87,7 +87,7 @@ namespace RawCraft.Network
 
         public static void ReadMetaData(Stream stream)
         {
-            byte MetaDataType = ReadUnsignedByte(stream);
+            sbyte MetaDataType = ReadSignedByte(stream);
             while (MetaDataType != 127)
             {
                 byte First3Bytes = (byte)(MetaDataType >> 0x05);
@@ -123,7 +123,7 @@ namespace RawCraft.Network
                     default:
                         throw new Exception();
                 }
-                MetaDataType = ReadUnsignedByte(stream);
+                MetaDataType = ReadSignedByte(stream);
             }
         }
 

@@ -120,6 +120,7 @@
   <ItemGroup>
     <Compile Include="Interface\FPSCounter.cs" />
     <Compile Include="MinecraftUtilities.cs" />
+    <Compile Include="Network\Packets\ClientSettings.cs" />
     <Compile Include="PKCSKeyGenerator.cs" />
     <Compile Include="Renderer\VertexPositions.cs" />
     <Compile Include="Interface\StatisticOverlay.cs" />

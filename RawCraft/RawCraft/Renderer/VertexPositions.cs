@@ -9,11 +9,6 @@ namespace RawCraft.Renderer
         public static List<Vector3>[] Block;
         public static List<Vector3> Plant;
 
-        // public static List<Vector3>[] HalfBlock = new List<Vector3>;
-        // public static List<Vector3>[] Stairs = new List<Vector3>;
-        // public static List<Vector3>[] Plant = new List<Vector3>;
-        // public static List<Vector3>[] Torch = new List<Vector3>;
-
         public static void Initialize()
         {
             // 0 = z+

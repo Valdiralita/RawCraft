@@ -18,14 +18,14 @@ namespace RawCraft.Network.Packets
             Reader.ReadUnsignedByte(aesStream);
         }
 
-        public static void Packet_0x01_LoginRequest_Send(NetworkStream stream, string playerName) // TODO: This is badly named
+        public static void Send(NetworkStream stream, string playerName) // not used anymore ?!
         {
             byte[] packet = new byte[20 + playerName.Length * 2];
-
+            
             packet[0] = 0x01; //ID
             packet[4] = 0x1D; // packet version (29)
             packet[6] = Convert.ToByte(playerName.Length); // (eigentlich short, aber max länge = 16) länge vom folgenden string    
-
+            
             int bytePos = 8; //start at packet[8]
             int j = 0; //counter to (playername.length)
             for (int i = 0; i < playerName.Length; i++)

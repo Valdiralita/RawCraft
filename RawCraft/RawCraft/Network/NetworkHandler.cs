@@ -223,6 +223,8 @@ namespace RawCraft.Network
                         stream = new AesStream(stream, SharedSecret.Get);
                         ClientStatuses clientStatuses = new ClientStatuses(stream);
                         clientStatuses.Send(0);
+                        ClientSettings clientSettings = new ClientSettings(stream);
+                        //clientSettings.Send();
                         break;
                     case 0xFD:
                         EncryptionKeyRequest encryptionKeyRequest = new EncryptionKeyRequest(stream, SharedSecret.Get, sessionID.GetID(), Storage.Network.UserName); //
@@ -231,7 +233,7 @@ namespace RawCraft.Network
                         break;
                     case 0xFF:
                         PositionUpdater = null;
-                        DisconnectKick disconnectKick = new DisconnectKick(stream, PositionUpdater, NetworkSocket);
+                        DisconnectKick disconnectKick = new DisconnectKick(stream, NetworkSocket);
                         break;
                     default:
                         Misc.Log.Write("We got a Unknown Packet (" + packetIDbuffer + ")from the Server. This should not happen: Error in Packet parser");

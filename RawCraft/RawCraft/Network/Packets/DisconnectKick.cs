@@ -8,13 +8,12 @@ namespace RawCraft.Network.Packets
 {
     class DisconnectKick
     {
-        public DisconnectKick(Stream aesStream, Timer positionUpdater, Socket networkSocket)
+        public DisconnectKick(Stream aesStream,Socket networkSocket)
         {
             Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Disconnect/Kick (0xFF)");
             Misc.Log.Write("We got kicked due to: " + Reader.ReadString(aesStream, Reader.ReadUnsignedShort(aesStream)));
-            positionUpdater.Dispose();
             aesStream.Close();
-            networkSocket.Disconnect(false);
+            networkSocket = null;
             Misc.isConnected = false;
         }
     }

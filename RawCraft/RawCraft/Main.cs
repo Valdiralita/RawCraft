@@ -70,8 +70,10 @@ namespace RawCraft
             Misc.NormalFont = Misc.Content.Load<SpriteFont>("NormalFont");
             Misc.BigFont = Misc.Content.Load<SpriteFont>("BigFont");
 
-            if (File.Exists("terrain.png"))
-                terrain = Texture2D.FromStream(GraphicsDevice, File.Open("terrain.png", FileMode.Open));
+            string TerrainPath = "Content/terrain.png";
+
+            if (File.Exists(TerrainPath))
+                terrain = Texture2D.FromStream(GraphicsDevice, File.Open(TerrainPath, FileMode.Open));
             else
             {
                 if (File.Exists(Path.Combine(MinecraftUtilities.DotMinecraft, "bin", "minecraft.jar")))

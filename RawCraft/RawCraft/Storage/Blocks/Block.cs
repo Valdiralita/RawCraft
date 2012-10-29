@@ -2,13 +2,10 @@
 {
     class Block
     {
-        private bool transparent, multitex, metadata, entity;
+        private bool transparent, multitex, metadata, notablock;
 
         public Block()
         {
-            transparent = false;
-            multitex = false;
-            metadata = false;
         }
 
         public bool IsTransparent
@@ -29,10 +26,10 @@
             set { metadata = value; }
         }
 
-        public bool IsEntity
+        public bool NotABlock
         {
-            get { return entity; }
-            set { entity = value; }
+            get { return notablock; }
+            set { notablock = value; }
         }
     }
 }

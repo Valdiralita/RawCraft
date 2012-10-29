@@ -13,6 +13,7 @@ namespace RawCraft.Network.Packets
             Reader.ReadUnsignedByte(aesStream);
             Reader.ReadInt(aesStream);
             Reader.ReadInt(aesStream);
+            Reader.ReadUnsignedByte(aesStream);
         }
     }
 }

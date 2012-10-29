@@ -41,8 +41,10 @@ namespace RawCraft.Renderer
 
         ~Mesh()
         {
-            vertexBuffer.Dispose();
-            indexBuffer.Dispose();
+            if (vertexBuffer != null)
+                vertexBuffer.Dispose();
+            if (indexBuffer != null)
+                indexBuffer.Dispose();
         }
 
         public void Draw()

@@ -1,14 +1,10 @@
-﻿#region Using Statements
-
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RawCraft.Storage;
 using RawCraft.Storage.Blocks;
 using RawCraft.Storage.Map;
-using System.Collections.Generic;
-using System;
-
-#endregion
 
 namespace RawCraft.Renderer
 {
@@ -61,7 +57,7 @@ namespace RawCraft.Renderer
 
                 }
 
-                if (!Blocks.blocks[ID].IsEntity && !Blocks.blocks[ID].IsTransparent)
+                if (!Blocks.blocks[ID].NotABlock && !Blocks.blocks[ID].IsTransparent)
                 {
                     if (!Blocks.blocks[ID].HasMetadata)
                     {
@@ -130,7 +126,7 @@ namespace RawCraft.Renderer
                         }
                     }
                 }
-                else if (Blocks.blocks[ID].IsEntity)
+                else if (Blocks.blocks[ID].NotABlock)
                 {
                     if (ID == 6 || ID == 31 || ID == 32 || ID == 37 || ID == 38 || ID == 39 || ID == 40 || ID == 59 || ID == 83 || ID == 104 || ID == 105 || ID == 115 || ID == 117)
                     {
@@ -143,17 +139,17 @@ namespace RawCraft.Renderer
                     }
                     else if (ID == 79) //ice hack
                     {
-                        if (Blocks.blocks[c.BlockType[X, Y, Z + 1]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z + 1]].IsEntity)
+                        if (Blocks.blocks[c.BlockType[X, Y, Z + 1]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z + 1]].NotABlock)
                             TransparentQuad(0);
-                        if (Blocks.blocks[c.BlockType[X, Y, Z - 1]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].IsEntity)
+                        if (Blocks.blocks[c.BlockType[X, Y, Z - 1]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
                             TransparentQuad(1);
-                        if (Blocks.blocks[c.BlockType[X + 1, Y, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].IsEntity)
+                        if (Blocks.blocks[c.BlockType[X + 1, Y, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
                             TransparentQuad(2);
-                        if (Blocks.blocks[c.BlockType[X - 1, Y, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].IsEntity)
+                        if (Blocks.blocks[c.BlockType[X - 1, Y, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
                             TransparentQuad(3);
-                        if (Blocks.blocks[c.BlockType[X, Y + 1, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].IsEntity)
+                        if (Blocks.blocks[c.BlockType[X, Y + 1, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
                             TransparentQuad(4);
-                        if (Blocks.blocks[c.BlockType[X, Y - 1, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].IsEntity)
+                        if (Blocks.blocks[c.BlockType[X, Y - 1, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
                             TransparentQuad(5);
                     }
                 }
@@ -321,13 +317,13 @@ namespace RawCraft.Renderer
                         if (Z == 15)
                         {
                             if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX, chunk.ChunkZ + 1), out AdjacentChunk))
-                                if (Blocks.blocks[AdjacentChunk.BlockType[X, Y, 0]].IsTransparent || Blocks.blocks[AdjacentChunk.BlockType[X, Y, 0]].IsEntity)
+                                if (Blocks.blocks[AdjacentChunk.BlockType[X, Y, 0]].IsTransparent || Blocks.blocks[AdjacentChunk.BlockType[X, Y, 0]].NotABlock)
                                     return true;
                             return false;
                         }
                         else
                         {
-                            if (Blocks.blocks[chunk.BlockType[X, Y, Z + 1]].IsTransparent || Blocks.blocks[chunk.BlockType[X, Y, Z + 1]].IsEntity)
+                            if (Blocks.blocks[chunk.BlockType[X, Y, Z + 1]].IsTransparent || Blocks.blocks[chunk.BlockType[X, Y, Z + 1]].NotABlock)
                                 return true;
                         }
                         return false;
@@ -337,13 +333,13 @@ namespace RawCraft.Renderer
                         if (Z == 0)
                         {
                             if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX, chunk.ChunkZ - 1), out AdjacentChunk))
-                                if (Blocks.blocks[AdjacentChunk.BlockType[X, Y, 15]].IsTransparent || Blocks.blocks[AdjacentChunk.BlockType[X, Y, 15]].IsEntity)
+                                if (Blocks.blocks[AdjacentChunk.BlockType[X, Y, 15]].IsTransparent || Blocks.blocks[AdjacentChunk.BlockType[X, Y, 15]].NotABlock)
                                     return true;
                             return false;
                         }
                         else
                         {
-                            if (Blocks.blocks[chunk.BlockType[X, Y, Z - 1]].IsTransparent || Blocks.blocks[chunk.BlockType[X, Y, Z - 1]].IsEntity)
+                            if (Blocks.blocks[chunk.BlockType[X, Y, Z - 1]].IsTransparent || Blocks.blocks[chunk.BlockType[X, Y, Z - 1]].NotABlock)
                                 return true;
                         }
                         return false;
@@ -353,13 +349,13 @@ namespace RawCraft.Renderer
                         if (X == 15)
                         {
                             if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX + 1, chunk.ChunkZ), out AdjacentChunk))
-                                if (Blocks.blocks[AdjacentChunk.BlockType[0, Y, Z]].IsTransparent || Blocks.blocks[AdjacentChunk.BlockType[0, Y, Z]].IsEntity)
+                                if (Blocks.blocks[AdjacentChunk.BlockType[0, Y, Z]].IsTransparent || Blocks.blocks[AdjacentChunk.BlockType[0, Y, Z]].NotABlock)
                                     return true;
                             return false;
                         }
                         else
                         {
-                            if (Blocks.blocks[chunk.BlockType[X + 1, Y, Z]].IsTransparent || Blocks.blocks[chunk.BlockType[X + 1, Y, Z]].IsEntity)
+                            if (Blocks.blocks[chunk.BlockType[X + 1, Y, Z]].IsTransparent || Blocks.blocks[chunk.BlockType[X + 1, Y, Z]].NotABlock)
                                 return true;
                         }
                         return false;
@@ -369,13 +365,13 @@ namespace RawCraft.Renderer
                         if (X == 0)
                         {
                             if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX - 1, chunk.ChunkZ), out AdjacentChunk))
-                                if (Blocks.blocks[AdjacentChunk.BlockType[15, Y, Z]].IsTransparent || Blocks.blocks[AdjacentChunk.BlockType[15, Y, Z]].IsEntity)
+                                if (Blocks.blocks[AdjacentChunk.BlockType[15, Y, Z]].IsTransparent || Blocks.blocks[AdjacentChunk.BlockType[15, Y, Z]].NotABlock)
                                     return true;
                             return false;
                         }
                         else
                         {
-                            if (Blocks.blocks[chunk.BlockType[X - 1, Y, Z]].IsTransparent || Blocks.blocks[chunk.BlockType[X - 1, Y, Z]].IsEntity)
+                            if (Blocks.blocks[chunk.BlockType[X - 1, Y, Z]].IsTransparent || Blocks.blocks[chunk.BlockType[X - 1, Y, Z]].NotABlock)
                                 return true;
                         }
                         return false;
@@ -388,7 +384,7 @@ namespace RawCraft.Renderer
                         }
                         else
                         {
-                            if (Blocks.blocks[chunk.BlockType[X, Y + 1, Z]].IsTransparent || Blocks.blocks[chunk.BlockType[X, Y + 1, Z]].IsEntity)
+                            if (Blocks.blocks[chunk.BlockType[X, Y + 1, Z]].IsTransparent || Blocks.blocks[chunk.BlockType[X, Y + 1, Z]].NotABlock)
                                 return true;
                         }
                         return false;
@@ -401,7 +397,7 @@ namespace RawCraft.Renderer
                         }
                         else
                         {
-                            if (Blocks.blocks[chunk.BlockType[X, Y - 1, Z]].IsEntity || Blocks.blocks[chunk.BlockType[X, Y - 1, Z]].IsTransparent)
+                            if (Blocks.blocks[chunk.BlockType[X, Y - 1, Z]].NotABlock || Blocks.blocks[chunk.BlockType[X, Y - 1, Z]].IsTransparent)
                                 return true;
                         }
                         return false;

@@ -9,9 +9,7 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Dropped Item (0x15)");
             Reader.ReadInt(aesStream);
-            Reader.ReadSignedShort(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
-            Reader.ReadSignedShort(aesStream);
+            Reader.ReadSlot(aesStream);
             Reader.ReadInt(aesStream);
             Reader.ReadInt(aesStream);
             Reader.ReadInt(aesStream);
