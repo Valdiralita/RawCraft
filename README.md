@@ -15,8 +15,9 @@ You must first install [Microsoft.NET 4.0](http://www.microsoft.com/en-us/downlo
 [XNA 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=23714). Then, add
 "C:\Windows\Microsoft.NET\Framework\v4.0.30319" to your PATH.
 
-For the best possible experience, you may also wish to install [this font](). If you do not wish to, edit
-the <FontName> xml tag in RawCraft/RawCraftContent/*.spritefont.
+For the best possible experience, you may also wish to install
+[this font](http://www.fonts2u.com/minecraft-regular.font). If you do not wish to, edit the \<FontName> xml
+tag in RawCraft/RawCraftContent/*.spritefont.
 
 Finally, run "msbuild.exe" from the root of the repository to build RawCraft.
 
