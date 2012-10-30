@@ -9,12 +9,12 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Update Sign (0x82)"); 
             Reader.ReadInt(aesStream);
-            Reader.ReadSignedShort(aesStream);
+            Reader.ReadShort(aesStream);
             Reader.ReadInt(aesStream);
-            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
-            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
-            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
-            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
+            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
+            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
+            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
+            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
         }
     }
 }

@@ -9,13 +9,13 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Named Entity (0x14)");
             Reader.ReadInt(aesStream);
-            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
+            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
             Reader.ReadInt(aesStream);
             Reader.ReadInt(aesStream);
             Reader.ReadInt(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
-            Reader.ReadSignedShort(aesStream);
+            Reader.ReadByte(aesStream);
+            Reader.ReadByte(aesStream);
+            Reader.ReadShort(aesStream);
             Reader.ReadMetaData(aesStream);
         }
     }

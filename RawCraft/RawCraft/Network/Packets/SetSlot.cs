@@ -8,8 +8,8 @@ namespace RawCraft.Network.Packets
         public SetSlot(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Set Slot (0x67)");
-            Reader.ReadSignedByte(aesStream);
-            Reader.ReadSignedShort(aesStream);
+            Reader.ReadByte(aesStream);
+            Reader.ReadShort(aesStream);
             Reader.ReadSlot(aesStream);
         }
     }

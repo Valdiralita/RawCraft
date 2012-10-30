@@ -8,8 +8,8 @@ namespace RawCraft.Network.Packets
         public PluginMessage(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Plugin Message (0xFA)"); 
-            Storage.Misc.Log.Write(Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream)));
-            Reader.ReadData(aesStream, Reader.ReadSignedShort(aesStream));
+            Storage.Misc.Log.Write(Reader.ReadString(aesStream, Reader.ReadShort(aesStream)));
+            Reader.ReadData(aesStream, Reader.ReadShort(aesStream));
         }
     }
 }

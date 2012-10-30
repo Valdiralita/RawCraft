@@ -9,16 +9,16 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Object/Vehicle (0x17)");
             Reader.ReadInt(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadByte(aesStream);
             Reader.ReadInt(aesStream);
             Reader.ReadInt(aesStream);
             Reader.ReadInt(aesStream);
             int throwerID = Reader.ReadInt(aesStream); // TODO: This is not correctly done
             if (throwerID != 0)
             {
-                Reader.ReadSignedShort(aesStream);
-                Reader.ReadSignedShort(aesStream);
-                Reader.ReadSignedShort(aesStream);
+                Reader.ReadShort(aesStream);
+                Reader.ReadShort(aesStream);
+                Reader.ReadShort(aesStream);
             }
         }
     }

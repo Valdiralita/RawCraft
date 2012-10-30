@@ -8,7 +8,7 @@ namespace RawCraft.Network.Packets
         public CloseWindow(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Close Window (0x65)");
-            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadByte(aesStream);
         }
     }
 }

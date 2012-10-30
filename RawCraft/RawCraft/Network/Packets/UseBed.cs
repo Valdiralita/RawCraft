@@ -9,9 +9,9 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Use Bed (0x11)");
             Reader.ReadInt(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadByte(aesStream);
             Reader.ReadInt(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadByte(aesStream);
             Reader.ReadInt(aesStream);
         }
     }

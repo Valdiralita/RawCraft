@@ -9,7 +9,7 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Remove Entity Effect (0x2A)");
             Reader.ReadInt(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadByte(aesStream);
         }
     }
 }

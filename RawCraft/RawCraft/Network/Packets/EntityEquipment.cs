@@ -9,7 +9,7 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Equipment (0x05)");
             Reader.ReadInt(aesStream);
-            Reader.ReadSignedShort(aesStream);
+            Reader.ReadShort(aesStream);
 
             Reader.ReadSlot(aesStream);
         }

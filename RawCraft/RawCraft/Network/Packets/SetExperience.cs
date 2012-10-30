@@ -9,8 +9,8 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Set Experience (0x2B)");
             Reader.ReadFloat(aesStream);
-            Reader.ReadSignedShort(aesStream);
-            Reader.ReadSignedShort(aesStream);
+            Reader.ReadShort(aesStream);
+            Reader.ReadShort(aesStream);
         }
     }
 }

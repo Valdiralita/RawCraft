@@ -8,7 +8,7 @@ namespace RawCraft.Network
     {
         // TODO: Just copy Craft.Net's code for this
 
-        public static short ReadSignedShort(Stream stream)
+        internal static short ReadShort(Stream stream)
         {
             short SignedShort;
             SignedShort = (byte)stream.ReadByte();
@@ -17,26 +17,12 @@ namespace RawCraft.Network
             return SignedShort;
         }
 
-        public static ushort ReadUnsignedShort(Stream stream)
-        {
-            int UnsignedShort;
-            UnsignedShort = stream.ReadByte();
-            UnsignedShort <<= 8;
-            UnsignedShort += stream.ReadByte();
-            return (ushort)UnsignedShort;
-        }
-
-        public static byte ReadUnsignedByte(Stream stream)
+        internal static byte ReadByte(Stream stream)
         {
             return (byte)stream.ReadByte();
         }
 
-        public static SByte ReadSignedByte(Stream stream)
-        {
-            return (SByte)stream.ReadByte();
-        }
-
-        public static int ReadInt(Stream stream)
+        internal static int ReadInt(Stream stream)
         {
             byte[] buffer = new byte[4];
             stream.Read(buffer, 0, 4);
@@ -44,7 +30,7 @@ namespace RawCraft.Network
             return BitConverter.ToInt32(buffer, 0);
         }
 
-        public static double ReadDouble(Stream stream)
+        internal static double ReadDouble(Stream stream)
         {
             byte[] buffer = new byte[8];
             stream.Read(buffer, 0, 8);
@@ -52,21 +38,21 @@ namespace RawCraft.Network
             return BitConverter.ToDouble(buffer, 0);
         }
 
-        public static Int64 ReadLong(Stream stream)
+        internal static Int64 ReadLong(Stream stream)
         {
             byte[] buffer = new byte[8];
             stream.Read(buffer, 0, 8);
             Array.Reverse(buffer);
             return BitConverter.ToInt64(buffer, 0);
         }
-        public static string ReadString(Stream stream, int count)
+        internal static string ReadString(Stream stream, int count)
         {
             byte[] String = ReadData(stream, count * 2);
             Encoding enc = new UnicodeEncoding(true, true, true);
             return enc.GetString(String, 0, String.Length);
         }
 
-        public static byte[] ReadData(Stream stream, int count)
+        internal static byte[] ReadData(Stream stream, int count)
         {
             if (count > 0)
             {
@@ -77,7 +63,7 @@ namespace RawCraft.Network
             return new byte[0];
         }
 
-        public static float ReadFloat(Stream stream)
+        internal static float ReadFloat(Stream stream)
         {
             byte[] buffer = new byte[4];
             stream.Read(buffer, 0, 4);
@@ -85,10 +71,10 @@ namespace RawCraft.Network
             return BitConverter.ToSingle(buffer, 0);
         }
 
-        public static void ReadMetaData(Stream stream)
+        internal static void ReadMetaData(Stream stream)
         {
-            sbyte MetaDataType = ReadSignedByte(stream);
-            while (MetaDataType != 127)
+            byte MetaDataType = ReadByte(stream);
+            while (MetaDataType != 255)
             {
                 byte First3Bytes = (byte)(MetaDataType >> 0x05);
                 byte Last5Bytes = (byte)(MetaDataType & 0x1F);
@@ -96,10 +82,10 @@ namespace RawCraft.Network
                 switch (First3Bytes)
                 {
                     case 0:
-                        ReadUnsignedByte(stream);
+                        ReadByte(stream);
                         break;
                     case 1:
-                        ReadSignedShort(stream);
+                        ReadShort(stream);
                         break;
                     case 2:
                         ReadInt(stream);
@@ -108,12 +94,12 @@ namespace RawCraft.Network
                         ReadFloat(stream);
                         break;
                     case 4:
-                        ReadString(stream, ReadSignedShort(stream));
+                        ReadString(stream, ReadShort(stream));
                         break;
                     case 5:
-                        ReadSignedShort(stream);
-                        ReadUnsignedByte(stream);
-                        ReadSignedShort(stream);
+                        ReadShort(stream);
+                        ReadByte(stream);
+                        ReadShort(stream);
                         break;
                     case 6:
                         ReadInt(stream);
@@ -123,19 +109,19 @@ namespace RawCraft.Network
                     default:
                         throw new Exception();
                 }
-                MetaDataType = ReadSignedByte(stream);
+                MetaDataType = ReadByte(stream);
             }
         }
 
-        public static void ReadSlot(Stream stream)
+        internal static void ReadSlot(Stream stream)
         {
-            short Block = ReadSignedShort(stream);
+            short Block = ReadShort(stream);
             if (Block != -1)
             {
-                ReadSignedByte(stream);
-                ReadSignedShort(stream);
+                ReadByte(stream);
+                ReadShort(stream);
 
-                int ByteArrayLength = ReadSignedShort(stream);
+                int ByteArrayLength = ReadShort(stream);
 
                 if (ByteArrayLength > -1)
                     ReadData(stream, ByteArrayLength);

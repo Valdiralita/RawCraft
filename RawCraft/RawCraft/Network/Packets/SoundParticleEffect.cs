@@ -10,10 +10,10 @@ namespace RawCraft.Network.Packets
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Sound/Particle Effect (0x3D)");
             Reader.ReadInt(aesStream);
             Reader.ReadInt(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadByte(aesStream);
             Reader.ReadInt(aesStream);
             Reader.ReadInt(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadByte(aesStream);
         }
     }
 }

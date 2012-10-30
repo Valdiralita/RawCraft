@@ -18,7 +18,7 @@ namespace RawCraft.Network.Packets
             Player.Z = Reader.ReadDouble(stream);
             Player.Yaw = Reader.ReadFloat(stream);
             Player.Pitch = Reader.ReadFloat(stream);
-            Player.OnGround = Convert.ToBoolean(Reader.ReadSignedByte(stream));
+            Player.OnGround = Convert.ToBoolean(Reader.ReadByte(stream));
 
             Misc.Log.Write("X: " + Player.X);
             Misc.Log.Write("Y: " + Player.Y);
@@ -31,9 +31,15 @@ namespace RawCraft.Network.Packets
 
         public static void Send(Stream stream)
         {
-            // I have no words to describe the following line.
-            byte[] packet = PacketID.Concat(BitConverter.GetBytes(Player.X).Reverse()).Concat(BitConverter.GetBytes(Player.Y).Reverse()).Concat(BitConverter.GetBytes(Player.Stance).Reverse()).Concat(BitConverter.GetBytes(Player.Z).Reverse()).Concat(BitConverter.GetBytes(Player.Yaw).Reverse()).Concat(BitConverter.GetBytes(Player.Pitch).Reverse()).Concat(BitConverter.GetBytes(Player.OnGround)).ToArray();
-            stream.Write(packet, 0, packet.Length);
+            Writer.WriteByte(0x0D, stream);
+            Writer.WriteDouble(Player.X, stream);
+            Writer.WriteDouble(Player.Y, stream);
+            Writer.WriteDouble(Player.Stance, stream);
+            Writer.WriteDouble(Player.Z, stream);
+            Writer.WriteFloat(Player.Yaw, stream);
+            Writer.WriteFloat(Player.Pitch, stream);
+            Writer.WriteBool(Player.OnGround, stream);
+
             Misc.Log.Write(DateTime.Now.TimeOfDay + " Sending: 0x0D Packet");
         }
     }

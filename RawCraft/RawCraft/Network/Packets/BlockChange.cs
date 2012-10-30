@@ -9,10 +9,10 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Block Change (0x35)");
             Reader.ReadInt(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadByte(aesStream);
             Reader.ReadInt(aesStream);
-            Reader.ReadUnsignedShort(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadShort(aesStream);
+            Reader.ReadByte(aesStream);
         }
     }
 }

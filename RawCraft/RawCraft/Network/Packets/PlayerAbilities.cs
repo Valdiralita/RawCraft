@@ -8,9 +8,9 @@ namespace RawCraft.Network.Packets
         public PlayerAbilities(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Player Abilities (0xCA)"); 
-            Reader.ReadUnsignedByte(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadByte(aesStream);
+            Reader.ReadByte(aesStream);
+            Reader.ReadByte(aesStream);
         }
     }
 }

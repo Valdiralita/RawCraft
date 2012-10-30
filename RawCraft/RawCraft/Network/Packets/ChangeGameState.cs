@@ -8,8 +8,8 @@ namespace RawCraft.Network.Packets
         public ChangeGameState(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Change Game State (0x46)");
-            Reader.ReadUnsignedByte(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadByte(aesStream);
+            Reader.ReadByte(aesStream);
         }
     }
 }

@@ -6,8 +6,6 @@ namespace RawCraft.Network.Packets
 {
     class KeepAlive
     {
-        static byte[] packetID = new byte[1] { 0x00 };
-
         public KeepAlive(Stream stream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: KeepAlive Packet (0x00)");
@@ -16,7 +14,8 @@ namespace RawCraft.Network.Packets
 
         private void Send(Stream stream, byte[] keepAliveID)
         {
-            stream.Write(packetID.Concat(keepAliveID).ToArray(), 0, 5);
+            Writer.WriteByte(0, stream);
+            Writer.WriteData(keepAliveID, stream);
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " Sending back KeepAlive!");
         }
     }

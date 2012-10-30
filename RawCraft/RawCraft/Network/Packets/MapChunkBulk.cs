@@ -16,13 +16,13 @@ namespace RawCraft.Network.Packets
         public MapChunkBulk(Stream stream)
         {
             Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Map Chunk Bulk (0x38)");
-            count = Reader.ReadUnsignedShort(stream);
+            count = Reader.ReadShort(stream);
             compressedChunks = Reader.ReadData(stream, Reader.ReadInt(stream));
             metaData = Reader.ReadData(stream, count * 12);
             StoreChunks(ZlibStream.UncompressBuffer(compressedChunks));
         }
 
-        private void StoreChunks(byte[] uncompressed)
+        private void StoreChunks(byte[] uncompressed) //todo: better!
         {
             int proceededSections = 0;
             int chunkcount = 0;

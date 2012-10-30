@@ -312,7 +312,7 @@ namespace RawCraft.Renderer
 
             switch (side)
             {
-                case 0x00: // Z+
+                case 0: // Z+
                     {
                         if (Z == 15)
                         {
@@ -328,7 +328,7 @@ namespace RawCraft.Renderer
                         }
                         return false;
                     }
-                case 0x01: // Z-
+                case 1: // Z-
                     {
                         if (Z == 0)
                         {
@@ -344,7 +344,7 @@ namespace RawCraft.Renderer
                         }
                         return false;
                     }
-                case 0x02: // X+
+                case 2: // X+
                     {
                         if (X == 15)
                         {
@@ -360,7 +360,7 @@ namespace RawCraft.Renderer
                         }
                         return false;
                     }
-                case 0x03: // X-
+                case 3: // X-
                     {
                         if (X == 0)
                         {
@@ -376,7 +376,7 @@ namespace RawCraft.Renderer
                         }
                         return false;
                     }
-                case 0x04:
+                case 4:
                     {
                         if (Y == 255)
                         {
@@ -389,7 +389,7 @@ namespace RawCraft.Renderer
                         }
                         return false;
                     }
-                case 0x05:
+                case 5:
                     {
                         if (Y == 0)
                         {

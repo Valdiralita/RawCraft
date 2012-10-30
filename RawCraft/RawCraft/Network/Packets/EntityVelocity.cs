@@ -9,9 +9,9 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Velocity (0x1C)");
             Reader.ReadInt(aesStream);
-            Reader.ReadSignedShort(aesStream);
-            Reader.ReadSignedShort(aesStream);
-            Reader.ReadSignedShort(aesStream);
+            Reader.ReadShort(aesStream);
+            Reader.ReadShort(aesStream);
+            Reader.ReadShort(aesStream);
         }
     }
 }

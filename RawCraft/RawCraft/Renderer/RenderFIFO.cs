@@ -11,7 +11,6 @@ namespace RawCraft.Renderer
     {
         private static ConcurrentQueue<Chunk> RenderQueue = new ConcurrentQueue<Chunk>();
         private static AutoResetEvent queueNotifier = new AutoResetEvent(false);
-       
 
         public void MeshGenerateThread()
         {

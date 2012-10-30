@@ -13,8 +13,8 @@ namespace RawCraft.Network.Packets
             socket.Connect(server, port);
             var stream = new NetworkStream(socket);
             stream.WriteByte(0xFE);
-            Reader.ReadSignedByte(stream);
-            infos[0] = Reader.ReadString(stream, Reader.ReadUnsignedShort(stream));
+            Reader.ReadByte(stream);
+            infos[0] = Reader.ReadString(stream, Reader.ReadShort(stream));
             infos = infos[0].Split('§');
 
             Misc.Log.Write("Server Name : " + infos[0]);

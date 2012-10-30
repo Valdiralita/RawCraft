@@ -8,8 +8,8 @@ namespace RawCraft.Network.Packets
         public UpdateHealth(Stream aesStream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Update Health (0x08)");
-            Reader.ReadSignedShort(aesStream);
-            Reader.ReadSignedShort(aesStream);
+            Reader.ReadShort(aesStream);
+            Reader.ReadShort(aesStream);
             Reader.ReadFloat(aesStream);
         }
     }

@@ -8,9 +8,9 @@ namespace RawCraft.Network.Packets
         public ConfirmTransaction(Stream aesStream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Confirm Transaction (0x6A)"); 
-            Reader.ReadUnsignedByte(aesStream);
-            Reader.ReadSignedShort(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
+            Reader.ReadByte(aesStream);
+            Reader.ReadShort(aesStream);
+            Reader.ReadByte(aesStream);
         }
     }
 }

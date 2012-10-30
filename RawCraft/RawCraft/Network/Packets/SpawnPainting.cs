@@ -9,7 +9,7 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Painting (0x19)");
             Reader.ReadInt(aesStream);
-            Reader.ReadString(aesStream, Reader.ReadSignedShort(aesStream));
+            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
             Reader.ReadInt(aesStream);
             Reader.ReadInt(aesStream);
             Reader.ReadInt(aesStream);

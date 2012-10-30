@@ -9,10 +9,10 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Update Tile Entity (0x84)"); 
             Reader.ReadInt(aesStream);
-            Reader.ReadSignedShort(aesStream);
+            Reader.ReadShort(aesStream);
             Reader.ReadInt(aesStream);
-            Reader.ReadUnsignedByte(aesStream);
-            Reader.ReadData(aesStream, Reader.ReadSignedShort(aesStream));
+            Reader.ReadByte(aesStream);
+            Reader.ReadData(aesStream, Reader.ReadShort(aesStream));
         }
     }
 }

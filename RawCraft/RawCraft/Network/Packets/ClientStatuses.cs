@@ -14,7 +14,8 @@ namespace RawCraft.Network.Packets
 
         public void Send(byte payload)
         {
-            stream.Write(new byte[2] { 0xCD, payload }, 0, 2);
+            Writer.WriteByte(0xCD, stream);
+            Writer.WriteByte(payload, stream);
         }
     }
 }

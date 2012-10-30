@@ -14,9 +14,9 @@ namespace RawCraft.Network.Packets
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Encryption Key Request (0xFD)");
 
-            string serverID = Reader.ReadString(stream, Reader.ReadSignedShort(stream));
-            byte[] publicKey = Reader.ReadData(stream, Reader.ReadSignedShort(stream));
-            byte[] token = Reader.ReadData(stream, Reader.ReadSignedShort(stream));
+            string serverID = Reader.ReadString(stream, Reader.ReadShort(stream));
+            byte[] publicKey = Reader.ReadData(stream, Reader.ReadShort(stream));
+            byte[] token = Reader.ReadData(stream, Reader.ReadShort(stream));
 
             encryptedToken = EncryptSHA1.RSAEnc(token, publicKey);
             encryptedSharedSecret = EncryptSHA1.RSAEnc(sharedSecret, publicKey);

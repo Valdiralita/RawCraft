@@ -14,6 +14,7 @@ namespace RawCraft.Network
 
         private Stream stream;
         private byte packetIDbuffer;
+        private PlayerPositionLook playerPositionLook;
 
         public void NetThread()
         {
@@ -65,7 +66,7 @@ namespace RawCraft.Network
                         RespawnPacket respawnPacket = new RespawnPacket(stream);
                         break;
                     case 0x0D:
-                        PlayerPositionLook playerPositionLook = new PlayerPositionLook(stream);
+                        playerPositionLook = new PlayerPositionLook(stream);
                         break;
                     case 0x11:
                         UseBed useBed = new UseBed(stream);
@@ -246,8 +247,9 @@ namespace RawCraft.Network
         private void NetworkSender(object o)
         {
             // doesnt work
-            //Console.WriteLine("X: " + Storage.Player.X + "\nY: " + Storage.Player.Y + "\nZ: " + Storage.Player.Z + "\nStance: " + Storage.Player.Stance + "\nYaw: " + Storage.Player.Yaw + "\nPitch: " + Storage.Player.Pitch);
-            //Packet_0x0D.Send(AESStream);
+            
+            if (playerPositionLook != null)
+                PlayerPositionLook.Send(stream);
         }
     }
 }
