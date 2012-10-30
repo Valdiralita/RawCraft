@@ -15,15 +15,13 @@ namespace RawCraft.Network.Packets
 
         public void Send()
         {
-            stream.Write(new byte[1] { 0xCC }, 0, 1);
-
             string locale = "en_GB";
-            stream.Write(new byte[2] { 0, (byte)(locale.Length * 2) }, 0, 2);
-            for (int i = 0; i < locale.Length; i++)
-            {
-                stream.Write(new byte[2] { 0, Convert.ToByte(locale[i]) }, 0, 2);
-            }
-            stream.Write(new byte[4] { 0, 0, 0, 1 }, 0, 4);
+            Writer.WriteByte((byte)0xCC, stream);
+            Writer.WriteString(locale, stream);
+            Writer.WriteByte(0, stream);
+            Writer.WriteByte(0, stream);
+            Writer.WriteByte(0, stream);
+            Writer.WriteByte(1, stream);
         }
     }
 }

@@ -6,28 +6,34 @@ namespace RawCraft.Network
 {
     static class Writer
     {
-        public static void WriteByte(Stream stream)
+        public static void WriteByte(byte b, Stream stream)
         {
-
+            stream.WriteByte(b);
         }
-        public static void WriteShort(Stream stream)
+        public static void WriteShort(short s, Stream stream)
         {
-
+            byte[] data = BitConverter.GetBytes(s);
+            //Array.Reverse(data);
+            stream.Write(data, 0, data.Length);
         }
-        public static void WriteInt(Stream stream)
+        public static void WriteInt(int i, Stream stream)
         {
-
+            byte[] data = BitConverter.GetBytes(i);
+            Array.Reverse(data);
+            stream.Write(data, 0, data.Length);
         }
-        public static void WriteFloat(Stream stream)
+        public static void WriteFloat(float f, Stream stream)
         {
-
+            byte[] data = BitConverter.GetBytes(f);
+            //Array.Reverse(data);
+            stream.Write(data, 0, data.Length);
         }
         public static void WriteString(string str, Stream stream)
         {
-            stream.Write(new byte[2] { 0, (byte)(str.Length * 2) }, 0, 2);
+            WriteShort((short)str.Length, stream);
             for (int i = 0; i < str.Length; i++)
             {
-                stream.Write(new byte[2] { 0, Convert.ToByte(str[i]) }, 0, 2);
+                stream.Write(new byte[2] { Convert.ToByte(str[i]), 0 }, 0, 2);
             }
         }
     }
