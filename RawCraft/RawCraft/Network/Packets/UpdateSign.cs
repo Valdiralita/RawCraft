@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class UpdateSign
     {
-        public UpdateSign(MyStream s)
+        public UpdateSign(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Update Sign (0x82)"); 
             s.ReadInt();

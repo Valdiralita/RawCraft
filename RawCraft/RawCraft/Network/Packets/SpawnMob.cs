@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class SpawnMob
     {
-        public SpawnMob(MyStream s) 
+        public SpawnMob(EnhancedStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Mob (0x18)");
             s.ReadInt();

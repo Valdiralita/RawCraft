@@ -11,7 +11,7 @@ namespace RawCraft.Network.Packets
             var infos = new string[1];
 
             socket.Connect(server, port);
-            MyStream stream = new MyStream(socket);
+            EnhancedStream stream = new EnhancedStream(socket);
             stream.WriteByte(0xFE);
             stream.ReadByte();
             infos[0] = stream.ReadString(stream.ReadShort());

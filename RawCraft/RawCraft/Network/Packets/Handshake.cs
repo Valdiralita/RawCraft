@@ -6,9 +6,9 @@ namespace RawCraft.Network.Packets
 {
     class Handshake
     {
-        MyStream stream;
+        EnhancedStream stream;
 
-        public Handshake(MyStream stream)
+        public Handshake(EnhancedStream stream)
         {
             this.stream = stream;
         }

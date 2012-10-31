@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class EntityTeleport
     {
-        public EntityTeleport(MyStream s) 
+        public EntityTeleport(EnhancedStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Teleport (0x22)");
             s.ReadInt();

@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class SpawnObjectVehicle
     {
-        public SpawnObjectVehicle(MyStream s) 
+        public SpawnObjectVehicle(EnhancedStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Object/Vehicle (0x17)");
             s.ReadInt();

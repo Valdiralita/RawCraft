@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class SoundParticleEffect
     {
-        public SoundParticleEffect(MyStream s) 
+        public SoundParticleEffect(EnhancedStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Sound/Particle Effect (0x3D)");
             s.ReadInt();

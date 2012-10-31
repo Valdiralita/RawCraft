@@ -6,7 +6,7 @@ namespace RawCraft.Network.Packets
 {
     class SpawnPosition
     {
-        public SpawnPosition(MyStream s)
+        public SpawnPosition(EnhancedStream s)
         {
             Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Position (0x06) (see compass)");
             s.ReadInt();

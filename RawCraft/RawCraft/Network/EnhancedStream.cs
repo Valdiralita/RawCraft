@@ -7,11 +7,11 @@ using System.Net.Sockets;
 
 namespace RawCraft.Network
 {
-    public class MyStream : NetworkStream
+    public class EnhancedStream : NetworkStream
     {
         Socket socket;
 
-        public MyStream(Socket s) : base(s)
+        public EnhancedStream(Socket s) : base(s)
         {
             socket = s;
         }

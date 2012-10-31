@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class RespawnPacket
     {
-        public RespawnPacket(MyStream s)
+        public RespawnPacket(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Respawn (0x09)");
             s.ReadInt();

@@ -6,7 +6,7 @@ namespace RawCraft.Network.Packets
 {
     class LoginRequest
     {
-        public LoginRequest(MyStream s)
+        public LoginRequest(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Login Request (0x01)");
             Storage.Misc.Log.Write("Player Entity ID: " + s.ReadInt());                        // The Players Entity ID

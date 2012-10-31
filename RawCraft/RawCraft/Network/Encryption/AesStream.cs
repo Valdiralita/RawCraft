@@ -5,11 +5,11 @@ using System.Net.Sockets;
 
 namespace RawCraft.Network.Encryption
 {
-    public class AesStream : MyStream
+    public class AesStream : EnhancedStream
     {
         CryptoStream enc;
         CryptoStream dec;
-        public AesStream(Socket socket, MyStream stream, byte[] key) : base(socket)
+        public AesStream(Socket socket, EnhancedStream stream, byte[] key) : base(socket)
         {
             BaseStream = stream;
             enc = new CryptoStream(stream, GenerateAES(key).CreateEncryptor(), CryptoStreamMode.Write);

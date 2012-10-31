@@ -12,7 +12,7 @@ namespace RawCraft.Network
     {
         // TODO: Make this not the worst thing ever
 
-        private MyStream stream;
+        private EnhancedStream stream;
         private byte packetIDbuffer;
         private PlayerPositionLook playerPositionLook;
 
@@ -32,7 +32,7 @@ namespace RawCraft.Network
             Socket NetworkSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             NetworkSocket.Connect(Storage.Network.Server, Storage.Network.Port);
             //stream = new NetworkStream(NetworkSocket);
-            stream = new MyStream(NetworkSocket);
+            stream = new EnhancedStream(NetworkSocket);
 
             Handshake handshake = new Handshake(stream);
             handshake.Send(Storage.Network.UserName, Storage.Network.Server, Storage.Network.Port); // connect

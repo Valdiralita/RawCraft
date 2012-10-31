@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class OpenWindow
     {
-        public OpenWindow(MyStream stream) 
+        public OpenWindow(EnhancedStream stream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Open Window (0x64)");
             stream.ReadByte();

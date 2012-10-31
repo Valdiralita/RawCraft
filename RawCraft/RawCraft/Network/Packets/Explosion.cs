@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class Explosion
     {
-        public Explosion(MyStream s)
+        public Explosion(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Explosion (0x3C)");
             s.ReadDouble();

@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class ConfirmTransaction
     {
-        public ConfirmTransaction(MyStream s)
+        public ConfirmTransaction(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Confirm Transaction (0x6A)");
             s.ReadByte();

@@ -5,9 +5,9 @@ namespace RawCraft.Network.Packets
 {
     class ClientStatuses
     {
-        MyStream stream;
+        EnhancedStream stream;
 
-        public ClientStatuses(MyStream s)
+        public ClientStatuses(EnhancedStream s)
         {
             stream = s;
         }

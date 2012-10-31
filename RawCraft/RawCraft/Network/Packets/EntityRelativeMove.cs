@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class EntityRelativeMove
     {
-        public EntityRelativeMove(MyStream s)
+        public EntityRelativeMove(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Relative Move (0x1F)");
             s.ReadInt();

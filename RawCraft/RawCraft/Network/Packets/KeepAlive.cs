@@ -6,9 +6,9 @@ namespace RawCraft.Network.Packets
 {
     class KeepAlive
     {
-        MyStream stream;
+        EnhancedStream stream;
 
-        public KeepAlive(MyStream s)
+        public KeepAlive(EnhancedStream s)
         {
             stream = s;
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: KeepAlive Packet (0x00)");

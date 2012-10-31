@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class BlockChange
     {
-        public BlockChange(MyStream s) 
+        public BlockChange(EnhancedStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Block Change (0x35)");
             s.ReadInt();

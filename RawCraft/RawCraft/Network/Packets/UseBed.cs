@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class UseBed
     {
-        public UseBed(MyStream s)
+        public UseBed(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Use Bed (0x11)");
             s.ReadInt();

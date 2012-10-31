@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class SpawnExperienceOrb
     {
-        public SpawnExperienceOrb(MyStream s)
+        public SpawnExperienceOrb(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Experience Orb (0x1A)"); 
             s.ReadInt();

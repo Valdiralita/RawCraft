@@ -8,9 +8,9 @@ namespace RawCraft.Network.Packets
     class PlayerPositionLook
     { 
         byte[] PacketID = new byte[1] { 0x0D };
-        MyStream stream;
+        EnhancedStream stream;
 
-        public PlayerPositionLook(MyStream s)
+        public PlayerPositionLook(EnhancedStream s)
         {
             stream = s;
             Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Player Position & Look (0x0D)");

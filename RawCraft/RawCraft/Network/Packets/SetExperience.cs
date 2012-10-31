@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class SetExperience
     {
-        public SetExperience(MyStream s)
+        public SetExperience(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Set Experience (0x2B)");
             s.ReadFloat();

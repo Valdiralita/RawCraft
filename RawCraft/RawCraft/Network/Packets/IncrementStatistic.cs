@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class IncrementStatistic
     {
-        public IncrementStatistic(MyStream s)
+        public IncrementStatistic(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Increment Statistic (0xC8)"); 
             s.ReadInt();

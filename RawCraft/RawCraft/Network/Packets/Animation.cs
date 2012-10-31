@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class Animation
     {
-        public Animation(MyStream s)
+        public Animation(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Animation (0x12)");
             s.ReadInt();

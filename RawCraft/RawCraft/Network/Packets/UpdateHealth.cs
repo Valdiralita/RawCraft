@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class UpdateHealth
     {
-        public UpdateHealth(MyStream s) 
+        public UpdateHealth(EnhancedStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Update Health (0x08)");
             s.ReadShort();

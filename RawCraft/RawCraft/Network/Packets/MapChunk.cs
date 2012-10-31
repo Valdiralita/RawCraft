@@ -8,7 +8,7 @@ namespace RawCraft.Network.Packets
 {
     class MapChunk
     {
-        public MapChunk(MyStream stream)
+        public MapChunk(EnhancedStream stream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Map Chunks (0x33)");
 

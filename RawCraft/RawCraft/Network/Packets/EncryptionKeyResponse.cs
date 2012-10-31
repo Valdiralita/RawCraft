@@ -6,9 +6,9 @@ namespace RawCraft.Network.Packets
 {
     class EncryptionKeyResponse
     {
-        MyStream stream;
+        EnhancedStream stream;
 
-        public EncryptionKeyResponse(MyStream s)
+        public EncryptionKeyResponse(EnhancedStream s)
         {
             stream = s;
         }

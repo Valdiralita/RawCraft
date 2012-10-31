@@ -10,7 +10,7 @@ namespace RawCraft.Network.Packets
     {
         byte[] encryptedToken, encryptedSharedSecret;
 
-        public EncryptionKeyRequest(MyStream stream, byte[] sharedSecret, string sessionID, string username)
+        public EncryptionKeyRequest(EnhancedStream stream, byte[] sharedSecret, string sessionID, string username)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Encryption Key Request (0xFD)");
 

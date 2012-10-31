@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class BlockAction
     {
-        public BlockAction(MyStream s) 
+        public BlockAction(EnhancedStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Block Action (0x36)");
             s.ReadInt();

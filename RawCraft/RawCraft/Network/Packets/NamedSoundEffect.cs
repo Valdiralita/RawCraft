@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class NamedSoundEffect
     {
-        public NamedSoundEffect(MyStream s) 
+        public NamedSoundEffect(EnhancedStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Named Sound Effect (0x3E)");
             s.ReadString(s.ReadShort());

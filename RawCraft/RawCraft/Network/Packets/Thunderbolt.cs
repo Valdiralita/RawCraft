@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class Thunderbolt
     {
-        public Thunderbolt(MyStream s)
+        public Thunderbolt(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Thunderbolt (0x47)");
             s.ReadInt();

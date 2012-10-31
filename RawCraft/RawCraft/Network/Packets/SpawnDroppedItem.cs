@@ -5,7 +5,7 @@ namespace RawCraft.Network.Packets
 {
     class SpawnDroppedItem
     {
-        public SpawnDroppedItem(MyStream s)
+        public SpawnDroppedItem(EnhancedStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Dropped Item (0x15)");
             s.ReadInt();
