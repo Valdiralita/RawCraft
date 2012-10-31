@@ -14,9 +14,9 @@ namespace RawCraft.Renderer
 
         #endregion
 
-        public Mesh(VertexPositionNormalTexture[] vertices, int[] indices)
+        public Mesh(GraphicsDevice gd, VertexPositionNormalTexture[] vertices, int[] indices)
         {
-            vertexBuffer = new VertexBuffer(Misc.graphics, typeof(VertexPositionNormalTexture), vertices.Length, BufferUsage.None);
+            vertexBuffer = new VertexBuffer(gd, typeof(VertexPositionNormalTexture), vertices.Length, BufferUsage.None);
             vertexBuffer.SetData(vertices);
 
             if (indices.Length < ushort.MaxValue) // saves about 50-60MB ram at view distance of 15 (cpu usage increase was not measurable) 
@@ -28,12 +28,12 @@ namespace RawCraft.Renderer
                     ushortindex[i] = (ushort)indices[i];
                 }
 
-                indexBuffer = new IndexBuffer(Misc.graphics, IndexElementSize.SixteenBits, indices.Length, BufferUsage.None);
+                indexBuffer = new IndexBuffer(gd, IndexElementSize.SixteenBits, indices.Length, BufferUsage.None);
                 indexBuffer.SetData(ushortindex);
             }
             else
             {
-                indexBuffer = new IndexBuffer(Misc.graphics, IndexElementSize.ThirtyTwoBits, indices.Length, BufferUsage.None);
+                indexBuffer = new IndexBuffer(gd, IndexElementSize.ThirtyTwoBits, indices.Length, BufferUsage.None);
                 indexBuffer.SetData(indices);
             }
             IndicesCount = indices.Length;
@@ -47,15 +47,15 @@ namespace RawCraft.Renderer
                 indexBuffer.Dispose();
         }
 
-        public void Draw()
+        public void Draw(Effect effect)
         {
-            Misc.effect.GraphicsDevice.SetVertexBuffer(vertexBuffer);
-            Misc.effect.GraphicsDevice.Indices = indexBuffer;
+            effect.GraphicsDevice.SetVertexBuffer(vertexBuffer);
+            effect.GraphicsDevice.Indices = indexBuffer;
 
-            foreach (EffectPass effectPass in Misc.effect.CurrentTechnique.Passes)
+            foreach (EffectPass effectPass in effect.CurrentTechnique.Passes)
             {
                 effectPass.Apply();
-                Misc.effect.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, IndicesCount, 0, IndicesCount / 3);
+                effect.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, IndicesCount, 0, IndicesCount / 3);
             }
         }
     }

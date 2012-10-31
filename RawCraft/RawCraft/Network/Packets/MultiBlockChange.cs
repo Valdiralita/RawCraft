@@ -7,7 +7,6 @@ namespace RawCraft.Network.Packets
     {
         public MultiBlockChange(EnhancedStream s) 
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Multi Block Change (0x34)");
             s.ReadInt();
             s.ReadInt();
             s.ReadShort();

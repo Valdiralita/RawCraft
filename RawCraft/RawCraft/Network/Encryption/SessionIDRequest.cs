@@ -34,17 +34,14 @@ namespace RawCraft.Network.Encryption
                 string responseString = Encoding.ASCII.GetString(buffer, 0, stream.Read(buffer, 0, buffer.Length));
                 if (!responseString.Contains(':'))
                 {
-                    Misc.Log.Write("Bad login, bad password");
-                    throw new InvalidDataException("Bad Login, implement disconnect behaviour here");
+                    throw new InvalidDataException("Bad Login");
                 }
-                Misc.Log.Write(responseString); // debug
 
                 SessionID = responseString.Split(':')[3];
             }
             catch
             {
                 Storage.Network.UserName = "Player";
-                Misc.Log.Write("Could not connect to 'login.minecraft.net'.");
                 SessionID = "-";
             }
         }

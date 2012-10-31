@@ -8,9 +8,8 @@ namespace RawCraft.Network.Packets
     {
         public LoginRequest(EnhancedStream s)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Login Request (0x01)");
-            Storage.Misc.Log.Write("Player Entity ID: " + s.ReadInt());                        // The Players Entity ID
-            Storage.Misc.Log.Write("World type: " + s.ReadString(s.ReadShort()));  // default/flat/largebiomes
+            s.ReadInt();
+            s.ReadString(s.ReadShort());
             s.ReadByte();
             s.ReadByte();
             s.ReadByte();

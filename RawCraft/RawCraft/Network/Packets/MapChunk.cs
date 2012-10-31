@@ -10,8 +10,6 @@ namespace RawCraft.Network.Packets
     {
         public MapChunk(EnhancedStream stream)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Map Chunks (0x33)");
-
             Store_Chunk(stream.ReadInt(),
                 stream.ReadInt(),
                 (byte)stream.ReadByte(),

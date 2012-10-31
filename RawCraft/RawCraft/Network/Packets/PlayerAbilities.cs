@@ -7,7 +7,6 @@ namespace RawCraft.Network.Packets
     {
         public PlayerAbilities(Stream stream)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Player Abilities (0xCA)");
             stream.ReadByte();
             stream.ReadByte();
             stream.ReadByte();

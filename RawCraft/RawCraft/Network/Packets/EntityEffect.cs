@@ -7,7 +7,6 @@ namespace RawCraft.Network.Packets
     {
         public EntityEffect(EnhancedStream s)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Effect (0x29)");
             s.ReadInt();
             s.ReadByte();
             s.ReadByte();

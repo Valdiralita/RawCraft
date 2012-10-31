@@ -16,7 +16,6 @@ namespace RawCraft.Network.Packets
 
         public MapChunkBulk(EnhancedStream stream)
         {
-            Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Map Chunk Bulk (0x38)");
             count = stream.ReadShort();
             compressedChunks = stream.ReadData(stream.ReadInt());
             metaData = stream.ReadData(count * 12);

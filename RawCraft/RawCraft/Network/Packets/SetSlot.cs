@@ -7,7 +7,6 @@ namespace RawCraft.Network.Packets
     {
         public SetSlot(EnhancedStream stream) 
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Set Slot (0x67)");
             stream.ReadByte();
             stream.ReadShort();
             stream.ReadSlot();

@@ -19,7 +19,17 @@ namespace RawCraft.Renderer
         private static byte ID, Meta;
         private static Chunk chunk;
 
-        public static Mesh[] generate(Chunk c)
+        public static Vector3[] normals =
+        {
+            new Vector3(0, 0, 1),  //5
+            new Vector3(0, 0, -1), //2
+            new Vector3(1, 0, 0),  //3
+            new Vector3(-1, 0, 0), //4
+            new Vector3(0, 1, 0),  //6
+            new Vector3(0, -1, 0)  //1
+        };
+
+        public static Mesh[] generate(Chunk c, GraphicsDevice gd)
         {
             X = 0;
             Y = 0;
@@ -170,9 +180,9 @@ namespace RawCraft.Renderer
             Mesh[] meshes = new Mesh[2];
 
             if (OpaqueIndices.Count > 0)
-                meshes[0] = new Mesh(OpaqueVertices.ToArray(), OpaqueIndices.ToArray());
+                meshes[0] = new Mesh(gd, OpaqueVertices.ToArray(), OpaqueIndices.ToArray());
             if (TransparentIndices.Count > 0)
-                meshes[1] = new Mesh(TransparentVertices.ToArray(), TransparentIndices.ToArray());
+                meshes[1] = new Mesh(gd, TransparentVertices.ToArray(), TransparentIndices.ToArray());
             return meshes;
         }
 
@@ -218,7 +228,7 @@ namespace RawCraft.Renderer
 
             foreach (Vector3 vec in VertexPositions.Block[side])
             {
-                OpaqueVertices.Add(new VertexPositionNormalTexture(vec + positionOffset, Misc.normals[side], tex[i]));
+                OpaqueVertices.Add(new VertexPositionNormalTexture(vec + positionOffset, normals[side], tex[i]));
                 if (++i > 3)
                     i = 0;
             }
@@ -257,7 +267,7 @@ namespace RawCraft.Renderer
             Vector2[] tex;
             if (TextureCoordinates.Textures.TryGetValue(Tuple.Create(ID, (byte)0), out tex))
             {
-                Vector3 normal = Misc.normals[side];
+                Vector3 normal = normals[side];
 
                 Vector3 side1 = new Vector3(normal.Y, normal.Z, normal.X);
                 Vector3 side2 = Vector3.Cross(normal, side1);
@@ -284,7 +294,7 @@ namespace RawCraft.Renderer
             Vector2[] tex;
             if (TextureCoordinates.Textures.TryGetValue(Tuple.Create(ID, (byte)0), out tex))
             {
-                Vector3 normal = Misc.normals[side];
+                Vector3 normal = normals[side];
 
                 Vector3 side1 = new Vector3(normal.Y, normal.Z, normal.X);
                 Vector3 side2 = Vector3.Cross(normal, side1);

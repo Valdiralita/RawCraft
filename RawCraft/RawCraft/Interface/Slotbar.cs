@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RawCraft.Storage;
+using Microsoft.Xna.Framework.Content;
 
 namespace RawCraft.Interface
 {
@@ -9,9 +10,9 @@ namespace RawCraft.Interface
         Texture2D SlotbarTexture;
         Vector2 SlotbarPosition;
 
-        public Slotbar(int x, int y)
+        public Slotbar(ContentManager Content, int x, int y)
         {
-            SlotbarTexture = Misc.Content.Load<Texture2D>("Slotbar");
+            SlotbarTexture = Content.Load<Texture2D>("Slotbar");
             SlotbarPosition = new Vector2(x / 2 - SlotbarTexture.Width / 2, y - SlotbarTexture.Height);
         }
 

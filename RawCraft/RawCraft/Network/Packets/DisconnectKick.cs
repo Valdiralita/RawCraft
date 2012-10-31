@@ -10,11 +10,11 @@ namespace RawCraft.Network.Packets
     {
         public DisconnectKick(EnhancedStream s, Socket networkSocket)
         {
-            Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Disconnect/Kick (0xFF)");
-            Misc.Log.Write("We got kicked due to: " + s.ReadString(s.ReadShort()));
+            string reason = s.ReadString(s.ReadShort());
             s.Close();
             networkSocket = null;
-            Misc.isConnected = false;
+            Storage.Network.isConnected = false; 
+            throw new Exception("Kicked due to: " + reason);
         }
     }
 }

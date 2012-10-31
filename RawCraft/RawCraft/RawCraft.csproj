@@ -118,6 +118,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameState.cs" />
     <Compile Include="Interface\FPSCounter.cs" />
     <Compile Include="MinecraftUtilities.cs" />
     <Compile Include="Network\EnhancedStream.cs" />
@@ -136,7 +137,6 @@
     <Compile Include="Menu\BaseClasses\Textbox.cs" />
     <Compile Include="Menu\MainMenu\MainMenu.cs" />
     <Compile Include="Menu\BaseClasses\Sprite.cs" />
-    <Compile Include="Network\Logging.cs" />
     <Compile Include="Network\Encryption\SessionIDRequest.cs" />
     <Compile Include="Network\Encryption\SharedSecretGen.cs" />
     <Compile Include="Network\Packets\ClientStatuses.cs" />
@@ -213,8 +213,9 @@
     <Compile Include="Network\Authentication\Authentication.cs" />
     <Compile Include="Network\Packets\LoginRequest.cs" />
     <Compile Include="Network\Packets\ChatMessage.cs" />
+    <Compile Include="Storage\Config.cs" />
+    <Compile Include="Storage\Debug.cs" />
     <Compile Include="Storage\Map\Chunk.cs" />
-    <Compile Include="Storage\Misc.cs" />
     <Compile Include="Storage\Map\MapChunks.cs" />
     <Compile Include="Network\NetworkHandler.cs" />
     <Compile Include="Network\Packets\KeepAlive.cs" />

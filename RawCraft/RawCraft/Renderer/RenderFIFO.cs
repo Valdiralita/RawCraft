@@ -4,6 +4,7 @@ using RawCraft.Storage;
 using RawCraft.Storage.Map;
 using System.Threading;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace RawCraft.Renderer
 {
@@ -12,7 +13,7 @@ namespace RawCraft.Renderer
         private static ConcurrentQueue<Chunk> RenderQueue = new ConcurrentQueue<Chunk>();
         private static AutoResetEvent queueNotifier = new AutoResetEvent(false);
 
-        public void MeshGenerateThread()
+        public void MeshGenerateThread(object gd)
         {
             while (true)
             {
@@ -22,9 +23,9 @@ namespace RawCraft.Renderer
                     Chunk chunk;
                     if (RenderQueue.TryDequeue(out chunk))
                     {
-                        Misc.RendertimeCounter.Start();
-                        chunk.UpdateMesh();
-                        Misc.RendertimeCounter.Stop();
+                        Debug.RendertimeCounter.Start();
+                        chunk.UpdateMesh((GraphicsDevice)gd);
+                        Debug.RendertimeCounter.Stop();
                     }
                 }
             }

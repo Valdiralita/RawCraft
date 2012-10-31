@@ -12,8 +12,6 @@ namespace RawCraft.Network.Packets
 
         public EncryptionKeyRequest(EnhancedStream stream, byte[] sharedSecret, string sessionID, string username)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Encryption Key Request (0xFD)");
-
             string serverID = stream.ReadString(stream.ReadShort());
             byte[] publicKey = stream.ReadData(stream.ReadShort());
             byte[] token = stream.ReadData(stream.ReadShort());

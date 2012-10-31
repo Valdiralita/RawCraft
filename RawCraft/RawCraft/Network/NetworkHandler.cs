@@ -18,10 +18,6 @@ namespace RawCraft.Network
 
         public void NetThread()
         {
-            if (Misc.Log == null)
-                Misc.Log = new Logging();
-            Misc.Log.Write("Network Thread running");
-
             SessionIDRequest sessionID = new SessionIDRequest(Storage.Network.UserName, Storage.Network.Password);
             sessionID.SendRequest();
 
@@ -37,7 +33,9 @@ namespace RawCraft.Network
             Handshake handshake = new Handshake(stream);
             handshake.Send(Storage.Network.UserName, Storage.Network.Server, Storage.Network.Port); // connect
 
-            while (Storage.Misc.isConnected)
+            Storage.Network.isConnected = true;
+
+            while (Storage.Network.isConnected)
             {
                 switch (packetIDbuffer = (byte)stream.ReadByte())
                 {
@@ -238,11 +236,9 @@ namespace RawCraft.Network
                         DisconnectKick disconnectKick = new DisconnectKick(stream, NetworkSocket);
                         break;
                     default:
-                        Misc.Log.Write("We got a Unknown Packet (" + packetIDbuffer + ")from the Server. This should not happen: Error in Packet parser");
                         throw new Exception("We got a Unknown Packet (" + packetIDbuffer + ")from the Server. This should not happen: Error in Packet parser");
                 }
             }
-            Misc.Log.Write("Your connection to the server has been terminated.");
         }
 
         private void NetworkSender(object o)

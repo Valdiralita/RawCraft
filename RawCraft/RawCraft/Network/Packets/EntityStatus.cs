@@ -7,7 +7,6 @@ namespace RawCraft.Network.Packets
     {
         public EntityStatus(EnhancedStream s) 
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Status (0x26)");
             s.ReadInt();
             s.ReadByte();
         }

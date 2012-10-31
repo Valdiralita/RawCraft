@@ -7,7 +7,6 @@ namespace RawCraft.Network.Packets
     {
         public Entity(EnhancedStream s)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity (0x1E)");
             s.ReadInt();
         }
     }

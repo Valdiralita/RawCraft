@@ -17,9 +17,9 @@ namespace RawCraft.Network.Packets
             infos[0] = stream.ReadString(stream.ReadShort());
             infos = infos[0].Split('§');
 
-            Misc.Log.Write("Server Name : " + infos[0]);
-            Misc.Log.Write("Online Players : " + infos[1]);
-            Misc.Log.Write("Max Players : " + infos[2]);
+            //Misc.Log.Write("Server Name : " + infos[0]);
+            //Misc.Log.Write("Online Players : " + infos[1]);
+            //Misc.Log.Write("Max Players : " + infos[2]);
             stream.Close();
             socket.Close();
         }

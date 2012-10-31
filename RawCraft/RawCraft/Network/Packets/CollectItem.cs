@@ -7,7 +7,6 @@ namespace RawCraft.Network.Packets
     {
         public CollectItem(EnhancedStream s) 
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Collect Item (0x16)");
             s.ReadInt();
             s.ReadInt();
         }

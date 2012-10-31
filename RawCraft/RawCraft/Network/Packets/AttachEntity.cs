@@ -7,7 +7,6 @@ namespace RawCraft.Network.Packets
     {
         public AttachEntity(EnhancedStream s)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Attach Entity (0x27)");
             s.ReadInt();
             s.ReadInt();
         }

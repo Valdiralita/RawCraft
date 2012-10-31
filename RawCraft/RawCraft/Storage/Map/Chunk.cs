@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using RawCraft.Renderer;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace RawCraft.Storage.Map
 {
@@ -72,20 +73,20 @@ namespace RawCraft.Storage.Map
             }
         }
 
-        public void DrawOpaque()
+        public void DrawOpaque(Effect effect)
         {
             if (OpaqueMesh != null)
-                OpaqueMesh.Draw();
+                OpaqueMesh.Draw(effect);
         }
-        public void DrawWater()
+        public void DrawWater(Effect effect)
         {
             if (WaterMesh != null)
-                WaterMesh.Draw();
+                WaterMesh.Draw(effect);
         }
 
-        public void UpdateMesh()
+        public void UpdateMesh(GraphicsDevice gd)
         {
-            Mesh[] meshes = VertexIndexGenerator.generate(this);
+            Mesh[] meshes = VertexIndexGenerator.generate(this, gd);
 
             if (meshes != null)
             {

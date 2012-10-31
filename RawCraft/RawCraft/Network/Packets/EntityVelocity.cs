@@ -7,7 +7,6 @@ namespace RawCraft.Network.Packets
     {
         public EntityVelocity(EnhancedStream s)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Velocity (0x1C)");
             s.ReadInt();
             s.ReadShort();
             s.ReadShort();

@@ -7,7 +7,6 @@ namespace RawCraft.Network.Packets
     {
         public EntityMetadata(EnhancedStream s)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Metadata (0x28)");
             s.ReadInt();
             s.ReadMetaData();
         }

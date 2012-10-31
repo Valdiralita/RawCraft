@@ -22,12 +22,9 @@ namespace RawCraft.Network.Authentication
 
                 int count = resStream.Read(buffer, 0, buffer.Length);
                 httpResponse = Encoding.ASCII.GetString(buffer, 0, count);
-
-                Misc.Log.Write("HTTP response was: '" + httpResponse + "'");
             }
             catch
             {
-                Misc.Log.Write("Could not connect to minecraft.net server. Connecting in offline mode.");
             }
 
             return httpResponse;

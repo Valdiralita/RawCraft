@@ -21,8 +21,8 @@ namespace RawCraft.Menu.BaseClasses
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            horizontalTileCount = Misc.Width / texture.Width + 1;
-            verticalTileCount = Misc.Height / texture.Height + 1;
+            horizontalTileCount = Config.Width / texture.Width + 1;
+            verticalTileCount = Config.Height / texture.Height + 1;
 
             for (int i = 0; i < horizontalTileCount; i++)
             {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using RawCraft.Storage;
 
 namespace RawCraft.Network.Packets
 {
@@ -15,14 +14,8 @@ namespace RawCraft.Network.Packets
 
         public void Get()
         {
-            Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Encryption Key Response (0xFC)");
-
             stream.ReadData(stream.ReadShort());
             stream.ReadData(stream.ReadShort());
-
-            Misc.Log.Write("========== Enabling encryption ==========");
-
-            Misc.isConnected = true;
         }
 
         public void Send(byte[] encodedSharedSecret, byte[] token)

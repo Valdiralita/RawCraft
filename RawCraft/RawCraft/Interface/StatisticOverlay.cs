@@ -27,13 +27,16 @@ namespace RawCraft.Interface
                 "\nPitch: " + Player.Pitch +
                 "\nYaw: " + Player.Yaw +
                 "\nRenderQueue: " + RenderFIFO.Count +
-                "\nRender Time: " + Misc.RendertimeCounter.ElapsedMilliseconds);
+                "\nRender Time: " + Debug.RendertimeCounter.ElapsedMilliseconds);
         }
 
-        public void Draw()
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            counter.UpdateFPS();
-            base.Draw(Misc.spriteBatch);
+            if (counter != null)
+            {
+                counter.UpdateFPS();
+                base.Draw(spriteBatch);
+            }
         }
     }
 }

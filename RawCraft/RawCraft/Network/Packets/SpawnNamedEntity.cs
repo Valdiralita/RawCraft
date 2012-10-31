@@ -7,7 +7,6 @@ namespace RawCraft.Network.Packets
     {
         public SpawnNamedEntity(EnhancedStream s)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Named Entity (0x14)");
             s.ReadInt();
             s.ReadString(s.ReadShort());
             s.ReadInt();

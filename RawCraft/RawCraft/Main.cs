@@ -14,25 +14,29 @@ using RawCraft.Storage.Blocks;
 using RawCraft.Storage.Map;
 using System.IO;
 using RawCraft.Network;
+using Microsoft.Xna.Framework.Content;
 
 namespace RawCraft
 {
     public class Main : Game
     {
         GraphicsDeviceManager graphics;
+        Effect effect;
         //Slotbar Slotbar;
         Thread networkThread, render;
         Camera camera;
         StatisticOverlay statistics;
-        Texture2D terrain; // TerrainEM;
+        Texture2D terrain;
         MainMenu mainMenu;
         DepthStencilState depthState, depthStateOff;
+        GameState currentGameState;
+        SpriteBatch spriteBatch;
 
         public Main()
         {
             graphics = new GraphicsDeviceManager(this);
-            Misc.Content = Content;
-            Misc.Content.RootDirectory = "Content";
+            currentGameState = GameState.MainMenu;
+            base.Content.RootDirectory = "Content";
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged; //resize function
         }
@@ -43,11 +47,11 @@ namespace RawCraft
             EventInput.Initialize(Window);
             Blocks.InitialzizeBlocks();
 
-            graphics.PreferredBackBufferWidth = Misc.Width;
-            graphics.PreferredBackBufferHeight = Misc.Height;
+            graphics.PreferredBackBufferWidth = Config.Width;
+            graphics.PreferredBackBufferHeight = Config.Height;
 
 
-            if (!Misc.VSync)
+            if (!Config.VSync)
             {
                 IsFixedTimeStep = false;
                 graphics.SynchronizeWithVerticalRetrace = false;
@@ -57,19 +61,16 @@ namespace RawCraft
 
             camera = new Camera(1f, 0.001f, GraphicsDevice); //move speed, rotate speed, devic
             //Slotbar = new Slotbar(Window.ClientBounds.Width, Window.ClientBounds.Height);
-            Misc.spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            statistics = new StatisticOverlay(Misc.NormalFont, new Vector2(48, 48));
-            mainMenu = new MainMenu();
+            statistics = new StatisticOverlay(base.Content.Load<SpriteFont>("NormalFont"), new Vector2(48, 48)); //debug
+            mainMenu = new MainMenu(base.Content);
 
             InitializeEffect();
         }
 
         protected override void LoadContent()
         {
-            Misc.NormalFont = Misc.Content.Load<SpriteFont>("NormalFont");
-            Misc.BigFont = Misc.Content.Load<SpriteFont>("BigFont");
-
             string TerrainPath = "Content/terrain.png";
 
             if (File.Exists(TerrainPath))
@@ -98,33 +99,33 @@ namespace RawCraft
 
         protected override void Update(GameTime gameTime)
         {
-            Misc.keyboardState = Keyboard.GetState();
-            Misc.mouseState = Mouse.GetState();
+            KeyboardState keyboardState = Keyboard.GetState();
+            MouseState mouseState = Mouse.GetState();
 
-            switch (Misc.CurrentGameState)
+            switch (currentGameState)
             {
-                case Misc.GameState.Exit:
+                case GameState.Exit:
                     CloseGame();
                     break;
-                case Misc.GameState.MainMenu:
-                    mainMenu.Update();
+                case GameState.MainMenu:
+                    currentGameState = mainMenu.Update(mouseState, keyboardState, currentGameState);
                     IsMouseVisible = true;
                     break;
-                case Misc.GameState.Options:
+                case GameState.Options:
                         break;
-                case Misc.GameState.NoInterface:
-                case Misc.GameState.InGame:
+                case GameState.NoInterface:
+                case GameState.InGame:
                     if (networkThread == null)
                         Connect();
                     IsMouseVisible = false;
                     camera.Update();
 
-                    Misc.effect.Parameters["View"].SetValue(camera.ViewMatrix);
+                    effect.Parameters["View"].SetValue(camera.ViewMatrix);
 
-                    if (Misc.keyboardState.IsKeyDown(Keys.Escape))
+                    if (keyboardState.IsKeyDown(Keys.Escape))
                     {
                         Disconnect();
-                        Misc.CurrentGameState = Misc.GameState.MainMenu;
+                        currentGameState = GameState.MainMenu;
                     }
                     break;
             }
@@ -135,55 +136,55 @@ namespace RawCraft
 
         protected override void Draw(GameTime gameTime)
         {
-            Misc.graphics.Clear(Color.CornflowerBlue);
+            base.GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            switch (Misc.CurrentGameState)
+            switch (currentGameState)
             {
-                case Misc.GameState.MainMenu:
-                    Misc.spriteBatch.Begin();
-                    mainMenu.Draw();
-                    Misc.spriteBatch.End();
+                case GameState.MainMenu:
+                    spriteBatch.Begin();
+                    mainMenu.Draw(spriteBatch);
+                    spriteBatch.End();
 
                     break;
-                // case Misc.GameState.Options:
+                // case GS.Options:
                 //     {
                 //         break;
                 //     }
-                // case Misc.GameState.NoInterface:
-                case Misc.GameState.InGame:
+                // case GS.NoInterface:
+                case GameState.InGame:
                     ApplyEffects();
 
-                    Misc.graphics.DepthStencilState = depthState;
+                    base.GraphicsDevice.DepthStencilState = depthState;
                         
                     foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Chunks)
-                        item.Value.DrawOpaque();
+                        item.Value.DrawOpaque(effect);
 
-                    Misc.graphics.DepthStencilState = depthStateOff;
+                    base.GraphicsDevice.DepthStencilState = depthStateOff;
 
                     foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Chunks)
-                        item.Value.DrawWater();
+                        item.Value.DrawWater(effect);
 
                     break;
             }
 
-            Misc.spriteBatch.Begin();
-            statistics.Draw();
-            Misc.spriteBatch.End();
+            spriteBatch.Begin();
+            statistics.Draw(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
         private void ApplyEffects()
         {
-            Misc.effect.Parameters["vecViewPos"].SetValue(new Vector3((float)Player.X, (float)Player.Y, (float)Player.Z));
-            Misc.graphics.SamplerStates[0] = SamplerState.PointClamp;
-            Misc.graphics.SamplerStates[1] = SamplerState.PointClamp;
+            effect.Parameters["vecViewPos"].SetValue(new Vector3((float)Player.X, (float)Player.Y, (float)Player.Z));
+            base.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+            base.GraphicsDevice.SamplerStates[1] = SamplerState.PointClamp;
             // Misc.graphics.BlendState = BlendState.Opaque;
         }
 
         private void InitializeEffect()
         {
-            Misc.graphics = GraphicsDevice;
+            
 
             depthState = new DepthStencilState();
             depthState.DepthBufferEnable = true;
@@ -195,30 +196,32 @@ namespace RawCraft
             depthStateOff.DepthBufferEnable = true;
             depthStateOff.DepthBufferWriteEnable = false;
 
-            Misc.effect = Content.Load<Effect>("Effect");
-            Misc.effect.Parameters["World"].SetValue(Matrix.CreateTranslation(new Vector3(0, 0, 0)));
-            Misc.effect.Parameters["Projection"].SetValue(camera.ProjectionMatrix);
-            Misc.effect.Parameters["entSkin1"].SetValue(terrain);
+            effect = Content.Load<Effect>("Effect");
+            effect.Parameters["World"].SetValue(Matrix.CreateTranslation(new Vector3(0, 0, 0)));
+            effect.Parameters["Projection"].SetValue(camera.ProjectionMatrix);
+            effect.Parameters["entSkin1"].SetValue(terrain);
 
-            Misc.effect.Parameters["vecSunDir"].SetValue(new Vector3(1, 5, 2));
-            //Misc.effect.Parameters["vecAmbient"].SetValue(new Vector3(150f / 255, 150f / 255, 150f / 255));
-            Misc.effect.Parameters["vecAmbient"].SetValue(new Vector3(90f / 255, 115f / 255, 130f / 255));
-            Misc.effect.Parameters["vecSunColor"].SetValue(new Vector3(198f / 255, 169f / 255, 134f / 255));
+            effect.Parameters["vecSunDir"].SetValue(new Vector3(1, 5, 2));
+            //effect.Parameters["vecAmbient"].SetValue(new Vector3(150f / 255, 150f / 255, 150f / 255));
+            effect.Parameters["vecAmbient"].SetValue(new Vector3(90f / 255, 115f / 255, 130f / 255));
+            effect.Parameters["vecSunColor"].SetValue(new Vector3(198f / 255, 169f / 255, 134f / 255));
 
             // RasterizerState rs = new RasterizerState(); //reduce triangles 
             // rs.CullMode = CullMode.CullCounterClockwiseFace;
-            // Misc.effect.GraphicsDevice.RasterizerState = rs; // call it every frame
+            // effect.GraphicsDevice.RasterizerState = rs; // call it every frame
         }
 
         private void Connect()
         {
             TextureCoordinates.InitializeTextures();
 
-            networkThread = new Thread(new NetworkHandler().NetThread);
+            NetworkHandler NetHandler = new NetworkHandler();
+            networkThread = new Thread(NetHandler.NetThread);
             networkThread.Start();
 
-            render = new Thread(new RenderFIFO().MeshGenerateThread);
-            render.Start();
+            RenderFIFO fifo = new RenderFIFO();
+            render = new Thread(fifo.MeshGenerateThread);
+            render.Start(base.GraphicsDevice);
         }
 
         public void CloseGame()
@@ -246,8 +249,8 @@ namespace RawCraft
 
         void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            Misc.Height = Window.ClientBounds.Height;
-            Misc.Width = Window.ClientBounds.Width;
+            Config.Height = Window.ClientBounds.Height;
+            Config.Width = Window.ClientBounds.Width;
             graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
             graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
             //Slotbar = new Slotbar(Window.ClientBounds.Width, Window.ClientBounds.Height);

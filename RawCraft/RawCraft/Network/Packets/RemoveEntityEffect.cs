@@ -7,7 +7,6 @@ namespace RawCraft.Network.Packets
     {
         public RemoveEntityEffect(EnhancedStream s) 
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Remove Entity Effect (0x2A)");
             s.ReadInt();
             s.ReadByte();
         }
