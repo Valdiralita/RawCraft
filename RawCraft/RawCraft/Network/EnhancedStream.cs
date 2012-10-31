@@ -165,10 +165,7 @@ namespace RawCraft.Network
         public void WriteString(string str)
         {
             WriteShort((short)str.Length);
-            for (int i = 0; i < str.Length; i++)
-            {
-                Write(new byte[2] { 0, Convert.ToByte(str[i]) }, 0, 2);
-            }
+            Write(Encoding.BigEndianUnicode.GetBytes(str), 0, str.Length * 2);
         }
 
         public void WriteData(byte[] data)
