@@ -10,7 +10,8 @@ namespace RawCraft.Network
     public class EnhancedStream : NetworkStream
     {
         Socket socket;
-
+        Encoding enc = new UnicodeEncoding(true, true, true);
+        byte[] buffer, data;
         public EnhancedStream(Socket s) : base(s)
         {
             socket = s;
@@ -18,20 +19,15 @@ namespace RawCraft.Network
 
         public short ReadShort()
         {
-            byte[] buffer = new byte[2];
+            buffer = new byte[2];
             Read(buffer, 0, 2);
             Array.Reverse(buffer);
             return BitConverter.ToInt16(buffer, 0);
         }
 
-        public override int ReadByte()
-        {
-            return base.ReadByte();
-        }
-
         public int ReadInt()
         {
-            byte[] buffer = new byte[4];
+            buffer = new byte[4];
             Read(buffer, 0, 4);
             Array.Reverse(buffer);
             return BitConverter.ToInt32(buffer, 0);
@@ -39,7 +35,7 @@ namespace RawCraft.Network
 
         public double ReadDouble()
         {
-            byte[] buffer = new byte[8];
+            buffer = new byte[8];
             Read(buffer, 0, 8);
             Array.Reverse(buffer);
             return BitConverter.ToDouble(buffer, 0);
@@ -47,23 +43,22 @@ namespace RawCraft.Network
 
         public Int64 ReadLong()
         {
-            byte[] buffer = new byte[8];
+            buffer = new byte[8];
             Read(buffer, 0, 8);
             Array.Reverse(buffer);
             return BitConverter.ToInt64(buffer, 0);
         }
         public string ReadString(int count)
         {
-            byte[] String = ReadData(count * 2);
-            Encoding enc = new UnicodeEncoding(true, true, true);
-            return enc.GetString(String, 0, String.Length);
+            buffer = ReadData(count * 2);
+            return enc.GetString(buffer, 0, buffer.Length);
         }
 
         public byte[] ReadData(int count)
         {
             if (count > 0)
             {
-                byte[] buffer = new byte[count];
+                buffer = new byte[count];
                 Read(buffer, 0, count);
                 return buffer;
             }
@@ -72,7 +67,7 @@ namespace RawCraft.Network
 
         public float ReadFloat()
         {
-            byte[] buffer = new byte[4];
+            buffer = new byte[4];
             Read(buffer, 0, 4);
             Array.Reverse(buffer);
             return BitConverter.ToSingle(buffer, 0);
@@ -143,21 +138,21 @@ namespace RawCraft.Network
 
         public void WriteShort(short s)
         {
-            byte[] data = BitConverter.GetBytes(s);
+            data = BitConverter.GetBytes(s);
             Array.Reverse(data);
             Write(data, 0, 2);
         }
 
         public void WriteInt(int i)
         {
-            byte[] data = BitConverter.GetBytes(i);
+            data = BitConverter.GetBytes(i);
             Array.Reverse(data);
             Write(data, 0, 4);
         }
 
         public void WriteFloat(float f)
         {
-            byte[] data = BitConverter.GetBytes(f);
+            data = BitConverter.GetBytes(f);
             Array.Reverse(data);
             Write(data, 0, 4);
         }
@@ -175,7 +170,7 @@ namespace RawCraft.Network
 
         public void WriteDouble(double p)
         {
-            byte[] data = BitConverter.GetBytes(p);
+            data = BitConverter.GetBytes(p);
             Array.Reverse(data);
             Write(data, 0, 8);
         }
