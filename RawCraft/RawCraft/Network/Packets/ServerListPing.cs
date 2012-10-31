@@ -11,15 +11,16 @@ namespace RawCraft.Network.Packets
             var infos = new string[1];
 
             socket.Connect(server, port);
-            var stream = new NetworkStream(socket);
+            MyStream stream = new MyStream(socket);
             stream.WriteByte(0xFE);
-            Reader.ReadByte(stream);
-            infos[0] = Reader.ReadString(stream, Reader.ReadShort(stream));
+            stream.ReadByte();
+            infos[0] = stream.ReadString(stream.ReadShort());
             infos = infos[0].Split('§');
 
             Misc.Log.Write("Server Name : " + infos[0]);
             Misc.Log.Write("Online Players : " + infos[1]);
             Misc.Log.Write("Max Players : " + infos[2]);
+            stream.Close();
             socket.Close();
         }
     }

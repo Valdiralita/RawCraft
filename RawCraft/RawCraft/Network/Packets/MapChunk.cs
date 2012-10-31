@@ -8,14 +8,16 @@ namespace RawCraft.Network.Packets
 {
     class MapChunk
     {
-        public MapChunk(Stream aesStream)
+        public MapChunk(MyStream stream)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Map Chunks (0x33)");
 
-            Store_Chunk(Reader.ReadInt(aesStream), Reader.ReadInt(aesStream),
-                Reader.ReadByte(aesStream), Reader.ReadShort(aesStream),
-                Reader.ReadShort(aesStream),
-                ZlibStream.UncompressBuffer(Reader.ReadData(aesStream, Reader.ReadInt(aesStream))));
+            Store_Chunk(stream.ReadInt(),
+                stream.ReadInt(),
+                (byte)stream.ReadByte(),
+                stream.ReadShort(),
+                stream.ReadShort(),
+                ZlibStream.UncompressBuffer(stream.ReadData(stream.ReadInt())));
         }
 
         private void Store_Chunk(int ChunkX, int ChunkZ, byte GroundUp, short PrimBit, short AddBit, byte[] UncompressedChunkData)

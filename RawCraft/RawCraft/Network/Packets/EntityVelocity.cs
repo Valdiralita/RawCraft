@@ -5,13 +5,13 @@ namespace RawCraft.Network.Packets
 {
     class EntityVelocity
     {
-        public EntityVelocity(Stream aesStream)
+        public EntityVelocity(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Velocity (0x1C)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadShort(aesStream);
-            Reader.ReadShort(aesStream);
-            Reader.ReadShort(aesStream);
+            s.ReadInt();
+            s.ReadShort();
+            s.ReadShort();
+            s.ReadShort();
         }
     }
 }

@@ -120,6 +120,7 @@
   <ItemGroup>
     <Compile Include="Interface\FPSCounter.cs" />
     <Compile Include="MinecraftUtilities.cs" />
+    <Compile Include="Network\MyStream.cs" />
     <Compile Include="Network\Packets\ClientSettings.cs" />
     <Compile Include="PKCSKeyGenerator.cs" />
     <Compile Include="Renderer\VertexPositions.cs" />
@@ -143,7 +144,6 @@
     <Compile Include="Network\Packets\EncryptionKeyResponse.cs" />
     <Compile Include="Network\Packets\Handshake.cs" />
     <Compile Include="Network\Packets\ServerListPing.cs" />
-    <Compile Include="Network\Writer.cs" />
     <Compile Include="Storage\Blocks\Block.cs" />
     <Compile Include="Storage\Blocks\BlockEnums.cs" />
     <Compile Include="Storage\Blocks\Blocks.cs" />
@@ -219,7 +219,6 @@
     <Compile Include="Network\NetworkHandler.cs" />
     <Compile Include="Network\Packets\KeepAlive.cs" />
     <Compile Include="Network\Packets\MapChunkBulk.cs" />
-    <Compile Include="Network\Reader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Main.cs" />

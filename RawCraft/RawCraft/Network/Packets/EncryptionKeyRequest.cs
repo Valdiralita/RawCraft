@@ -10,13 +10,13 @@ namespace RawCraft.Network.Packets
     {
         byte[] encryptedToken, encryptedSharedSecret;
 
-        public EncryptionKeyRequest(Stream stream, byte[] sharedSecret, string sessionID, string username)
+        public EncryptionKeyRequest(MyStream stream, byte[] sharedSecret, string sessionID, string username)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Encryption Key Request (0xFD)");
 
-            string serverID = Reader.ReadString(stream, Reader.ReadShort(stream));
-            byte[] publicKey = Reader.ReadData(stream, Reader.ReadShort(stream));
-            byte[] token = Reader.ReadData(stream, Reader.ReadShort(stream));
+            string serverID = stream.ReadString(stream.ReadShort());
+            byte[] publicKey = stream.ReadData(stream.ReadShort());
+            byte[] token = stream.ReadData(stream.ReadShort());
 
             encryptedToken = EncryptSHA1.RSAEnc(token, publicKey);
             encryptedSharedSecret = EncryptSHA1.RSAEnc(sharedSecret, publicKey);

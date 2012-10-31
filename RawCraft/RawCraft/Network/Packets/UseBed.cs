@@ -5,14 +5,14 @@ namespace RawCraft.Network.Packets
 {
     class UseBed
     {
-        public UseBed(Stream aesStream)
+        public UseBed(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Use Bed (0x11)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadInt(aesStream);
+            s.ReadInt();
+            s.ReadByte();
+            s.ReadInt();
+            s.ReadByte();
+            s.ReadInt();
         }
     }
 }

@@ -5,15 +5,15 @@ namespace RawCraft.Network.Packets
 {
     class NamedSoundEffect
     {
-        public NamedSoundEffect(Stream aesStream) 
+        public NamedSoundEffect(MyStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Named Sound Effect (0x3E)");
-            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadFloat(aesStream);
-            Reader.ReadByte(aesStream);
+            s.ReadString(s.ReadShort());
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadFloat();
+            s.ReadByte();
         }
     }
 }

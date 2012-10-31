@@ -5,14 +5,14 @@ namespace RawCraft.Network.Packets
 {
     class Thunderbolt
     {
-        public Thunderbolt(Stream aesStream)
+        public Thunderbolt(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Thunderbolt (0x47)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
+            s.ReadInt();
+            s.ReadByte();
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadInt();
         }
     }
 }

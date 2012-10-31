@@ -5,12 +5,12 @@ namespace RawCraft.Network.Packets
 {
     class PlayerAbilities
     {
-        public PlayerAbilities(Stream aesStream)
+        public PlayerAbilities(Stream stream)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Player Abilities (0xCA)"); 
-            Reader.ReadByte(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadByte(aesStream);
+            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Player Abilities (0xCA)");
+            stream.ReadByte();
+            stream.ReadByte();
+            stream.ReadByte();
         }
     }
 }

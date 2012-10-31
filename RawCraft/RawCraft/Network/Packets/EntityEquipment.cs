@@ -5,13 +5,13 @@ namespace RawCraft.Network.Packets
 {
     class EntityEquipment
     {
-        public EntityEquipment(Stream aesStream)
+        public EntityEquipment(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Equipment (0x05)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadShort(aesStream);
+            s.ReadInt();
+            s.ReadShort();
 
-            Reader.ReadSlot(aesStream);
+            s.ReadSlot();
         }
     }
 }

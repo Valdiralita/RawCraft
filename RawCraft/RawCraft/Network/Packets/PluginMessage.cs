@@ -5,11 +5,11 @@ namespace RawCraft.Network.Packets
 {
     class PluginMessage
     {
-        public PluginMessage(Stream aesStream)
+        public PluginMessage(MyStream s)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Plugin Message (0xFA)"); 
-            Storage.Misc.Log.Write(Reader.ReadString(aesStream, Reader.ReadShort(aesStream)));
-            Reader.ReadData(aesStream, Reader.ReadShort(aesStream));
+            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Plugin Message (0xFA)");
+            Storage.Misc.Log.Write(s.ReadString(s.ReadShort()));
+            s.ReadData(s.ReadShort());
         }
     }
 }

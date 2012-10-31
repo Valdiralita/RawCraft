@@ -12,7 +12,7 @@ namespace RawCraft.Network
     {
         // TODO: Make this not the worst thing ever
 
-        private Stream stream;
+        private MyStream stream;
         private byte packetIDbuffer;
         private PlayerPositionLook playerPositionLook;
 
@@ -31,7 +31,8 @@ namespace RawCraft.Network
 
             Socket NetworkSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             NetworkSocket.Connect(Storage.Network.Server, Storage.Network.Port);
-            stream = new NetworkStream(NetworkSocket);
+            //stream = new NetworkStream(NetworkSocket);
+            stream = new MyStream(NetworkSocket);
 
             Handshake handshake = new Handshake(stream);
             handshake.Send(Storage.Network.UserName, Storage.Network.Server, Storage.Network.Port); // connect
@@ -46,6 +47,8 @@ namespace RawCraft.Network
                     case 0x01:
                         LoginRequest loginRequest = new LoginRequest(stream);
                         PositionUpdater.Change(0, 500);
+                        ClientSettings clientSettings = new ClientSettings(stream);
+                        clientSettings.Send();
                         break;
                     case 0x03:
                         ChatMessage chatMessage = new ChatMessage(stream);
@@ -221,11 +224,9 @@ namespace RawCraft.Network
                     case 0xFC:
                         EncryptionKeyResponse encryptionKeyResponse = new EncryptionKeyResponse(stream);
                         encryptionKeyResponse.Get();
-                        stream = new AesStream(stream, SharedSecret.Get);
+                        stream = new AesStream(NetworkSocket, stream, SharedSecret.Get);
                         ClientStatuses clientStatuses = new ClientStatuses(stream);
                         clientStatuses.Send(0);
-                        ClientSettings clientSettings = new ClientSettings(stream);
-                        //clientSettings.Send();
                         break;
                     case 0xFD:
                         EncryptionKeyRequest encryptionKeyRequest = new EncryptionKeyRequest(stream, SharedSecret.Get, sessionID.GetID(), Storage.Network.UserName); //
@@ -249,7 +250,7 @@ namespace RawCraft.Network
             // doesnt work
             
             if (playerPositionLook != null)
-                PlayerPositionLook.Send(stream);
+                playerPositionLook.Send();
         }
     }
 }

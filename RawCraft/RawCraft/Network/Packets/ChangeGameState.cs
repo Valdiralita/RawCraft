@@ -5,11 +5,11 @@ namespace RawCraft.Network.Packets
 {
     class ChangeGameState
     {
-        public ChangeGameState(Stream aesStream) 
+        public ChangeGameState(Stream stream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Change Game State (0x46)");
-            Reader.ReadByte(aesStream);
-            Reader.ReadByte(aesStream);
+            stream.ReadByte();
+            stream.ReadByte();
         }
     }
 }

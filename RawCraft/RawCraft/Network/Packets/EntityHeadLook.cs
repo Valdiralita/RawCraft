@@ -5,11 +5,11 @@ namespace RawCraft.Network.Packets
 {
     class EntityHeadLook
     {
-        public EntityHeadLook(Stream aesStream) 
+        public EntityHeadLook(MyStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Head Look (0x23)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
+            s.ReadInt();
+            s.ReadByte();
         }
     }
 }

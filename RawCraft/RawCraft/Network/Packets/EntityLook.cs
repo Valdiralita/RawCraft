@@ -5,12 +5,12 @@ namespace RawCraft.Network.Packets
 {
     class EntityLook
     {
-        public EntityLook(Stream aesStream) 
+        public EntityLook(MyStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Look (0x20)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadByte(aesStream);
+            s.ReadInt();
+            s.ReadByte();
+            s.ReadByte();
         }
     }
 }

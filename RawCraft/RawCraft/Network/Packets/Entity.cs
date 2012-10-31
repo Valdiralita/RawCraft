@@ -5,10 +5,10 @@ namespace RawCraft.Network.Packets
 {
     class Entity
     {
-        public Entity(Stream aesStream)
+        public Entity(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity (0x1E)");
-            Reader.ReadInt(aesStream);
+            s.ReadInt();
         }
     }
 }

@@ -5,11 +5,11 @@ namespace RawCraft.Network.Packets
 {
     class EntityMetadata
     {
-        public EntityMetadata(Stream aesStream)
+        public EntityMetadata(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Metadata (0x28)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadMetaData(aesStream);
+            s.ReadInt();
+            s.ReadMetaData();
         }
     }
 }

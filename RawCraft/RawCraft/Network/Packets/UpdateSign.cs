@@ -5,16 +5,16 @@ namespace RawCraft.Network.Packets
 {
     class UpdateSign
     {
-        public UpdateSign(Stream aesStream)
+        public UpdateSign(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Update Sign (0x82)"); 
-            Reader.ReadInt(aesStream);
-            Reader.ReadShort(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
-            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
-            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
-            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
+            s.ReadInt();
+            s.ReadShort();
+            s.ReadInt();
+            s.ReadString(s.ReadShort());
+            s.ReadString(s.ReadShort());
+            s.ReadString(s.ReadShort());
+            s.ReadString(s.ReadShort());
         }
     }
 }

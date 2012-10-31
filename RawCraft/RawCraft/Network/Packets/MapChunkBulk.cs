@@ -5,6 +5,7 @@ using RawCraft.Storage.Map;
 using Ionic.Zlib;
 using Microsoft.Xna.Framework;
 using System.IO;
+using RawCraft.Network.Encryption;
 
 namespace RawCraft.Network.Packets
 {
@@ -13,12 +14,12 @@ namespace RawCraft.Network.Packets
         int count;
         byte[] compressedChunks, metaData;
 
-        public MapChunkBulk(Stream stream)
+        public MapChunkBulk(MyStream stream)
         {
             Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Map Chunk Bulk (0x38)");
-            count = Reader.ReadShort(stream);
-            compressedChunks = Reader.ReadData(stream, Reader.ReadInt(stream));
-            metaData = Reader.ReadData(stream, count * 12);
+            count = stream.ReadShort();
+            compressedChunks = stream.ReadData(stream.ReadInt());
+            metaData = stream.ReadData(count * 12);
             StoreChunks(ZlibStream.UncompressBuffer(compressedChunks));
         }
 
@@ -46,9 +47,12 @@ namespace RawCraft.Network.Packets
                 z <<= 8;
                 z += metaData[i * 12 + 7];
 
+                ushort bitmask = metaData[i * 12 + 8];
+                bitmask <<= 8;
+                bitmask += metaData[i * 12 + 9];
 
                 int sectioncount = 0;
-                ushort bitmask = BitConverter.ToUInt16(metaData.Skip(i * 12 + 8).Take(2).Reverse().ToArray(), 0);
+
                 for (int j = 0; j < 15; j++)
                 {
                     if ((bitmask & (0x01 << j)) == 0x01 << j)
@@ -59,7 +63,13 @@ namespace RawCraft.Network.Packets
                 proceededSections += sectioncount;
                 chunkcount++;
 
-                MapChunks.Chunks.TryAdd(new Vector2(x,z), new Chunk(x, z, bitmask, chunkdata));
+                Chunk c = new Chunk(x, z, bitmask, chunkdata);
+
+                MapChunks.Chunks.AddOrUpdate(new Vector2(x, z), c,
+                (key, existingVal) =>
+                {
+                    return c;
+                });
             }
         }
     }

@@ -5,17 +5,17 @@ namespace RawCraft.Network.Packets
 {
     class SpawnDroppedItem
     {
-        public SpawnDroppedItem(Stream aesStream)
+        public SpawnDroppedItem(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Dropped Item (0x15)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadSlot(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadByte(aesStream);
+            s.ReadInt();
+            s.ReadSlot();
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadByte();
+            s.ReadByte();
+            s.ReadByte();
         }
     }
 }

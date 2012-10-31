@@ -6,20 +6,20 @@ namespace RawCraft.Network.Packets
 {
     class Handshake
     {
-        Stream stream;
+        MyStream stream;
 
-        public Handshake(Stream stream)
+        public Handshake(MyStream stream)
         {
             this.stream = stream;
         }
 
         public void Send(string username, string server, int port)
         {
-            Writer.WriteByte(0x02, stream); //packet ID
-            Writer.WriteByte((byte)47, stream); // protocol version
-            Writer.WriteString(username, stream); 
-            Writer.WriteString(server, stream);
-            Writer.WriteInt(port, stream);
+            stream.WriteByte(0x02); //packet ID
+            stream.WriteByte((byte)47); // protocol version
+            stream.WriteString(username);
+            stream.WriteString(server);
+            stream.WriteInt(port);
         }
     }
 }

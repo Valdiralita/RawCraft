@@ -5,13 +5,13 @@ namespace RawCraft.Network.Packets
 {
     class OpenWindow
     {
-        public OpenWindow(Stream aesStream) 
+        public OpenWindow(MyStream stream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Open Window (0x64)");
-            Reader.ReadByte(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
-            Reader.ReadByte(aesStream);
+            stream.ReadByte();
+            stream.ReadByte();
+            stream.ReadString(stream.ReadShort());
+            stream.ReadByte();
         }
     }
 }

@@ -5,11 +5,11 @@ namespace RawCraft.Network.Packets
 {
     class TimeUpdate
     {
-        public TimeUpdate(Stream aesStream)
+        public TimeUpdate(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Time Update (0x04)");
-            Reader.ReadLong(aesStream);
-            Reader.ReadLong(aesStream);
+            s.ReadLong();
+            s.ReadLong();
         }
     }
 }

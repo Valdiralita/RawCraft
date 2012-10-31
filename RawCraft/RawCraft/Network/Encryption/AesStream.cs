@@ -1,14 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Net.Sockets;
 
 namespace RawCraft.Network.Encryption
 {
-    public class AesStream : Stream
+    public class AesStream : MyStream
     {
         CryptoStream enc;
         CryptoStream dec;
-        public AesStream(Stream stream, byte[] key)
+        public AesStream(Socket socket, MyStream stream, byte[] key) : base(socket)
         {
             BaseStream = stream;
             enc = new CryptoStream(stream, GenerateAES(key).CreateEncryptor(), CryptoStreamMode.Write);

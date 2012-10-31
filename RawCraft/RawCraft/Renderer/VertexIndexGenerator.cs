@@ -137,21 +137,21 @@ namespace RawCraft.Renderer
                         if (c.BlockType[X, Y + 1, Z] != 9)
                             CreateWater(4);
                     }
-                    else if (ID == 79) //ice hack
-                    {
-                        if (Blocks.blocks[c.BlockType[X, Y, Z + 1]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z + 1]].NotABlock)
-                            TransparentQuad(0);
-                        if (Blocks.blocks[c.BlockType[X, Y, Z - 1]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
-                            TransparentQuad(1);
-                        if (Blocks.blocks[c.BlockType[X + 1, Y, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
-                            TransparentQuad(2);
-                        if (Blocks.blocks[c.BlockType[X - 1, Y, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
-                            TransparentQuad(3);
-                        if (Blocks.blocks[c.BlockType[X, Y + 1, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
-                            TransparentQuad(4);
-                        if (Blocks.blocks[c.BlockType[X, Y - 1, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
-                            TransparentQuad(5);
-                    }
+                   // else if (ID == 79) //ice hack
+                   // {
+                   //     if (Blocks.blocks[c.BlockType[X, Y, Z + 1]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z + 1]].NotABlock)
+                   //         TransparentQuad(0);
+                   //     if (Blocks.blocks[c.BlockType[X, Y, Z - 1]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
+                   //         TransparentQuad(1);
+                   //     if (Blocks.blocks[c.BlockType[X + 1, Y, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
+                   //         TransparentQuad(2);
+                   //     if (Blocks.blocks[c.BlockType[X - 1, Y, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
+                   //         TransparentQuad(3);
+                   //     if (Blocks.blocks[c.BlockType[X, Y + 1, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
+                   //         TransparentQuad(4);
+                   //     if (Blocks.blocks[c.BlockType[X, Y - 1, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
+                   //         TransparentQuad(5);
+                   // }
                 }
                 else if (Blocks.blocks[ID].IsTransparent)
                 {

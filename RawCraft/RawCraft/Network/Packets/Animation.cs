@@ -5,11 +5,11 @@ namespace RawCraft.Network.Packets
 {
     class Animation
     {
-        public Animation(Stream aesStream)
+        public Animation(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Animation (0x12)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
+            s.ReadInt();
+            s.ReadByte();
         }
     }
 }

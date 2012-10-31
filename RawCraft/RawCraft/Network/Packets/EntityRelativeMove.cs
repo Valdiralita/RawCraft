@@ -5,13 +5,13 @@ namespace RawCraft.Network.Packets
 {
     class EntityRelativeMove
     {
-        public EntityRelativeMove(Stream aesStream)
+        public EntityRelativeMove(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Entity Relative Move (0x1F)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadByte(aesStream);
+            s.ReadInt();
+            s.ReadByte();
+            s.ReadByte();
+            s.ReadByte();
         }
     }
 }

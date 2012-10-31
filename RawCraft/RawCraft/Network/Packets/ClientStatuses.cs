@@ -5,17 +5,17 @@ namespace RawCraft.Network.Packets
 {
     class ClientStatuses
     {
-        Stream stream;
+        MyStream stream;
 
-        public ClientStatuses(Stream stream)
+        public ClientStatuses(MyStream s)
         {
-            this.stream = stream;
+            stream = s;
         }
 
         public void Send(byte payload)
         {
-            Writer.WriteByte(0xCD, stream);
-            Writer.WriteByte(payload, stream);
+            stream.WriteByte(0xCD);
+            stream.WriteByte(payload);
         }
     }
 }

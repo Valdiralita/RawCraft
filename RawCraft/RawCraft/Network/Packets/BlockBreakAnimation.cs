@@ -5,14 +5,14 @@ namespace RawCraft.Network.Packets
 {
     class BlockBreakAnimation
     {
-        public BlockBreakAnimation(Stream aesStream) 
+        public BlockBreakAnimation(MyStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Block Break Animation (0x37)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadByte();
         }
     }
 }

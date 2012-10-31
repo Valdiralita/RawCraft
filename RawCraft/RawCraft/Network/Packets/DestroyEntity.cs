@@ -5,14 +5,14 @@ namespace RawCraft.Network.Packets
 {
     class DestroyEntity
     {
-        public DestroyEntity(Stream aesStream) 
+        public DestroyEntity(MyStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Destroy Entity (0x1D)");
-            byte count = Reader.ReadByte(aesStream);
+            byte count = (byte)s.ReadByte();
 
             for (int i = 0; i < count; i++)
             {
-                Reader.ReadInt(aesStream);
+                s.ReadInt();
             }
         }
     }

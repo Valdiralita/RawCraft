@@ -5,17 +5,17 @@ namespace RawCraft.Network.Packets
 {
     class Explosion
     {
-        public Explosion(Stream aesStream)
+        public Explosion(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Explosion (0x3C)");
-            Reader.ReadDouble(aesStream);
-            Reader.ReadDouble(aesStream);
-            Reader.ReadDouble(aesStream);
-            Reader.ReadFloat(aesStream);
-            Reader.ReadData(aesStream, Reader.ReadInt(aesStream) * 3);
-            Reader.ReadFloat(aesStream);
-            Reader.ReadFloat(aesStream);
-            Reader.ReadFloat(aesStream);
+            s.ReadDouble();
+            s.ReadDouble();
+            s.ReadDouble();
+            s.ReadFloat();
+            s.ReadData(s.ReadInt() * 3);
+            s.ReadFloat();
+            s.ReadFloat();
+            s.ReadFloat();
         }
     }
 }

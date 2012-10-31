@@ -5,12 +5,12 @@ namespace RawCraft.Network.Packets
 {
     class ConfirmTransaction
     {
-        public ConfirmTransaction(Stream aesStream)
+        public ConfirmTransaction(MyStream s)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Confirm Transaction (0x6A)"); 
-            Reader.ReadByte(aesStream);
-            Reader.ReadShort(aesStream);
-            Reader.ReadByte(aesStream);
+            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Confirm Transaction (0x6A)");
+            s.ReadByte();
+            s.ReadShort();
+            s.ReadByte();
         }
     }
 }

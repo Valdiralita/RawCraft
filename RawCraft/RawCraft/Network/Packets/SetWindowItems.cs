@@ -5,14 +5,14 @@ namespace RawCraft.Network.Packets
 {
     class SetWindowItems
     {
-        public SetWindowItems(Stream aesStream) 
+        public SetWindowItems(MyStream stream) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Set Window Items (0x68)");
-            Reader.ReadByte(aesStream);
-            int slots = Reader.ReadShort(aesStream);
+            stream.ReadByte();
+            int slots = stream.ReadShort();
 
             for (int i = 0; i < slots; i++)
-                Reader.ReadSlot(aesStream);
+                stream.ReadSlot();
         }
     }
 }

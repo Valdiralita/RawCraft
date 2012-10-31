@@ -6,8 +6,9 @@ namespace RawCraft.Network.Packets
 {
     class EncryptionKeyResponse
     {
-        Stream stream;
-        public EncryptionKeyResponse(Stream s)
+        MyStream stream;
+
+        public EncryptionKeyResponse(MyStream s)
         {
             stream = s;
         }
@@ -16,8 +17,8 @@ namespace RawCraft.Network.Packets
         {
             Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Encryption Key Response (0xFC)");
 
-            Reader.ReadData(stream, Reader.ReadShort(stream));
-            Reader.ReadData(stream, Reader.ReadShort(stream));
+            stream.ReadData(stream.ReadShort());
+            stream.ReadData(stream.ReadShort());
 
             Misc.Log.Write("========== Enabling encryption ==========");
 
@@ -26,11 +27,11 @@ namespace RawCraft.Network.Packets
 
         public void Send(byte[] encodedSharedSecret, byte[] token)
         {
-            Writer.WriteByte(0xFC, stream);
-            Writer.WriteShort(128, stream);
-            Writer.WriteData(encodedSharedSecret, stream);
-            Writer.WriteShort(128, stream);
-            Writer.WriteData(token, stream);
+            stream.WriteByte(0xFC);
+            stream.WriteShort(128);
+            stream.WriteData(encodedSharedSecret);
+            stream.WriteShort(128);
+            stream.WriteData(token);
         }
     }
 }

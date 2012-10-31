@@ -5,14 +5,14 @@ namespace RawCraft.Network.Packets
 {
     class SpawnExperienceOrb
     {
-        public SpawnExperienceOrb(Stream aesStream)
+        public SpawnExperienceOrb(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Experience Orb (0x1A)"); 
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadShort(aesStream);
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadShort();
         }
     }
 }

@@ -5,10 +5,10 @@ namespace RawCraft.Network.Packets
 {
     class TabComplete
     {
-        public TabComplete(Stream aesStream)
+        public TabComplete(MyStream s)
         {
-            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Tab-complete (0xCB)"); 
-            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
+            Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Tab-complete (0xCB)");
+            s.ReadString(s.ReadShort());
         }
     }
 }

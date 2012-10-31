@@ -5,15 +5,15 @@ namespace RawCraft.Network.Packets
 {
     class SpawnPainting
     {
-        public SpawnPainting(Stream aesStream) 
+        public SpawnPainting(MyStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Painting (0x19)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
+            s.ReadInt();
+            s.ReadString(s.ReadShort());
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadInt();
         }
     }
 }

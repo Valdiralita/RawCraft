@@ -5,14 +5,14 @@ namespace RawCraft.Network.Packets
 {
     class RespawnPacket
     {
-        public RespawnPacket(Stream aesStream)
+        public RespawnPacket(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Respawn (0x09)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadShort(aesStream);
-            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
+            s.ReadInt();
+            s.ReadByte();
+            s.ReadByte();
+            s.ReadShort();
+            s.ReadString(s.ReadShort());
         }
     }
 }

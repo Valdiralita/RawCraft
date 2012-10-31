@@ -5,15 +5,15 @@ namespace RawCraft.Network.Packets
 {
     class BlockAction
     {
-        public BlockAction(Stream aesStream) 
+        public BlockAction(MyStream s) 
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Block Action (0x36)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadShort(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadShort(aesStream);
+            s.ReadInt();
+            s.ReadShort();
+            s.ReadInt();
+            s.ReadByte();
+            s.ReadByte();
+            s.ReadShort();
         }
     }
 }

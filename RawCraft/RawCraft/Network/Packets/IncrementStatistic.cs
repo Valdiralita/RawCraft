@@ -5,11 +5,11 @@ namespace RawCraft.Network.Packets
 {
     class IncrementStatistic
     {
-        public IncrementStatistic(Stream aesStream)
+        public IncrementStatistic(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Increment Statistic (0xC8)"); 
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
+            s.ReadInt();
+            s.ReadByte();
         }
     }
 }

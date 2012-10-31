@@ -6,22 +6,22 @@ namespace RawCraft.Network.Packets
 {
     class ClientSettings
     {
-        Stream stream;
+        MyStream stream;
 
-        public ClientSettings(Stream stream)
+        public ClientSettings(MyStream s)
         {
-            this.stream = stream;
+            stream = s;
         }
 
         public void Send()
         {
             string locale = "en_GB";
-            Writer.WriteByte((byte)0xCC, stream); //packet id
-            Writer.WriteString(locale, stream);
-            Writer.WriteByte(0, stream);
-            Writer.WriteByte(8, stream);
-            Writer.WriteByte(0, stream);
-            Writer.WriteByte(1, stream);
+            stream.WriteByte((byte)0xCC); //packet id
+            stream.WriteString(locale);
+            stream.WriteByte(0);
+            stream.WriteByte(8);
+            stream.WriteByte(0);
+            stream.WriteByte(1);
         }
     }
 }

@@ -5,18 +5,18 @@ namespace RawCraft.Network.Packets
 {
     class SpawnNamedEntity 
     {
-        public SpawnNamedEntity(Stream aesStream)
+        public SpawnNamedEntity(MyStream s)
         {
             Storage.Misc.Log.Write(DateTime.Now.TimeOfDay + " We got a: Spawn Named Entity (0x14)");
-            Reader.ReadInt(aesStream);
-            Reader.ReadString(aesStream, Reader.ReadShort(aesStream));
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadInt(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadByte(aesStream);
-            Reader.ReadShort(aesStream);
-            Reader.ReadMetaData(aesStream);
+            s.ReadInt();
+            s.ReadString(s.ReadShort());
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadInt();
+            s.ReadByte();
+            s.ReadByte();
+            s.ReadShort();
+            s.ReadMetaData();
         }
     }
 }
