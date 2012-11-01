@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using RawCraft.Renderer;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace RawCraft.Storage.Map
 {
@@ -42,18 +43,18 @@ namespace RawCraft.Storage.Map
             {
                 if ((PrimBit & 1 << i) == 1 << i)
                 {
-                    byte[] id = _Chunk.Skip(sectionCounter*4096).Take(4096).ToArray();
+                    byte[] id = _Chunk.Skip(sectionCounter * 4096).Take(4096).ToArray();
                     byte[] meta = _Chunk.Skip(sections * 4096 + sectionCounter * 2048).Take(2048).ToArray();
                     for (int j = 0; j < 4096; j++)
                     {
                         BlockType[x, y, z] = id[j];
-                        if (meta[j/2] != 0 && j % 2 == 0)
+                        if (meta[j / 2] != 0 && j % 2 == 0)
                         {
-                            BlockMetadata[x + 1, y, z] = (byte)((meta[j/2] & 0xf0) >> 4);
+                            BlockMetadata[x + 1, y, z] = (byte)((meta[j / 2] & 0xf0) >> 4);
                             BlockMetadata[x, y, z] = (byte)(meta[j / 2] & 0x0f);
                         }
                         x++;
-                        if (x > 15)             
+                        if (x > 15)
                         {
                             x = 0;
                             z++;
@@ -97,6 +98,14 @@ namespace RawCraft.Storage.Map
                     WaterMesh = meshes[1];
             }
         }
+
+        public void ChangeBlock(Vector3 pos, byte id, byte metadata)
+        {
+            BlockType[(int)pos.X, (int)pos.Y, (int)pos.Z] = id;
+            BlockMetadata[(int)pos.X, (int)pos.Y, (int)pos.Z] = metadata;
+            RenderFIFO.Enqueue(this);
+        }
+
     }
 }
 
