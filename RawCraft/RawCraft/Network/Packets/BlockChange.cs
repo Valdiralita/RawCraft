@@ -20,8 +20,19 @@ namespace RawCraft.Network.Packets
             // the following if check is wrong, sometimes we receive a block change for a chunk we didnt receive yet.
             // TODO: check and improve performance
 
-            if (MapChunks.Chunks.TryGetValue(new Vector2((int)(x / 16), (int)(z / 16)), out c))
-                c.ChangeBlock(new Vector3(x % 16, y, z % 16), id, meta);
+            int chunkx = (int)(x / 16 - Math.Sign(x) == -1 ? 1 : -1);
+            int chunkz = (int)(z / 16 - Math.Sign(z) == -1 ? 1 : -1);
+
+            if (MapChunks.Chunks.TryGetValue(new Vector2(chunkx, chunkz), out c))
+            {
+                int offsetX, offsetZ;
+
+                offsetX = x < 0 ? 16 + (x % 16 == 0 ? -16 : x % 16) : x % 16;
+                offsetZ = z < 0 ? 16 + (z % 16 == 0 ? -16 : z % 16) : z % 16;
+
+
+                c.ChangeBlock(new Vector3(offsetX, y, offsetZ), id, meta);
+            }
         }
     }
 }
