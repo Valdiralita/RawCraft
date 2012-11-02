@@ -133,6 +133,11 @@ namespace RawCraft.Network
             }
         }
 
+        public override void WriteByte(byte b)
+        {
+            base.WriteByte(b);
+        }
+
         public void WriteShort(short s)
         {
             data = BitConverter.GetBytes(s);

@@ -29,7 +29,6 @@ namespace RawCraft.Network.Packets
         
             if (MapChunks.Chunks.TryGetValue(new Vector2(chunkx, chunkz), out c))
             {
-                Console.WriteLine(count);
                 for (int i = 0; i < count; i++)
                 {
                     byte[] data = stream.ReadData(4);

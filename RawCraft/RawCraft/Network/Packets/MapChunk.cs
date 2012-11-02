@@ -27,7 +27,6 @@ namespace RawCraft.Network.Packets
             if (MapChunks.Chunks.TryGetValue(new Vector2(x, z), out c))
             {
                 //c.SetChunk(bitmask, chunkdata, sectioncount);
-
             }
             else
             {
