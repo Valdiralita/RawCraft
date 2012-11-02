@@ -22,7 +22,6 @@ namespace RawCraft
     {
         GraphicsDeviceManager graphics;
         Effect effect;
-        //Slotbar Slotbar;
         Thread networkThread, render;
         Camera camera;
         StatisticOverlay statistics;
@@ -50,7 +49,6 @@ namespace RawCraft
             graphics.PreferredBackBufferWidth = Config.Width;
             graphics.PreferredBackBufferHeight = Config.Height;
 
-
             if (!Config.VSync)
             {
                 IsFixedTimeStep = false;
@@ -59,8 +57,7 @@ namespace RawCraft
             graphics.ApplyChanges();
             base.Initialize();
 
-            camera = new Camera(1f, 0.001f, GraphicsDevice); //move speed, rotate speed, devic
-            //Slotbar = new Slotbar(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            camera = new Camera(1f, 0.001f, GraphicsDevice); //move speed, rotate speed, ...
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             statistics = new StatisticOverlay(base.Content.Load<SpriteFont>("NormalFont"), new Vector2(48, 48)); //debug
@@ -179,13 +176,10 @@ namespace RawCraft
             effect.Parameters["vecViewPos"].SetValue(new Vector3((float)Player.X, (float)Player.Y, (float)Player.Z));
             base.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
             base.GraphicsDevice.SamplerStates[1] = SamplerState.PointClamp;
-            // Misc.graphics.BlendState = BlendState.Opaque;
         }
 
         private void InitializeEffect()
         {
-            
-
             depthState = new DepthStencilState();
             depthState.DepthBufferEnable = true;
             depthState.DepthBufferWriteEnable = true;
@@ -205,10 +199,6 @@ namespace RawCraft
             //effect.Parameters["vecAmbient"].SetValue(new Vector3(150f / 255, 150f / 255, 150f / 255));
             effect.Parameters["vecAmbient"].SetValue(new Vector3(90f / 255, 115f / 255, 130f / 255));
             effect.Parameters["vecSunColor"].SetValue(new Vector3(198f / 255, 169f / 255, 134f / 255));
-
-            // RasterizerState rs = new RasterizerState(); //reduce triangles 
-            // rs.CullMode = CullMode.CullCounterClockwiseFace;
-            // effect.GraphicsDevice.RasterizerState = rs; // call it every frame
         }
 
         private void Connect()
@@ -253,7 +243,6 @@ namespace RawCraft
             Config.Width = Window.ClientBounds.Width;
             graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
             graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-            //Slotbar = new Slotbar(Window.ClientBounds.Width, Window.ClientBounds.Height);
         }
     }
 }

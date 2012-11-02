@@ -7,8 +7,7 @@ namespace RawCraft.Storage
 {
     class Config
     {
-        public static bool VSync = true, EnableLog = false;
+        public static bool VSync = true;
         public static int Width = 1280, Height = 720;
-
     }
 }

@@ -21,14 +21,12 @@ namespace RawCraft.Network.Packets
             UpdateChunk();
         }
 
-        private void UpdateChunk()
+        private void UpdateChunk() // TODO: check and improve performance
         {
-            Chunk c;
-            int chunkx = (int)(x / 16 - Math.Sign(x) == -1 ? 1 : -1);
-            int chunkz = (int)(z / 16 - Math.Sign(z) == -1 ? 1 : -1);
+            int chunkx = x < 0 ? ((int)((x + 1) / 16) - 1) : (int)(x / 16);
+            int chunkz = z < 0 ? ((int)((x + 1) / 16) - 1) : (int)(z / 16);
 
-            // the following if check is wrong, sometimes we receive a block change for a chunk we didnt receive yet.
-            // TODO: check and improve performance
+            Chunk c;
 
             if (MapChunks.Chunks.TryGetValue(new Vector2(chunkx, chunkz), out c))
             {
@@ -37,7 +35,7 @@ namespace RawCraft.Network.Packets
                 offsetX = x < 0 ? 16 + (x % 16 == 0 ? -16 : x % 16) : x % 16;
                 offsetZ = z < 0 ? 16 + (z % 16 == 0 ? -16 : z % 16) : z % 16;
 
-                c.ChangeBlock(new Vector3(offsetX, y, offsetZ), id, meta);
+                c.ChangeBlock(new Vector3(offsetX, y, offsetZ), id, meta, false);
             }
         }
     }

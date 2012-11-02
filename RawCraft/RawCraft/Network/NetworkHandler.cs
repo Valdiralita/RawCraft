@@ -8,12 +8,10 @@ using RawCraft.Storage;
 
 namespace RawCraft.Network
 {
-    class NetworkHandler
+    class NetworkHandler // TODO: Make this not the worst thing ever
     {
-        // TODO: Make this not the worst thing ever
-
         private EnhancedStream stream;
-        private byte packetIDbuffer;
+        private byte packetIDbuffer = 0;
         private PlayerPositionLook playerPositionLook;
 
         public void NetThread()
@@ -27,7 +25,6 @@ namespace RawCraft.Network
 
             Socket NetworkSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             NetworkSocket.Connect(Storage.Network.Server, Storage.Network.Port);
-            //stream = new NetworkStream(NetworkSocket);
             stream = new EnhancedStream(NetworkSocket);
 
             Handshake handshake = new Handshake(stream);
@@ -44,7 +41,7 @@ namespace RawCraft.Network
                         break;
                     case 0x01:
                         LoginRequest loginRequest = new LoginRequest(stream);
-                        PositionUpdater.Change(0, 500);
+                        //PositionUpdater.Change(0, 500);
                         ClientSettings clientSettings = new ClientSettings(stream);
                         clientSettings.Send();
                         break;
@@ -243,8 +240,6 @@ namespace RawCraft.Network
 
         private void NetworkSender(object o)
         {
-            // doesnt work
-            
             if (playerPositionLook != null)
                 playerPositionLook.Send();
         }

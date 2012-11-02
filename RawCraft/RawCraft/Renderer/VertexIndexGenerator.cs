@@ -62,11 +62,6 @@ namespace RawCraft.Renderer
                 ID = c.BlockType[X, Y, Z];
                 Meta = c.BlockMetadata[X, Y, Z];
 
-                if (ID == (int)BlockEnum.Blocks.PistonSticky)
-                {
-
-                }
-
                 if (!Blocks.blocks[ID].NotABlock && !Blocks.blocks[ID].IsTransparent)
                 {
                     if (!Blocks.blocks[ID].HasMetadata)
@@ -418,28 +413,3 @@ namespace RawCraft.Renderer
         }
     }
 }
-
-
-
-
-// if (side == 2 || side == 3)
-// {
-//  OpaqueVertices.Add(new VertexPositionNormalTexture((normal - side1 + side2 + position_offset) / 2, normal, Texture[1]));
-//  OpaqueVertices.Add(new VertexPositionNormalTexture((normal - side1 + side2 + position_offset) / 2, normal, Texture[2]));
-//  OpaqueVertices.Add(new VertexPositionNormalTexture((normal + side1 + side2 + position_offset) / 2, normal, Texture[3]));
-//  OpaqueVertices.Add(new VertexPositionNormalTexture((normal + side1 - side2 + position_offset) / 2, normal, Texture[0]));
-// }
-// else if (side == 0 || side == 1)
-// {
-//     OpaqueVertices.Add(new VertexPositionNormalTexture((normal - side1 - side2 + position_offset) / 2, normal, Texture[2]));
-//     OpaqueVertices.Add(new VertexPositionNormalTexture((normal - side1 + side2 + position_offset) / 2, normal, Texture[3]));
-//     OpaqueVertices.Add(new VertexPositionNormalTexture((normal + side1 + side2 + position_offset) / 2, normal, Texture[0]));
-//     OpaqueVertices.Add(new VertexPositionNormalTexture((normal + side1 - side2 + position_offset) / 2, normal, Texture[1]));
-// }
-// else
-// {
-//     OpaqueVertices.Add(new VertexPositionNormalTexture((normal - side1 - side2 + position_offset) / 2, normal, Texture[0]));
-//     OpaqueVertices.Add(new VertexPositionNormalTexture((normal - side1 + side2 + position_offset) / 2, normal, Texture[1]));
-//     OpaqueVertices.Add(new VertexPositionNormalTexture((normal + side1 + side2 + position_offset) / 2, normal, Texture[2]));
-//     OpaqueVertices.Add(new VertexPositionNormalTexture((normal + side1 - side2 + position_offset) / 2, normal, Texture[3]));
-// }

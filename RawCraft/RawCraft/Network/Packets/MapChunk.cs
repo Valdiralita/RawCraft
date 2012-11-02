@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Ionic.Zlib;
 using System.IO;
 using RawCraft.Storage.Map;
@@ -13,20 +14,26 @@ namespace RawCraft.Network.Packets
             Store_Chunk(stream.ReadInt(),
                 stream.ReadInt(),
                 (byte)stream.ReadByte(),
-                stream.ReadShort(),
+                (ushort)stream.ReadShort(),
                 stream.ReadShort(),
                 ZlibStream.UncompressBuffer(stream.ReadData(stream.ReadInt())));
         }
 
-        private void Store_Chunk(int ChunkX, int ChunkZ, byte GroundUp, short PrimBit, short AddBit, byte[] UncompressedChunkData)
+        private void Store_Chunk(int x, int z, byte GroundUp, ushort PrimBit, short AddBit, byte[] UncompressedChunkData)
         {
-            Chunk c = new Chunk(ChunkX, ChunkZ, (ushort)PrimBit, UncompressedChunkData);
+            int sectioncount = Convert.ToString(PrimBit, 2).ToCharArray().Count(a => a == '1');
 
-            MapChunks.Chunks.AddOrUpdate(new Vector2(ChunkX, ChunkZ), c,
-            (key, existingVal) =>
+            Chunk c;
+            if (MapChunks.Chunks.TryGetValue(new Vector2(x, z), out c))
             {
-                return c;
-            });
+                //c.SetChunk(bitmask, chunkdata, sectioncount);
+
+            }
+            else
+            {
+                c = new Chunk(x, z, sectioncount, (ushort)PrimBit, UncompressedChunkData);
+                MapChunks.Chunks.TryAdd(new Vector2(x, z), c);
+            }
         }
     }
 }

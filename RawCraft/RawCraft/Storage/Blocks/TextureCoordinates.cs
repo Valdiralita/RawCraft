@@ -265,9 +265,9 @@ namespace RawCraft.Storage.Blocks
 
             Textures.TryAdd(Tuple.Create((byte)BlockEnum.Blocks.EndStone,         (byte) 0), new Vector2[] { new Vector2(16,10) / 16, new Vector2(15,10) / 16, new Vector2(15,11) / 16, new Vector2(16,  11) / 16 });
 
-            Textures.TryAdd(Tuple.Create((byte)BlockEnum.Blocks.EmeraldOre,       (byte) 0), new Vector2[] { new Vector2(16,10) / 16, new Vector2(15,10) / 16, new Vector2(15,11) / 16, new Vector2(16,  11) / 16 });
+            Textures.TryAdd(Tuple.Create((byte)BlockEnum.Blocks.EmeraldOre,       (byte) 0), new Vector2[] { new Vector2(12,10) / 16, new Vector2(11,10) / 16, new Vector2(11,11) / 16, new Vector2(12,  11) / 16 });
 
-            Textures.TryAdd(Tuple.Create((byte)BlockEnum.Blocks.EmeraldBlock,     (byte) 0), new Vector2[] { new Vector2(12,10) / 16, new Vector2(11,10) / 16, new Vector2(11,11) / 16, new Vector2(12,  11) / 16 });
+            Textures.TryAdd(Tuple.Create((byte)BlockEnum.Blocks.EmeraldBlock,     (byte) 0), new Vector2[] { new Vector2(10, 1) / 16, new Vector2(9,  1) / 16, new Vector2(9,  2) / 16, new Vector2(10,   2) / 16 });
 
 
 

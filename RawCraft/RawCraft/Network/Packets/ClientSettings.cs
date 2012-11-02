@@ -15,7 +15,7 @@ namespace RawCraft.Network.Packets
 
         public void Send()
         {
-            string locale = "en_GB";
+            string locale = "en_US";
             stream.WriteByte((byte)0xCC); //packet id
             stream.WriteString(locale);
             stream.WriteByte(0);

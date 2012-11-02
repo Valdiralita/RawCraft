@@ -12,6 +12,7 @@ namespace RawCraft.Network
         Socket socket;
         Encoding enc = new UnicodeEncoding(true, true, true);
         byte[] buffer, data;
+
         public EnhancedStream(Socket s) : base(s)
         {
             socket = s;
@@ -78,7 +79,7 @@ namespace RawCraft.Network
             byte MetaDataType = (byte)ReadByte();
             while (MetaDataType != 127)
             {
-                byte First3Bytes = (byte)(MetaDataType >> 0x05);
+                byte First3Bytes = (byte)(MetaDataType >> 5);
                 byte Last5Bytes = (byte)(MetaDataType & 0x1F);
 
                 switch (First3Bytes)
@@ -99,9 +100,11 @@ namespace RawCraft.Network
                         ReadString(ReadShort());
                         break;
                     case 5:
-                        ReadShort();
-                        ReadByte();
-                        ReadShort();
+                        if (ReadShort() != -1)
+                        {
+                            ReadByte();
+                            ReadShort();
+                        }
                         break;
                     case 6:
                         ReadInt();
@@ -117,8 +120,8 @@ namespace RawCraft.Network
 
         public void ReadSlot() //dummy
         {
-            short Block = ReadShort();
-            if (Block != -1)
+            short slot = ReadShort();
+            if (slot != -1)
             {
                 ReadByte();
                 ReadShort();
@@ -127,13 +130,7 @@ namespace RawCraft.Network
 
                 if (ByteArrayLength > -1)
                     ReadData(ByteArrayLength);
-
             }
-        }
-
-        public override void WriteByte(byte b)
-        {
-            base.WriteByte(b);
         }
 
         public void WriteShort(short s)
