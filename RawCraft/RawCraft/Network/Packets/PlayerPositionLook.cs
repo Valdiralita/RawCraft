@@ -2,6 +2,7 @@
 using System.Linq;
 using RawCraft.Storage;
 using System.IO;
+using Microsoft.Xna.Framework;
 
 namespace RawCraft.Network.Packets
 {
@@ -29,8 +30,8 @@ namespace RawCraft.Network.Packets
             stream.WriteDouble(Player.Y);
             stream.WriteDouble(Player.Stance);
             stream.WriteDouble(Player.Z);
-            stream.WriteFloat(Player.Yaw);
-            stream.WriteFloat(Player.Pitch);
+            stream.WriteFloat(180 - MathHelper.ToDegrees(Player.Yaw));
+            stream.WriteFloat(-MathHelper.ToDegrees(Player.Pitch));
             stream.WriteBool(Player.OnGround);
         }
     }

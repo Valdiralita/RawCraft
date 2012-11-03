@@ -21,7 +21,7 @@ namespace RawCraft.Network
 
             SharedSecretGenerator SharedSecret = new SharedSecretGenerator(); //random byte[16] gen
 
-            Timer PositionUpdater = new Timer(new TimerCallback(NetworkSender), null, Timeout.Infinite, 50); //create position updater
+            Timer PositionUpdater = new Timer(new TimerCallback(PositionSender), null, Timeout.Infinite, 50); //create position updater
 
             Socket NetworkSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             NetworkSocket.Connect(Storage.Network.Server, Storage.Network.Port);
@@ -41,7 +41,7 @@ namespace RawCraft.Network
                         break;
                     case 0x01:
                         LoginRequest loginRequest = new LoginRequest(stream);
-                        //PositionUpdater.Change(0, 500);
+                        PositionUpdater.Change(0, 50);
                         ClientSettings clientSettings = new ClientSettings(stream);
                         clientSettings.Send();
                         break;
@@ -238,7 +238,7 @@ namespace RawCraft.Network
             }
         }
 
-        private void NetworkSender(object o)
+        private void PositionSender(object o)
         {
             if (playerPositionLook != null)
                 playerPositionLook.Send();

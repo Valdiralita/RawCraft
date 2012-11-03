@@ -57,7 +57,7 @@ namespace RawCraft
             graphics.ApplyChanges();
             base.Initialize();
 
-            camera = new Camera(1f, 0.001f, GraphicsDevice); //move speed, rotate speed, ...
+            camera = new Camera(0.3f, 0.001f, GraphicsDevice); //move speed, rotate speed, ...
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             statistics = new StatisticOverlay(base.Content.Load<SpriteFont>("NormalFont"), new Vector2(48, 48)); //debug

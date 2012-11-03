@@ -101,7 +101,7 @@ namespace RawCraft.Renderer
             v = Vector3.Transform(v, rotationMatrix);
             Player.X = Player.X + v.X;
             Player.Y = Player.Y + v.Y;
-            Player.Stance = Player.Y + 1.5f;
+            Player.Stance = Player.Y + 1.62f;
             Player.Z = Player.Z + v.Z;
 
             CameraPosition = new Vector3((float)Player.X, (float)Player.Stance, (float)Player.Z);
