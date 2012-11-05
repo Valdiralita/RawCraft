@@ -105,7 +105,6 @@ namespace RawCraft.Renderer
             Player.Z = Player.Z + v.Z;
 
             CameraPosition = new Vector3((float)Player.X, (float)Player.Stance, (float)Player.Z);
-
         }
     }
 }
