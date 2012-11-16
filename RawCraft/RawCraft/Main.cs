@@ -39,7 +39,7 @@ namespace RawCraft
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged; //resize function
         }
-
+        
         protected override void Initialize()
         {
             VertexPositions.Initialize();
@@ -55,15 +55,14 @@ namespace RawCraft
                 graphics.SynchronizeWithVerticalRetrace = false;
             }
             graphics.ApplyChanges();
-            base.Initialize();
 
-            camera = new Camera(0.3f, 0.001f, GraphicsDevice); //move speed, rotate speed, ...
+            camera = new Camera(0.3f, 0.002f, GraphicsDevice); //move speed, rotate speed, ...
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             statistics = new StatisticOverlay(base.Content.Load<SpriteFont>("NormalFont"), new Vector2(48, 48)); //debug
             mainMenu = new MainMenu(base.Content);
 
-            InitializeEffect();
+            base.Initialize();
         }
 
         protected override void LoadContent()
@@ -92,6 +91,8 @@ namespace RawCraft
                 else
                     throw new FileNotFoundException("Missing terrain.png!");
             }
+
+            InitializeEffect();
         }
 
         protected override void Update(GameTime gameTime)

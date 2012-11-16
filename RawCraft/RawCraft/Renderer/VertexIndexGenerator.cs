@@ -29,161 +29,174 @@ namespace RawCraft.Renderer
             new Vector3(0, -1, 0)  //1
         };
 
-        public static Mesh[] generate(Chunk c, GraphicsDevice gd)
+        public unsafe static Mesh[] generate(Chunk c, GraphicsDevice gd)
         {
-            X = 0;
-            Y = 0;
-            Z = 0;
-
-            chunk = c;
-
-            OpaqueVertices = new List<VertexPositionNormalTexture>();
-            OpaqueIndices = new List<int>();
-            TransparentVertices = new List<VertexPositionNormalTexture>();
-            TransparentIndices = new List<int>();
-
-            for (; ; X++)
+            unchecked
             {
-                if (X > 15)
+                X = 0;
+                Y = 0;
+                Z = 0;
+
+                chunk = c;
+
+                OpaqueVertices = new List<VertexPositionNormalTexture>();
+                OpaqueIndices = new List<int>();
+                TransparentVertices = new List<VertexPositionNormalTexture>();
+                TransparentIndices = new List<int>();
+
+                for (; ; X++)
                 {
-                    Z++;
-                    X = 0;
-                    if (Z > 15)
+                    if (X > 15)
                     {
-                        Y++;
-                        Z = 0;
-                        if (Y > 255)
+                        Z++;
+                        X = 0;
+                        if (Z > 15)
                         {
-                            break;
+                            Y++;
+                            Z = 0;
+                            if (Y > 255)
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+                    ID = c.BlockType[X, Y, Z];
+                    Meta = c.BlockMetadata[X, Y, Z];
+
+                    if (!Blocks.blocks[ID].NotABlock && !Blocks.blocks[ID].IsTransparent)
+                    {
+                        if (!Blocks.blocks[ID].HasMetadata)
+                        {
+                            if (Blocks.blocks[ID].IsMultitex)
+                            {
+                                if (isTransparent(0))
+                                    CreateMultiTexBlockSide(0, 0);
+                                if (isTransparent(1))
+                                    CreateMultiTexBlockSide(1, 1);
+                                if (isTransparent(2))
+                                    CreateMultiTexBlockSide(2, 2);
+                                if (isTransparent(3))
+                                    CreateMultiTexBlockSide(3, 3);
+                                if (isTransparent(4))
+                                    CreateMultiTexBlockSide(4, 4);
+                                if (isTransparent(5))
+                                    CreateMultiTexBlockSide(5, 5);
+                            }
+                            else
+                            {
+                                if (isTransparent(0))
+                                    CreateBlockSide(0);
+                                if (isTransparent(1))
+                                    CreateBlockSide(1);
+                                if (isTransparent(2))
+                                    CreateBlockSide(2);
+                                if (isTransparent(3))
+                                    CreateBlockSide(3);
+                                if (isTransparent(4))
+                                    CreateBlockSide(4);
+                                if (isTransparent(5))
+                                    CreateBlockSide(5);
+                            }
+                        }
+                        else
+                        {
+                            if (Blocks.blocks[ID].IsMultitex)
+                            {
+                                if (isTransparent(0))
+                                    CreateMultiTexBlockSide(0, (byte)(0 + Meta * 6));
+                                if (isTransparent(1))
+                                    CreateMultiTexBlockSide(1, (byte)(1 + Meta * 6));
+                                if (isTransparent(2))
+                                    CreateMultiTexBlockSide(2, (byte)(2 + Meta * 6));
+                                if (isTransparent(3))
+                                    CreateMultiTexBlockSide(3, (byte)(3 + Meta * 6));
+                                if (isTransparent(4))
+                                    CreateMultiTexBlockSide(4, (byte)(4 + Meta * 6));
+                                if (isTransparent(5))
+                                    CreateMultiTexBlockSide(5, (byte)(5 + Meta * 6));
+                            }
+                            else
+                            {
+                                if (isTransparent(0))
+                                    CreateBlockSide(0);
+                                if (isTransparent(1))
+                                    CreateBlockSide(1);
+                                if (isTransparent(2))
+                                    CreateBlockSide(2);
+                                if (isTransparent(3))
+                                    CreateBlockSide(3);
+                                if (isTransparent(4))
+                                    CreateBlockSide(4);
+                                if (isTransparent(5))
+                                    CreateBlockSide(5);
+                            }
+                        }
+                    }
+                    else if (Blocks.blocks[ID].NotABlock)
+                    {
+                        if (Blocks.blocks[ID].IsXSprite)
+                        {
+                            CreateXSprite();
+                        }
+                        else if (ID == 9)//quick hack for water
+                        {
+                            if (c.BlockType[X, Y + 1, Z] != 9)
+                                CreateWater(4);
+                        }
+                        else if (ID == 79) //ice 
+                        {
+                            if (!sameBlock(0))
+                                TransparentQuad(0);
+                            if (!sameBlock(1))
+                                TransparentQuad(1);
+                            if (!sameBlock(2))
+                                TransparentQuad(2);
+                            if (!sameBlock(3))
+                                TransparentQuad(3);
+                            if (!sameBlock(4))
+                                TransparentQuad(4);
+                            if (!sameBlock(5))
+                                TransparentQuad(5);
+                        }
+                    }
+                    else if (Blocks.blocks[ID].IsTransparent)
+                    {
+                        if (ID == 18) // leaves
+                        {
+                            CreateBlockSide(0);
+                            CreateBlockSide(1);
+                            CreateBlockSide(2);
+                            CreateBlockSide(3);
+                            CreateBlockSide(4);
+                            CreateBlockSide(5);
+                        }
+                        else if (ID == 20)
+                        {
+                            if (!sameBlock(0))
+                                CreateBlockSide(0);
+                            if (!sameBlock(1))
+                                CreateBlockSide(1);
+                            if (!sameBlock(2))
+                                CreateBlockSide(2);
+                            if (!sameBlock(3))
+                                CreateBlockSide(3);
+                            if (!sameBlock(4))
+                                CreateBlockSide(4);
+                            if (!sameBlock(5))
+                                CreateBlockSide(5);
                         }
                     }
                 }
 
-                ID = c.BlockType[X, Y, Z];
-                Meta = c.BlockMetadata[X, Y, Z];
+                Mesh[] meshes = new Mesh[2];
 
-                if (!Blocks.blocks[ID].NotABlock && !Blocks.blocks[ID].IsTransparent)
-                {
-                    if (!Blocks.blocks[ID].HasMetadata)
-                    {
-                        if (Blocks.blocks[ID].IsMultitex)
-                        {
-                            if (isTransparent(0))
-                                CreateMultiTexBlockSide(0, 0);
-                            if (isTransparent(1))
-                                CreateMultiTexBlockSide(1, 1);
-                            if (isTransparent(2))
-                                CreateMultiTexBlockSide(2, 2);
-                            if (isTransparent(3))
-                                CreateMultiTexBlockSide(3, 3);
-                            if (isTransparent(4))
-                                CreateMultiTexBlockSide(4, 4);
-                            if (isTransparent(5))
-                                CreateMultiTexBlockSide(5, 5);
-                        }
-                        else
-                        {
-                            if (isTransparent(0))
-                                CreateBlockSide(0);
-                            if (isTransparent(1))
-                                CreateBlockSide(1);
-                            if (isTransparent(2))
-                                CreateBlockSide(2);
-                            if (isTransparent(3))
-                                CreateBlockSide(3);
-                            if (isTransparent(4))
-                                CreateBlockSide(4);
-                            if (isTransparent(5))
-                                CreateBlockSide(5);
-                        }
-                    }
-                    else
-                    {
-                        if (Blocks.blocks[ID].IsMultitex)
-                        {
-                            if (isTransparent(0))
-                                CreateMultiTexBlockSide(0, (byte)(0 + Meta * 6));
-                            if (isTransparent(1))
-                                CreateMultiTexBlockSide(1, (byte)(1 + Meta * 6));
-                            if (isTransparent(2))
-                                CreateMultiTexBlockSide(2, (byte)(2 + Meta * 6));
-                            if (isTransparent(3))
-                                CreateMultiTexBlockSide(3, (byte)(3 + Meta * 6));
-                            if (isTransparent(4))
-                                CreateMultiTexBlockSide(4, (byte)(4 + Meta * 6));
-                            if (isTransparent(5))
-                                CreateMultiTexBlockSide(5, (byte)(5 + Meta * 6));
-                        }
-                        else
-                        {
-                            if (isTransparent(0))
-                                CreateBlockSide(0);
-                            if (isTransparent(1))
-                                CreateBlockSide(1);
-                            if (isTransparent(2))
-                                CreateBlockSide(2);
-                            if (isTransparent(3))
-                                CreateBlockSide(3);
-                            if (isTransparent(4))
-                                CreateBlockSide(4);
-                            if (isTransparent(5))
-                                CreateBlockSide(5);
-                        }
-                    }
-                }
-                else if (Blocks.blocks[ID].NotABlock)
-                {
-                    if (ID == 6 || ID == 31 || ID == 32 || ID == 37 || ID == 38 || ID == 39 || ID == 40 || ID == 59 || ID == 83 || ID == 104 || ID == 105 || ID == 115 || ID == 117)
-                    {
-                        CreatePlant();
-                    }
-                    else if (ID == 9)//quick hack for water
-                    {
-                        if (c.BlockType[X, Y + 1, Z] != 9)
-                            CreateWater(4);
-                    }
-                   // else if (ID == 79) //ice hack
-                   // {
-                   //     if (Blocks.blocks[c.BlockType[X, Y, Z + 1]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z + 1]].NotABlock)
-                   //         TransparentQuad(0);
-                   //     if (Blocks.blocks[c.BlockType[X, Y, Z - 1]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
-                   //         TransparentQuad(1);
-                   //     if (Blocks.blocks[c.BlockType[X + 1, Y, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
-                   //         TransparentQuad(2);
-                   //     if (Blocks.blocks[c.BlockType[X - 1, Y, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
-                   //         TransparentQuad(3);
-                   //     if (Blocks.blocks[c.BlockType[X, Y + 1, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
-                   //         TransparentQuad(4);
-                   //     if (Blocks.blocks[c.BlockType[X, Y - 1, Z]].IsTransparent || Blocks.blocks[c.BlockType[X, Y, Z - 1]].NotABlock)
-                   //         TransparentQuad(5);
-                   // }
-                }
-                else if (Blocks.blocks[ID].IsTransparent)
-                {
-                    if (ID == 18 || ID == 20 || ID == 24)
-                    {
-                        CreateBlockSide(0);
-                        CreateBlockSide(1);
-                        CreateBlockSide(2);
-                        CreateBlockSide(3);
-                        CreateBlockSide(4);
-                        CreateBlockSide(5);
-                    }
-                }
+                if (OpaqueIndices.Count > 0)
+                    meshes[0] = new Mesh(gd, OpaqueVertices.ToArray(), OpaqueIndices.ToArray());
+                if (TransparentIndices.Count > 0)
+                    meshes[1] = new Mesh(gd, TransparentVertices.ToArray(), TransparentIndices.ToArray());
+                return meshes;
             }
-
-            Mesh[] meshes = new Mesh[2];
-
-            if (OpaqueIndices.Count > 0)
-                meshes[0] = new Mesh(gd, OpaqueVertices.ToArray(), OpaqueIndices.ToArray());
-            if (TransparentIndices.Count > 0)
-                meshes[1] = new Mesh(gd, TransparentVertices.ToArray(), TransparentIndices.ToArray());
-            return meshes;
-        }
-
-        private static void CreateSlab()
-        {
-            throw new NotImplementedException();
         }
 
         private static void CreateBlockSide(byte side)
@@ -208,7 +221,6 @@ namespace RawCraft.Renderer
 
         private static void CreateQuad(byte side, Vector2[] tex)
         {
-
             Vector3 positionOffset = new Vector3(16 * chunk.ChunkX + X + 0.5f, Y + 0.5f, Z + 0.5f + 16 * chunk.ChunkZ);
 
             OpaqueIndices.Add(OpaqueVertices.Count + 1);
@@ -229,7 +241,7 @@ namespace RawCraft.Renderer
             }
         }
 
-        private static void CreatePlant()
+        private static void CreateXSprite()
         {
             Vector2[] tex;
             if (TextureCoordinates.Textures.TryGetValue(Tuple.Create(ID, Meta), out tex))
@@ -248,7 +260,7 @@ namespace RawCraft.Renderer
 
                 int j = 0;
 
-                foreach (Vector3 vec in VertexPositions.Plant)
+                foreach (Vector3 vec in VertexPositions.XSprite)
                 {
                     OpaqueVertices.Add(new VertexPositionNormalTexture(vec + positionOffset, Vector3.Zero, tex[j]));
                     if (++j > 3)
@@ -408,7 +420,108 @@ namespace RawCraft.Renderer
                         return false;
                     }
                 default:
-                    throw new Exception();
+                    return false;
+            }
+        }
+      
+        private static bool sameBlock(byte side)
+        {
+            Chunk AdjacentChunk = null;
+
+            switch (side)
+            {
+                case 0: // Z+
+                    {
+                        if (Z == 15)
+                        {
+                            if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX, chunk.ChunkZ + 1), out AdjacentChunk))
+                                if (AdjacentChunk.BlockType[X, Y, 0] == ID)
+                                    return true;
+                            return false;
+                        }
+                        else
+                        {
+                            if (chunk.BlockType[X, Y, Z + 1] == ID)
+                                return true;
+                        }
+                        return false;
+                    }
+                case 1: // Z-
+                    {
+                        if (Z == 0)
+                        {
+                            if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX, chunk.ChunkZ - 1), out AdjacentChunk))
+                                if (AdjacentChunk.BlockType[X, Y, 15] == ID)
+                                    return true;
+                            return false;
+                        }
+                        else
+                        {
+                            if (chunk.BlockType[X, Y, Z - 1] == ID)
+                                return true;
+                        }
+                        return false;
+                    }
+                case 2: // X+
+                    {
+                        if (X == 15)
+                        {
+                            if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX + 1, chunk.ChunkZ), out AdjacentChunk))
+                                if (AdjacentChunk.BlockType[0, Y, Z] == ID)
+                                    return true;
+                            return false;
+                        }
+                        else
+                        {
+                            if (chunk.BlockType[X + 1, Y, Z] == ID)
+                                return true;
+                        }
+                        return false;
+                    }
+                case 3: // X-
+                    {
+                        if (X == 0)
+                        {
+                            if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX - 1, chunk.ChunkZ), out AdjacentChunk))
+                                if (AdjacentChunk.BlockType[15, Y, Z] == ID)
+                                    return true;
+                            return false;
+                        }
+                        else
+                        {
+                            if (chunk.BlockType[X - 1, Y, Z] == ID)
+                                return true;
+                        }
+                        return false;
+                    }
+                case 4:
+                    {
+                        if (Y == 255)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            if (chunk.BlockType[X, Y + 1, Z] == ID)
+                                return true;
+                        }
+                        return false;
+                    }
+                case 5:
+                    {
+                        if (Y == 0)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            if (chunk.BlockType[X, Y - 1, Z] == ID)
+                                return true;
+                        }
+                        return false;
+                    }
+                default:
+                    return false;
             }
         }
     }

@@ -21,9 +21,8 @@ namespace RawCraft.Storage.Map
             ChunkX = X;
             ChunkZ = Z;
 
-
             SetChunk(primBit, Chunk, sections);
-            RenderFIFO.Enqueue(this);
+            RenderFIFO.Enqueue(this, new bool[4] { true, true, true, true });
         }
 
         internal void SetChunk(ushort primBit, byte[] data, int sections)
@@ -79,28 +78,59 @@ namespace RawCraft.Storage.Map
         public void UpdateMesh(GraphicsDevice gd)
         {
             Mesh[] meshes = VertexIndexGenerator.generate(this, gd);
-       
+
             if (meshes != null)
             {
                 if (meshes.Length > 0)
                     OpaqueMesh = meshes[0];
-       
+
                 if (meshes.Length > 1)
                     WaterMesh = meshes[1];
             }
         }
 
-        public void EnqueueToRender()
+        public void EnqueueToRender(bool[] toRender)
         {
-            RenderFIFO.Enqueue(this);
+            RenderFIFO.Enqueue(this, toRender);
         }
 
-        public void ChangeBlock(Vector3 pos, byte id, byte metadata, bool suppressRendering)
+        public void ChangeBlock(Vector3 pos, byte id, byte metadata, bool SupressRerender)
         {
             BlockType[(int)pos.X, (int)pos.Y, (int)pos.Z] = id;
             BlockMetadata[(int)pos.X, (int)pos.Y, (int)pos.Z] = metadata;
-            if (!suppressRendering)
-                RenderFIFO.Enqueue(this);
+            if (!SupressRerender)
+            {
+                RenderFIFO.Enqueue(this, new bool[] { 
+                    pos.X == 15 ? true : false, 
+                    pos.X == 0 ? true : false, 
+                    pos.Y == 15 ? true : false, 
+                    pos.Y == 0 ? true : false 
+                });
+            }
+        }
+        public void MultiBlockChange(byte[][] data, int count)
+        {
+            bool[] toRender = new bool[4];
+
+            for (int i = 0; i < count; i++)
+            {
+                int offsetX = (data[i][0] >> 4) & 0x0F;
+                int offsetZ = data[i][0] & 0x0F;
+
+                byte meta = (byte)(data[i][3] & 0x0F);
+                byte id = (byte)((data[i][2] << 4 | (data[i][3] >> 4) & 0x0F));
+                ChangeBlock(new Vector3(offsetX, data[i][1], offsetZ), id, meta, true);
+
+                if (!toRender[0])
+                    toRender[0] = offsetX == 15 ? true : false;
+                if (!toRender[1])
+                    toRender[1] = offsetX == 0 ? true : false; 
+                if (!toRender[2])
+                    toRender[2] = offsetX == 15 ? true : false;
+                if (!toRender[3])
+                    toRender[3] = offsetX == 0 ? true : false;
+            }
+            EnqueueToRender(toRender);
         }
     }
 }

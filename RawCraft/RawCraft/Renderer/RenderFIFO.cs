@@ -15,12 +15,12 @@ namespace RawCraft.Renderer
 
         public void MeshGenerateThread(object gd)
         {
+            Chunk chunk;
             while (true)
             {
                 queueNotifier.WaitOne();
                 while (RenderQueue.Count != 0)
                 {
-                    Chunk chunk;
                     if (RenderQueue.TryDequeue(out chunk))
                     {
                         Debug.RendertimeCounter.Start();
@@ -36,26 +36,26 @@ namespace RawCraft.Renderer
            get { return RenderQueue.Count; }
        }
 
-        public static void Enqueue(Chunk c)
+        public static void Enqueue(Chunk c, bool[] toRender)
         {
             Chunk AdjacentChunk;
 
-            if (!RenderQueue.Contains(c)) //check if chunk is in queue, if not then enqueue it
+            if (!RenderQueue.Contains(c))
                 RenderQueue.Enqueue(c);
 
-            if (MapChunks.Chunks.TryGetValue(new Vector2(c.ChunkX + 1, c.ChunkZ + 1), out AdjacentChunk))       //check if there is a chunk (at the vector2 position) and rerender it
-                if (!RenderQueue.Contains(AdjacentChunk))                                                       // dont enqueue the chunk if its already in queue
+            if (toRender[0] && MapChunks.Chunks.TryGetValue(new Vector2(c.ChunkX + 1, c.ChunkZ), out AdjacentChunk))        // check if there is a chunk (at the vector2 position) and rerender it
+                if (!RenderQueue.Contains(AdjacentChunk))                                                                   // dont enqueue the chunk if its already in queue
                     RenderQueue.Enqueue(AdjacentChunk);
 
-            if (MapChunks.Chunks.TryGetValue(new Vector2(c.ChunkX - 1, c.ChunkZ + 1), out AdjacentChunk))
+            if (toRender[1] && MapChunks.Chunks.TryGetValue(new Vector2(c.ChunkX - 1, c.ChunkZ), out AdjacentChunk))
                 if (!RenderQueue.Contains(AdjacentChunk))
                     RenderQueue.Enqueue(AdjacentChunk);
 
-            if (MapChunks.Chunks.TryGetValue(new Vector2(c.ChunkX + 1, c.ChunkZ - 1), out AdjacentChunk))
+            if (toRender[2] && MapChunks.Chunks.TryGetValue(new Vector2(c.ChunkX, c.ChunkZ + 1), out AdjacentChunk))
                 if (!RenderQueue.Contains(AdjacentChunk))
                     RenderQueue.Enqueue(AdjacentChunk);
 
-            if (MapChunks.Chunks.TryGetValue(new Vector2(c.ChunkX - 1, c.ChunkZ - 1), out AdjacentChunk))
+            if (toRender[3] && MapChunks.Chunks.TryGetValue(new Vector2(c.ChunkX, c.ChunkZ - 1), out AdjacentChunk))
                 if (!RenderQueue.Contains(AdjacentChunk))
                     RenderQueue.Enqueue(AdjacentChunk);
 

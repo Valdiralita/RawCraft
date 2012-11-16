@@ -2,10 +2,23 @@
 {
     class Block
     {
-        private bool transparent, multitex, metadata, notablock;
+        private bool transparent, multitex, metadata, notablock, xsprite;
+
+        // transparent: has the block(!) a texture with any transparency (this is NOT true if notablock is true). eg: mob spawner
+        // multitex: has the block multiple textures. eg: grass_block, log
+        // metadata: has the object metadata. eg: log, repeater
+        // notablock: is the object not a full block. eg: fence, torch, repeater
+        // *** RENDER ***
+        // xsprite: is the model an X (with 2 sprites)
 
         public Block()
         {
+        }
+
+        public bool IsXSprite
+        {
+            get { return xsprite; }
+            set { xsprite = value; }
         }
 
         public bool IsTransparent

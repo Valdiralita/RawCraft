@@ -8,26 +8,22 @@ namespace RawCraft.Renderer
 {
     class Camera
     {
-        public Vector3 CameraPosition;
-        public float MoveSpeed;
         public Matrix ViewMatrix, ProjectionMatrix;
         Matrix rotationMatrix;
-        float rotateSpeed;
-        int oldX, oldY;
-        int centerX;
-        int centerY;
+        Vector3 CameraPosition;
+        float rotateSpeed, moveSpeed;
+        int centerX, centerY;
 
-        public Camera(float moveSpeed, float rotateSpeed, GraphicsDevice device)
+        public Camera(float mSpeed, float rSpeed, GraphicsDevice device)
         {
             CameraPosition = new Vector3((float)Player.X, (float)Player.Stance, (float)Player.Z);
-            MoveSpeed = moveSpeed;
-            this.rotateSpeed = rotateSpeed;
+            moveSpeed = mSpeed;
+            rotateSpeed = rSpeed;
 
             ViewMatrix = Matrix.CreateLookAt(CameraPosition, Vector3.Zero, Vector3.Forward);
             ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(60f), device.Viewport.AspectRatio, 0.3f, 10000f);
             centerX = device.Viewport.Width / 2;
             centerY = device.Viewport.Height / 2;
-            ResetMousePos();
         }
 
         public void Update()
@@ -36,42 +32,42 @@ namespace RawCraft.Renderer
 
             if (kState.IsKeyDown(Keys.W))
             {
-                Vector3 v = new Vector3(0, 0, -1) * MoveSpeed;
-                move(v);
+                Vector3 v = new Vector3(0, 0, -1) * moveSpeed;
+                moveCamera(v);
             }
             if (kState.IsKeyDown(Keys.S))
             {
-                Vector3 v = new Vector3(0, 0, 1) * MoveSpeed;
-                move(v);
+                Vector3 v = new Vector3(0, 0, 1) * moveSpeed;
+                moveCamera(v);
             }
             if (kState.IsKeyDown(Keys.A))
             {
-                Vector3 v = new Vector3(-1, 0, 0) * MoveSpeed;
-                move(v);
+                Vector3 v = new Vector3(-1, 0, 0) * moveSpeed;
+                moveCamera(v);
             }
             if (kState.IsKeyDown(Keys.D))
             {
-                Vector3 v = new Vector3(1, 0, 0) * MoveSpeed;
-                move(v);
+                Vector3 v = new Vector3(1, 0, 0) * moveSpeed;
+                moveCamera(v);
             }
             if (kState.IsKeyDown(Keys.Q))
             {
-                Vector3 v = new Vector3(0, -1, 0) * MoveSpeed;
-                move(v);
+                Vector3 v = new Vector3(0, -1, 0) * moveSpeed;
+                moveCamera(v);
             }
             if (kState.IsKeyDown(Keys.E))
             {
-                Vector3 v = new Vector3(0, 1, 0) * MoveSpeed;
-                move(v);
+                Vector3 v = new Vector3(0, 1, 0) * moveSpeed;
+                moveCamera(v);
             }
 
             MouseState mState = Mouse.GetState();
 
-            Player.Yaw -= rotateSpeed * (mState.X - oldX) * 2;
-            Player.Pitch -= rotateSpeed * (mState.Y - oldY) * 2;
+            Player.Yaw -= rotateSpeed * (mState.X - centerX);
+            Player.Pitch -= rotateSpeed * (mState.Y - centerY);
 
-            if (Math.Abs(Player.Pitch) > 1.57)
-                Player.Pitch = (float)(1.57 * Math.Sign(Player.Pitch));
+            if (Math.Abs(Player.Pitch) > Math.PI / 2 - 0.001)
+                Player.Pitch = (float)((Math.PI / 2 - 0.001) * Math.Sign(Player.Pitch)); // just Math.PI / 2 makes the world invisible at max and min pitch
 
             if (Math.Abs(Player.Yaw) >= Math.PI)
                 Player.Yaw -= 2 * (float)(Math.PI * Math.Sign(Player.Yaw));
@@ -84,8 +80,6 @@ namespace RawCraft.Renderer
         private void ResetMousePos()
         {
             Mouse.SetPosition(centerX, centerY);
-            oldX = centerX;
-            oldY = centerY;
         }
 
         private void UpdateMatrices()
@@ -96,7 +90,7 @@ namespace RawCraft.Renderer
             ViewMatrix = Matrix.CreateLookAt(CameraPosition, lookAt, Vector3.Up);
         }
 
-        private void move(Vector3 v)
+        private void moveCamera(Vector3 v)
         {
             v = Vector3.Transform(v, rotationMatrix);
             Player.X = Player.X + v.X;

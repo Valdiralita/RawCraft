@@ -19,6 +19,7 @@
             blocks[5].HasMetadata = true;
 
             blocks[6].NotABlock = true;
+            blocks[6].IsXSprite = true;
 
             blocks[8].NotABlock = true;
 
@@ -55,8 +56,10 @@
             blocks[30].NotABlock = true;
 
             blocks[31].NotABlock = true;
+            blocks[31].IsXSprite = true;
 
             blocks[32].NotABlock = true;
+            blocks[32].IsXSprite = true;
 
             blocks[33].IsMultitex = true;
             // blocks[33].HasMetadata = true; <-- enable this after fixing the vertexindexgenerator
@@ -68,12 +71,17 @@
             blocks[36].NotABlock = true;
 
             blocks[37].NotABlock = true;
+            blocks[37].IsXSprite = true;
 
             blocks[38].NotABlock = true;
+            blocks[38].IsXSprite = true;
 
             blocks[39].NotABlock = true;
+            blocks[39].IsXSprite = true;
 
             blocks[40].NotABlock = true;
+            blocks[40].IsXSprite = true;
+
 
             blocks[43].IsMultitex = true;
             blocks[43].HasMetadata = true;
@@ -101,6 +109,7 @@
             blocks[58].IsMultitex = true;
 
             blocks[59].NotABlock = true;
+            blocks[59].IsXSprite = true;
 
             blocks[60].IsTransparent = true;
             blocks[60].IsMultitex = true;
@@ -145,6 +154,7 @@
             blocks[81].NotABlock = true;
 
             blocks[83].NotABlock = true;
+            blocks[83].IsXSprite = true;
 
             blocks[84].IsMultitex = true;
 
@@ -178,8 +188,10 @@
             blocks[103].IsMultitex = true;
 
             blocks[104].NotABlock = true;
+            blocks[104].IsXSprite = true;
 
             blocks[105].NotABlock = true;
+            blocks[105].IsXSprite = true;
 
             blocks[106].NotABlock = true;
 
@@ -199,10 +211,12 @@
             blocks[114].IsTransparent = true;
 
             blocks[115].NotABlock = true;
+            blocks[115].IsXSprite = true;
 
             blocks[116].NotABlock = true;
 
             blocks[117].NotABlock = true;
+            blocks[117].IsXSprite = true;
 
             blocks[118].NotABlock = true;
 

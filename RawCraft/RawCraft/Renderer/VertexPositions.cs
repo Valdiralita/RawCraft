@@ -7,7 +7,7 @@ namespace RawCraft.Renderer
     static class VertexPositions
     {
         public static List<Vector3>[] Block;
-        public static List<Vector3> Plant;
+        public static List<Vector3> XSprite;
 
         public static void Initialize()
         {
@@ -57,27 +57,27 @@ namespace RawCraft.Renderer
             Block[5].Add(new Vector3(-0.5f, -0.5f, -0.5f));
 
 
-            Plant = new List<Vector3>();
+            XSprite = new List<Vector3>();
 
-            Plant.Add(new Vector3((float)(-Math.Sqrt(2) / 4),  0.5f, (float)(-Math.Sqrt(2) / 4)));
-            Plant.Add(new Vector3((float)( Math.Sqrt(2) / 4),  0.5f, (float)( Math.Sqrt(2) / 4)));
-            Plant.Add(new Vector3((float)( Math.Sqrt(2) / 4), -0.5f, (float)( Math.Sqrt(2) / 4)));
-            Plant.Add(new Vector3((float)(-Math.Sqrt(2) / 4), -0.5f, (float)(-Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)(-Math.Sqrt(2) / 4),  0.5f, (float)(-Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)( Math.Sqrt(2) / 4),  0.5f, (float)( Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)( Math.Sqrt(2) / 4), -0.5f, (float)( Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)(-Math.Sqrt(2) / 4), -0.5f, (float)(-Math.Sqrt(2) / 4)));
                                                                                              
-            Plant.Add(new Vector3((float)( Math.Sqrt(2) / 4),  0.5f, (float)( Math.Sqrt(2) / 4)));
-            Plant.Add(new Vector3((float)(-Math.Sqrt(2) / 4),  0.5f, (float)(-Math.Sqrt(2) / 4)));
-            Plant.Add(new Vector3((float)(-Math.Sqrt(2) / 4), -0.5f, (float)(-Math.Sqrt(2) / 4)));
-            Plant.Add(new Vector3((float)( Math.Sqrt(2) / 4), -0.5f, (float)( Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)( Math.Sqrt(2) / 4),  0.5f, (float)( Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)(-Math.Sqrt(2) / 4),  0.5f, (float)(-Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)(-Math.Sqrt(2) / 4), -0.5f, (float)(-Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)( Math.Sqrt(2) / 4), -0.5f, (float)( Math.Sqrt(2) / 4)));
                                                                                              
-            Plant.Add(new Vector3((float)(-Math.Sqrt(2) / 4),  0.5f, (float)( Math.Sqrt(2) / 4)));
-            Plant.Add(new Vector3((float)( Math.Sqrt(2) / 4),  0.5f, (float)(-Math.Sqrt(2) / 4)));
-            Plant.Add(new Vector3((float)( Math.Sqrt(2) / 4), -0.5f, (float)(-Math.Sqrt(2) / 4)));
-            Plant.Add(new Vector3((float)(-Math.Sqrt(2) / 4), -0.5f, (float)( Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)(-Math.Sqrt(2) / 4),  0.5f, (float)( Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)( Math.Sqrt(2) / 4),  0.5f, (float)(-Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)( Math.Sqrt(2) / 4), -0.5f, (float)(-Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)(-Math.Sqrt(2) / 4), -0.5f, (float)( Math.Sqrt(2) / 4)));
                                                                                              
-            Plant.Add(new Vector3((float)( Math.Sqrt(2) / 4),  0.5f, (float)(-Math.Sqrt(2) / 4)));
-            Plant.Add(new Vector3((float)(-Math.Sqrt(2) / 4),  0.5f, (float)( Math.Sqrt(2) / 4)));
-            Plant.Add(new Vector3((float)(-Math.Sqrt(2) / 4), -0.5f, (float)( Math.Sqrt(2) / 4)));
-            Plant.Add(new Vector3((float)( Math.Sqrt(2) / 4), -0.5f, (float)(-Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)( Math.Sqrt(2) / 4),  0.5f, (float)(-Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)(-Math.Sqrt(2) / 4),  0.5f, (float)( Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)(-Math.Sqrt(2) / 4), -0.5f, (float)( Math.Sqrt(2) / 4)));
+            XSprite.Add(new Vector3((float)( Math.Sqrt(2) / 4), -0.5f, (float)(-Math.Sqrt(2) / 4)));
         }
     }
 }
