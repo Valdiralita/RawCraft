@@ -41,7 +41,7 @@ namespace RawCraft.Network.Packets
                 chunkcount++;
 
                 Chunk c;
-                if (MapChunks.Chunks.TryGetValue(new Vector2(x, z), out c))
+                if (MapChunks.Map.TryGetValue(new Vector2(x, z), out c))
                 {
                     //c.SetChunk(bitmask, chunkdata, sectioncount);
                     //TODO: implement correct way to change chunk sections
@@ -49,7 +49,7 @@ namespace RawCraft.Network.Packets
                 else
                 {
                     c = new Chunk(x, z, sectioncount, bitmask, chunkdata);
-                    MapChunks.Chunks.TryAdd(new Vector2(x, z), c);
+                    MapChunks.Map.TryAdd(new Vector2(x, z), c);
                 }
             }
         }

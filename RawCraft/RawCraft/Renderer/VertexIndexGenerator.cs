@@ -333,7 +333,7 @@ namespace RawCraft.Renderer
                     {
                         if (Z == 15)
                         {
-                            if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX, chunk.ChunkZ + 1), out AdjacentChunk))
+                            if (MapChunks.Map.TryGetValue(new Vector2(chunk.ChunkX, chunk.ChunkZ + 1), out AdjacentChunk))
                                 if (Blocks.blocks[AdjacentChunk.BlockType[X, Y, 0]].IsTransparent || Blocks.blocks[AdjacentChunk.BlockType[X, Y, 0]].NotABlock)
                                     return true;
                             return false;
@@ -349,7 +349,7 @@ namespace RawCraft.Renderer
                     {
                         if (Z == 0)
                         {
-                            if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX, chunk.ChunkZ - 1), out AdjacentChunk))
+                            if (MapChunks.Map.TryGetValue(new Vector2(chunk.ChunkX, chunk.ChunkZ - 1), out AdjacentChunk))
                                 if (Blocks.blocks[AdjacentChunk.BlockType[X, Y, 15]].IsTransparent || Blocks.blocks[AdjacentChunk.BlockType[X, Y, 15]].NotABlock)
                                     return true;
                             return false;
@@ -365,7 +365,7 @@ namespace RawCraft.Renderer
                     {
                         if (X == 15)
                         {
-                            if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX + 1, chunk.ChunkZ), out AdjacentChunk))
+                            if (MapChunks.Map.TryGetValue(new Vector2(chunk.ChunkX + 1, chunk.ChunkZ), out AdjacentChunk))
                                 if (Blocks.blocks[AdjacentChunk.BlockType[0, Y, Z]].IsTransparent || Blocks.blocks[AdjacentChunk.BlockType[0, Y, Z]].NotABlock)
                                     return true;
                             return false;
@@ -381,7 +381,7 @@ namespace RawCraft.Renderer
                     {
                         if (X == 0)
                         {
-                            if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX - 1, chunk.ChunkZ), out AdjacentChunk))
+                            if (MapChunks.Map.TryGetValue(new Vector2(chunk.ChunkX - 1, chunk.ChunkZ), out AdjacentChunk))
                                 if (Blocks.blocks[AdjacentChunk.BlockType[15, Y, Z]].IsTransparent || Blocks.blocks[AdjacentChunk.BlockType[15, Y, Z]].NotABlock)
                                     return true;
                             return false;
@@ -434,7 +434,7 @@ namespace RawCraft.Renderer
                     {
                         if (Z == 15)
                         {
-                            if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX, chunk.ChunkZ + 1), out AdjacentChunk))
+                            if (MapChunks.Map.TryGetValue(new Vector2(chunk.ChunkX, chunk.ChunkZ + 1), out AdjacentChunk))
                                 if (AdjacentChunk.BlockType[X, Y, 0] == ID)
                                     return true;
                             return false;
@@ -450,7 +450,7 @@ namespace RawCraft.Renderer
                     {
                         if (Z == 0)
                         {
-                            if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX, chunk.ChunkZ - 1), out AdjacentChunk))
+                            if (MapChunks.Map.TryGetValue(new Vector2(chunk.ChunkX, chunk.ChunkZ - 1), out AdjacentChunk))
                                 if (AdjacentChunk.BlockType[X, Y, 15] == ID)
                                     return true;
                             return false;
@@ -466,7 +466,7 @@ namespace RawCraft.Renderer
                     {
                         if (X == 15)
                         {
-                            if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX + 1, chunk.ChunkZ), out AdjacentChunk))
+                            if (MapChunks.Map.TryGetValue(new Vector2(chunk.ChunkX + 1, chunk.ChunkZ), out AdjacentChunk))
                                 if (AdjacentChunk.BlockType[0, Y, Z] == ID)
                                     return true;
                             return false;
@@ -482,7 +482,7 @@ namespace RawCraft.Renderer
                     {
                         if (X == 0)
                         {
-                            if (MapChunks.Chunks.TryGetValue(new Vector2(chunk.ChunkX - 1, chunk.ChunkZ), out AdjacentChunk))
+                            if (MapChunks.Map.TryGetValue(new Vector2(chunk.ChunkX - 1, chunk.ChunkZ), out AdjacentChunk))
                                 if (AdjacentChunk.BlockType[15, Y, Z] == ID)
                                     return true;
                             return false;

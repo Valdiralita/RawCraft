@@ -28,7 +28,7 @@ namespace RawCraft.Network.Packets
 
             Chunk c;
 
-            if (MapChunks.Chunks.TryGetValue(new Vector2(chunkx, chunkz), out c))
+            if (MapChunks.Map.TryGetValue(new Vector2(chunkx, chunkz), out c))
             {
                 int offsetX, offsetZ;
 

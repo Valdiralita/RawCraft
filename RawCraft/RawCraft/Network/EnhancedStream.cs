@@ -104,6 +104,11 @@ namespace RawCraft.Network
                         {
                             ReadByte();
                             ReadShort();
+
+                            if (ReadShort() != -1)
+                            {
+                                ReadByte();
+                            }
                         }
                         break;
                     case 6:

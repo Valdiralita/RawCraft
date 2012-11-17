@@ -24,14 +24,14 @@ namespace RawCraft.Network.Packets
             int sectioncount = Convert.ToString(PrimBit, 2).ToCharArray().Count(a => a == '1');
 
             Chunk c;
-            if (MapChunks.Chunks.TryGetValue(new Vector2(x, z), out c))
+            if (MapChunks.Map.TryGetValue(new Vector2(x, z), out c))
             {
                 //c.SetChunk(bitmask, chunkdata, sectioncount);
             }
             else
             {
                 c = new Chunk(x, z, sectioncount, (ushort)PrimBit, UncompressedChunkData);
-                MapChunks.Chunks.TryAdd(new Vector2(x, z), c);
+                MapChunks.Map.TryAdd(new Vector2(x, z), c);
             }
         }
     }

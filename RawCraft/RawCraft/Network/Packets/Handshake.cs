@@ -16,7 +16,7 @@ namespace RawCraft.Network.Packets
         public void Send(string username, string server, int port)
         {
             stream.WriteByte(0x02); //packet ID
-            stream.WriteByte((byte)47); // protocol version
+            stream.WriteByte((byte)49); // protocol version
             stream.WriteString(username);
             stream.WriteString(server);
             stream.WriteInt(port);

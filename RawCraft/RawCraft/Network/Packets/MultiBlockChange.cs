@@ -28,7 +28,7 @@ namespace RawCraft.Network.Packets
             Chunk c;
             byte[][] data = new byte[count][];
         
-            if (MapChunks.Chunks.TryGetValue(new Vector2(chunkx, chunkz), out c))
+            if (MapChunks.Map.TryGetValue(new Vector2(chunkx, chunkz), out c))
             {
                 for (int i = 0; i < count; i++)
                 {

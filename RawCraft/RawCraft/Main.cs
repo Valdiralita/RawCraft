@@ -154,12 +154,12 @@ namespace RawCraft
 
                     base.GraphicsDevice.DepthStencilState = depthState;
                         
-                    foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Chunks)
+                    foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Map)
                         item.Value.DrawOpaque(effect);
 
                     base.GraphicsDevice.DepthStencilState = depthStateOff;
 
-                    foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Chunks)
+                    foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Map)
                         item.Value.DrawWater(effect);
 
                     break;
