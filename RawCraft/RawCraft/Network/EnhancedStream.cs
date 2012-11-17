@@ -100,16 +100,7 @@ namespace RawCraft.Network
                         ReadString(ReadShort());
                         break;
                     case 5:
-                        if (ReadShort() != -1)
-                        {
-                            ReadByte();
-                            ReadShort();
-
-                            if (ReadShort() != -1)
-                            {
-                                ReadByte();
-                            }
-                        }
+                        ReadSlot();
                         break;
                     case 6:
                         ReadInt();
@@ -136,11 +127,6 @@ namespace RawCraft.Network
                 if (ByteArrayLength > -1)
                     ReadData(ByteArrayLength);
             }
-        }
-
-        public override void WriteByte(byte b)
-        {
-            base.WriteByte(b);
         }
 
         public void WriteShort(short s)

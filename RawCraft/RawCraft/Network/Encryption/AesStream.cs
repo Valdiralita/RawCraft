@@ -2,6 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Net.Sockets;
+using System.Text;
 
 namespace RawCraft.Network.Encryption
 {
@@ -9,6 +10,7 @@ namespace RawCraft.Network.Encryption
     {
         CryptoStream enc;
         CryptoStream dec;
+
         public AesStream(Socket socket, EnhancedStream stream, byte[] key) : base(socket)
         {
             BaseStream = stream;
@@ -54,16 +56,6 @@ namespace RawCraft.Network.Encryption
             }
         }
 
-        public override int ReadByte()
-        {
-            return dec.ReadByte();
-        }
-
-        public override int Read(byte[] buffer, int offset, int count)
-        {
-            return dec.Read(buffer, offset, count);
-        }
-
         public override long Seek(long offset, SeekOrigin origin)
         {
             throw new NotSupportedException();
@@ -72,16 +64,6 @@ namespace RawCraft.Network.Encryption
         public override void SetLength(long value)
         {
             throw new NotSupportedException();
-        }
-
-        public override void WriteByte(byte b)
-        {
-            enc.WriteByte(b);
-        }
-
-        public override void Write(byte[] buffer, int offset, int count)
-        {
-            enc.Write(buffer, offset, count);
         }
 
         private RijndaelManaged GenerateAES(byte[] key)
@@ -95,6 +77,25 @@ namespace RawCraft.Network.Encryption
             cipher.IV = key;
 
             return cipher;
+        }
+
+        public override int ReadByte()
+        {
+            return dec.ReadByte();
+        }
+
+        public override int Read(byte[] buffer, int offset, int count)
+        {
+            return dec.Read(buffer, offset, count);
+        }
+        public override void WriteByte(byte b)
+        {
+            enc.WriteByte(b);
+        }
+
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+            enc.Write(buffer, offset, count);
         }
     }
 }
