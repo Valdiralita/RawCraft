@@ -21,6 +21,7 @@ namespace RawCraft.Network.Packets
             Player.Yaw = stream.ReadFloat();
             Player.Pitch = stream.ReadFloat();
             Player.OnGround = Convert.ToBoolean(stream.ReadByte());
+            Send();
         }
 
         public void Send()

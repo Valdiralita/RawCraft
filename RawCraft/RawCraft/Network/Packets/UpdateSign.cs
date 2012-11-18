@@ -10,10 +10,10 @@ namespace RawCraft.Network.Packets
             s.ReadInt();
             s.ReadShort();
             s.ReadInt();
-            s.ReadString(s.ReadShort());
-            s.ReadString(s.ReadShort());
-            s.ReadString(s.ReadShort());
-            s.ReadString(s.ReadShort());
+            s.ReadString();
+            s.ReadString();
+            s.ReadString();
+            s.ReadString();
         }
     }
 }

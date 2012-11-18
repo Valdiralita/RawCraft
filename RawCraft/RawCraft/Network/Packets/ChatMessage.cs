@@ -7,7 +7,7 @@ namespace RawCraft.Network.Packets
     {
         public ChatMessage(EnhancedStream s)
         {
-            s.ReadString(s.ReadShort());
+            s.ReadString();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace RawCraft.Network.Packets
             UpdateChunk();
         }
 
-        private void UpdateChunk() // TODO: check and improve performance
+        private void UpdateChunk()
         {
             int chunkx = x < 0 ? ((int)((x + 1) / 16) - 1) : (int)(x / 16);
             int chunkz = z < 0 ? ((int)((x + 1) / 16) - 1) : (int)(z / 16);

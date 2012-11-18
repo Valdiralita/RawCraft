@@ -7,7 +7,7 @@ namespace RawCraft.Network.Packets
     {
         public PlayerListItem(EnhancedStream s)
         {
-            s.ReadString(s.ReadShort());
+            s.ReadString();
             s.ReadByte();
             s.ReadShort();
         }

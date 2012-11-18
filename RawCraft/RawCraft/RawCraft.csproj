@@ -177,7 +177,7 @@
     <Compile Include="Network\Packets\EntityEffect.cs" />
     <Compile Include="Network\Packets\RemoveEntityEffect.cs" />
     <Compile Include="Network\Packets\SetExperience.cs" />
-    <Compile Include="Network\Packets\MapChunk.cs" />
+    <Compile Include="Network\Packets\ChunkData.cs" />
     <Compile Include="Network\Packets\MultiBlockChange.cs" />
     <Compile Include="Network\Packets\BlockChange.cs" />
     <Compile Include="Network\Packets\BlockAction.cs" />

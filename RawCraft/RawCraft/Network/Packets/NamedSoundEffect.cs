@@ -7,7 +7,7 @@ namespace RawCraft.Network.Packets
     {
         public NamedSoundEffect(EnhancedStream s) 
         {
-            s.ReadString(s.ReadShort());
+            s.ReadString();
             s.ReadInt();
             s.ReadInt();
             s.ReadInt();

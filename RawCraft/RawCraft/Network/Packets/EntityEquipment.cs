@@ -9,7 +9,6 @@ namespace RawCraft.Network.Packets
         {
             s.ReadInt();
             s.ReadShort();
-
             s.ReadSlot();
         }
     }

@@ -7,16 +7,19 @@ using Microsoft.Xna.Framework;
 
 namespace RawCraft.Network.Packets
 {
-    class MapChunk
+    class ChunkData
     {
-        public MapChunk(EnhancedStream stream)
+        public ChunkData(EnhancedStream stream)
         {
-            Store_Chunk(stream.ReadInt(),
+            Store_Chunk(
+                stream.ReadInt(),
                 stream.ReadInt(),
                 (byte)stream.ReadByte(),
                 (ushort)stream.ReadShort(),
                 stream.ReadShort(),
-                ZlibStream.UncompressBuffer(stream.ReadData(stream.ReadInt())));
+                ZlibStream.UncompressBuffer(
+                stream.ReadData(
+                stream.ReadInt())));
         }
 
         private void Store_Chunk(int x, int z, byte GroundUp, ushort PrimBit, short AddBit, byte[] UncompressedChunkData)

@@ -8,7 +8,7 @@ namespace RawCraft.Network.Packets
         public SpawnNamedEntity(EnhancedStream s)
         {
             s.ReadInt();
-            s.ReadString(s.ReadShort());
+            s.ReadString();
             s.ReadInt();
             s.ReadInt();
             s.ReadInt();

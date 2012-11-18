@@ -7,7 +7,7 @@ namespace RawCraft.Network.Packets
     {
         public PluginMessage(EnhancedStream s)
         {
-            s.ReadString(s.ReadShort());
+            s.ReadString();
             s.ReadData(s.ReadShort());
         }
     }

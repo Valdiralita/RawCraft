@@ -17,9 +17,6 @@ namespace RawCraft.Network.Packets
             int count = s.ReadShort();
             int datacount = s.ReadInt();
 
-            if (count * 4 != datacount)
-                throw new Exception();
-
             UpdateChunk(chunkx, chunkz, count);
         }
 

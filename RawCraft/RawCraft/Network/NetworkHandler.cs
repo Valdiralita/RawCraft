@@ -136,7 +136,7 @@ namespace RawCraft.Network
                         SetExperience setExperience = new SetExperience(stream);
                         break;
                     case 0x33:
-                        MapChunk mapChunk = new MapChunk(stream);
+                        ChunkData mapChunk = new ChunkData(stream);
                         break;
                     case 0x34:
                         MultiBlockChange multiBlockChange = new MultiBlockChange(stream);

@@ -26,3 +26,10 @@ Finally, run "msbuild.exe" from the root of the repository to build RawCraft.
 RawCraft uses the permissive [BSD license](https://github.com/Valdiralita/RawCraft/blob/master/LICENSE).
 
 RawCraft is not affiliated with [Minecraft](http://minecraft.net).
+
+## Special Thanks
+
+Special thanks go to:
+ - SirCmpwn
+ - _68x
+ 

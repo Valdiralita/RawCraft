@@ -9,7 +9,7 @@ namespace RawCraft.Network.Packets
         public LoginRequest(EnhancedStream s)
         {
             s.ReadInt();
-            s.ReadString(s.ReadShort());
+            s.ReadString();
             s.ReadByte();
             s.ReadByte();
             s.ReadByte();

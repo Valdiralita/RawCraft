@@ -9,7 +9,7 @@ namespace RawCraft.Network.Packets
         {
             stream.ReadByte();
             stream.ReadByte();
-            stream.ReadString(stream.ReadShort());
+            stream.ReadString();
             stream.ReadByte();
         }
     }

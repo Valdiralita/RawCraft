@@ -10,7 +10,7 @@ namespace RawCraft.Network.Packets
     {
         public DisconnectKick(EnhancedStream s, Socket networkSocket)
         {
-            string reason = s.ReadString(s.ReadShort());
+            string reason = s.ReadString();
             s.Close();
             networkSocket = null;
             Storage.Network.isConnected = false; 

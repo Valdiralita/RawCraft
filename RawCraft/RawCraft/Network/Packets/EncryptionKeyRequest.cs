@@ -12,7 +12,7 @@ namespace RawCraft.Network.Packets
 
         public EncryptionKeyRequest(EnhancedStream stream, byte[] sharedSecret, string sessionID, string username)
         {
-            string serverID = stream.ReadString(stream.ReadShort());
+            string serverID = stream.ReadString();
             byte[] publicKey = stream.ReadData(stream.ReadShort());
             byte[] token = stream.ReadData(stream.ReadShort());
 

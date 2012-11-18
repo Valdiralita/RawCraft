@@ -11,14 +11,14 @@ namespace RawCraft.Network.Packets
 {
     class MapChunkBulk
     {
-        int count;
+        int chunkCount;
         byte[] compressedChunks, metaData;
 
         public MapChunkBulk(EnhancedStream stream)
         {
-            count = stream.ReadShort();
+            chunkCount = stream.ReadShort();
             compressedChunks = stream.ReadData(stream.ReadInt());
-            metaData = stream.ReadData(count * 12);
+            metaData = stream.ReadData(chunkCount * 12);
             StoreChunks(ZlibStream.UncompressBuffer(compressedChunks));
         }
 
@@ -26,7 +26,7 @@ namespace RawCraft.Network.Packets
         {
             int proceededSections = 0;
             int chunkcount = 0;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < chunkCount; i++)
             {
                 int x, z, sectioncount;
                 ushort bitmask;

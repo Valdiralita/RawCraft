@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+// Credits and special thanks go to _68x - creator of this file.
+
+ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Net.Sockets;

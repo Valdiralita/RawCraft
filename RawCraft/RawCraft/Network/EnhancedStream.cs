@@ -49,9 +49,10 @@ namespace RawCraft.Network
             Array.Reverse(buffer);
             return BitConverter.ToInt64(buffer, 0);
         }
-        public string ReadString(int count)
+        public string ReadString()
         {
-            buffer = ReadData(count * 2);
+            int length = ReadShort();
+            buffer = ReadData(length * 2);
             return enc.GetString(buffer, 0, buffer.Length);
         }
 
@@ -97,7 +98,7 @@ namespace RawCraft.Network
                         ReadFloat();
                         break;
                     case 4:
-                        ReadString(ReadShort());
+                        ReadString();
                         break;
                     case 5:
                         ReadSlot();
@@ -124,7 +125,7 @@ namespace RawCraft.Network
 
                 int ByteArrayLength = ReadShort();
 
-                if (ByteArrayLength > -1)
+                if (ByteArrayLength > 0)
                     ReadData(ByteArrayLength);
             }
         }

@@ -11,7 +11,7 @@ namespace RawCraft.Network.Packets
             s.ReadByte();
             s.ReadByte();
             s.ReadShort();
-            s.ReadString(s.ReadShort());
+            s.ReadString();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace RawCraft.Network.Packets
         public SpawnPainting(EnhancedStream s) 
         {
             s.ReadInt();
-            s.ReadString(s.ReadShort());
+            s.ReadString();
             s.ReadInt();
             s.ReadInt();
             s.ReadInt();
