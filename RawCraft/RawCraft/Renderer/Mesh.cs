@@ -21,15 +21,15 @@ namespace RawCraft.Renderer
 
             if (indices.Length < ushort.MaxValue) // saves about 50-60MB ram at view distance of 15 (cpu usage increase was not measurable) 
             {
-                ushort[] ushortindex = new ushort[indices.Length];
+                ushort[] ushortIndices = new ushort[indices.Length];
 
                 for (int i = 0; i < indices.Length; i++)
                 {
-                    ushortindex[i] = (ushort)indices[i];
+                    ushortIndices[i] = (ushort)indices[i];
                 }
 
                 indexBuffer = new IndexBuffer(gd, IndexElementSize.SixteenBits, indices.Length, BufferUsage.None);
-                indexBuffer.SetData(ushortindex);
+                indexBuffer.SetData(ushortIndices);
             }
             else
             {
