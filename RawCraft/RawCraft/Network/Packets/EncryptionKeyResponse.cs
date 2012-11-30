@@ -1,30 +1,27 @@
-﻿using System;
-using System.IO;
-
-namespace RawCraft.Network.Packets
+﻿namespace RawCraft.Network.Packets
 {
     class EncryptionKeyResponse
     {
-        EnhancedStream stream;
+        EnhancedStream _stream;
 
         public EncryptionKeyResponse(EnhancedStream s)
         {
-            stream = s;
+            _stream = s;
         }
 
         public void Get()
         {
-            stream.ReadData(stream.ReadShort());
-            stream.ReadData(stream.ReadShort());
+            _stream.ReadData(_stream.ReadShort());
+            _stream.ReadData(_stream.ReadShort());
         }
 
         public void Send(byte[] encodedSharedSecret, byte[] token)
         {
-            stream.WriteByte(0xFC);
-            stream.WriteShort(128);
-            stream.WriteData(encodedSharedSecret);
-            stream.WriteShort(128);
-            stream.WriteData(token);
+            _stream.WriteByte(0xFC);
+            _stream.WriteShort(128);
+            _stream.WriteData(encodedSharedSecret);
+            _stream.WriteShort(128);
+            _stream.WriteData(token);
         }
     }
 }

@@ -6,23 +6,24 @@ namespace RawCraft.Menu.BaseClasses
 {
     class Textbox : Button
     {
-        protected bool HasFocus;
-        protected int MaxTextLength = 100;
-        protected string TextboxName;
-        protected SpriteFont TextboxNameFont;
-        protected Vector2 NamePosition;
+        bool _hasFocus;
+        int _maxTextLength = 100;
+        string _textboxName;
+        SpriteFont _textboxNameFont;
+        Vector2 _namePosition;
 
         public Textbox(Texture2D left, Texture2D mid, Texture2D right, int width,
-            Vector2 pos, string text, SpriteFont BigFont, SpriteFont NormalFont) : base(left, mid, right, width, "", BigFont)
+            Vector2 pos, string text, SpriteFont bigFont, SpriteFont normalFont) : base(left, mid, right, width, "", bigFont)
         {
-            TextboxNameFont = NormalFont;
-            TextboxName = text;
+            _namePosition = pos;
+            _textboxNameFont = normalFont;
+            _textboxName = text;
             EventInput.CharEntered += UpdateText;
         }
 
         protected void UpdateText(object sender, CharacterEventArgs e)
         {
-            if (HasFocus)
+            if (_hasFocus)
             {
                 if (e.Character == (char)Keys.Back)
                 {
@@ -31,7 +32,7 @@ namespace RawCraft.Menu.BaseClasses
                         Text = Text.Remove(Text.Length - 1);
                     }
                 }
-                else if (Text.Length < MaxTextLength)
+                else if (Text.Length < _maxTextLength)
                 {
                     Text += e.Character;
                 }
@@ -40,7 +41,7 @@ namespace RawCraft.Menu.BaseClasses
 
         public void SetTextLength(int length)
         {
-            MaxTextLength = length;
+            _maxTextLength = length;
         }
 
         public virtual string GetText()
@@ -54,26 +55,26 @@ namespace RawCraft.Menu.BaseClasses
                 TexLeft.Width + TexMid.Width * BtnWidth + TexRight.Width, TexMid.Height);
             HitboxMouse = new Rectangle(mouse.X, mouse.Y, 1, 1);
 
-            BtnColor = HasFocus ? new Color(255, 255, 255, 255) : new Color(180, 180, 180, 255);
+            BtnColor = _hasFocus ? new Color(255, 255, 255, 255) : new Color(180, 180, 180, 255);
 
             if (HitboxMouse.Intersects(Hitbox))
             {
                 if (mouse.LeftButton == ButtonState.Pressed)
-                    HasFocus = true;
+                    _hasFocus = true;
             }
             else
             {
                 if (mouse.LeftButton == ButtonState.Pressed)
-                    HasFocus = false;
+                    _hasFocus = false;
             }
-            NamePosition = Position + new Vector2(0, -TextboxNameFont.MeasureString(TextboxName).Y);
-            TextPosition = Position + new Vector2(Hitbox.Width / 2, Hitbox.Height / 2) - ButtonFont.MeasureString(Text) / 2;
+            _namePosition = Position + new Vector2(0, -_textboxNameFont.MeasureString(_textboxName).Y);
+            TextPosition = Position + new Vector2(Hitbox.Width / 2f, Hitbox.Height / 2f) - ButtonFont.MeasureString(Text) / 2;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.DrawString(TextboxNameFont, TextboxName, NamePosition, BtnColor);
+            spriteBatch.DrawString(_textboxNameFont, _textboxName, _namePosition, BtnColor);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace RawCraft.Storage.Blocks
 {
-    class Blocks
+    static class Blocks
     {
         public static Block[] blocks;
 

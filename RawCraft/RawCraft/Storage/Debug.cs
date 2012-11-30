@@ -2,8 +2,8 @@
 
 namespace RawCraft.Storage
 {
-    class Debug
+    static class Debug
     {
-        public static Stopwatch RendertimeCounter = new Stopwatch();
+        public static readonly Stopwatch RendertimeCounter = new Stopwatch();
     }
 }

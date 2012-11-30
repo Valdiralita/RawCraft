@@ -1,25 +1,21 @@
-﻿using System;
-using System.Linq;
-using System.IO;
-
-namespace RawCraft.Network.Packets
+﻿namespace RawCraft.Network.Packets
 {
     class Handshake
     {
-        EnhancedStream stream;
+        EnhancedStream _stream;
 
         public Handshake(EnhancedStream stream)
         {
-            this.stream = stream;
+            _stream = stream;
         }
 
         public void Send(string username, string server, int port)
         {
-            stream.WriteByte(0x02); //packet ID
-            stream.WriteByte((byte)49); // protocol version
-            stream.WriteString(username);
-            stream.WriteString(server);
-            stream.WriteInt(port);
+            _stream.WriteByte(0x02); //packet ID
+            _stream.WriteByte(49); // protocol version
+            _stream.WriteString(username);
+            _stream.WriteString(server);
+            _stream.WriteInt(port);
         }
     }
 }

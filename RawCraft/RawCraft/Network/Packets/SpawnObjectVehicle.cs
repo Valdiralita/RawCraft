@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace RawCraft.Network.Packets
+﻿namespace RawCraft.Network.Packets
 {
     class SpawnObjectVehicle
     {
@@ -12,13 +9,11 @@ namespace RawCraft.Network.Packets
             s.ReadInt();
             s.ReadInt();
             s.ReadInt();
-            int throwerID = s.ReadInt(); // TODO: This is not correctly done
-            if (throwerID != 0)
-            {
-                s.ReadShort();
-                s.ReadShort();
-                s.ReadShort();
-            }
+            int throwerID = s.ReadInt();
+            if (throwerID == 0) return;
+            s.ReadShort();
+            s.ReadShort();
+            s.ReadShort();
         }
     }
 }

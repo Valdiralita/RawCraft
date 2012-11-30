@@ -1,21 +1,19 @@
-﻿using System;
-using System.IO;
-using RawCraft.Storage.Map;
+﻿using RawCraft.Storage.Map;
 using Microsoft.Xna.Framework;
 
 namespace RawCraft.Network.Packets
 {
     class MultiBlockChange
     {
-        EnhancedStream stream;
+        EnhancedStream _stream;
 
         public MultiBlockChange(EnhancedStream s) 
         {
-            stream = s;
+            _stream = s;
             int chunkx = s.ReadInt();
             int chunkz = s.ReadInt();
             int count = s.ReadShort();
-            int datacount = s.ReadInt();
+            s.ReadInt();
 
             UpdateChunk(chunkx, chunkz, count);
         }
@@ -29,7 +27,7 @@ namespace RawCraft.Network.Packets
             {
                 for (int i = 0; i < count; i++)
                 {
-                    data[i] = stream.ReadData(4);
+                    data[i] = _stream.ReadData(4);
                 }
                 c.MultiBlockChange(data, count);
             }

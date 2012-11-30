@@ -1,27 +1,23 @@
-﻿using System;
-using System.IO;
-
-
-namespace RawCraft.Network.Packets
+﻿namespace RawCraft.Network.Packets
 {
     class ClientSettings
     {
-        EnhancedStream stream;
+        EnhancedStream _stream;
 
         public ClientSettings(EnhancedStream s)
         {
-            stream = s;
+            _stream = s;
         }
 
         public void Send()
         {
             string locale = "en_US";
-            stream.WriteByte((byte)0xCC); //packet id
-            stream.WriteString(locale);
-            stream.WriteByte(0);
-            stream.WriteByte(8);
-            stream.WriteByte(0);
-            stream.WriteByte(1);
+            _stream.WriteByte(0xCC); //packet id
+            _stream.WriteString(locale);
+            _stream.WriteByte(0);
+            _stream.WriteByte(8);
+            _stream.WriteByte(0);
+            _stream.WriteByte(1);
         }
     }
 }

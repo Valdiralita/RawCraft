@@ -1,39 +1,36 @@
 ﻿using System;
-using System.Linq;
 using RawCraft.Storage;
-using System.IO;
 using Microsoft.Xna.Framework;
 
 namespace RawCraft.Network.Packets
 {
     class PlayerPositionLook
-    { 
-        byte[] PacketID = new byte[1] { 0x0D };
-        EnhancedStream stream;
+    {
+        EnhancedStream _stream;
 
         public PlayerPositionLook(EnhancedStream s)
         {
-            stream = s;
-            Player.X = stream.ReadDouble();
-            Player.Stance = stream.ReadDouble();
-            Player.Y = stream.ReadDouble();
-            Player.Z = stream.ReadDouble();
-            Player.Yaw = stream.ReadFloat();
-            Player.Pitch = stream.ReadFloat();
-            Player.OnGround = Convert.ToBoolean(stream.ReadByte());
+            _stream = s;
+            Player.X = _stream.ReadDouble();
+            Player.Stance = _stream.ReadDouble();
+            Player.Y = _stream.ReadDouble();
+            Player.Z = _stream.ReadDouble();
+            Player.Yaw = _stream.ReadFloat();
+            Player.Pitch = _stream.ReadFloat();
+            Player.OnGround = Convert.ToBoolean(_stream.ReadByte());
             Send();
         }
 
         public void Send()
         {
-            stream.WriteByte(0x0D);
-            stream.WriteDouble(Player.X);
-            stream.WriteDouble(Player.Y);
-            stream.WriteDouble(Player.Stance);
-            stream.WriteDouble(Player.Z);
-            stream.WriteFloat(180 - MathHelper.ToDegrees(Player.Yaw));
-            stream.WriteFloat(-MathHelper.ToDegrees(Player.Pitch));
-            stream.WriteBool(Player.OnGround);
+            _stream.WriteByte(0x0D);
+            _stream.WriteDouble(Player.X);
+            _stream.WriteDouble(Player.Y);
+            _stream.WriteDouble(Player.Stance);
+            _stream.WriteDouble(Player.Z);
+            _stream.WriteFloat(180 - MathHelper.ToDegrees(Player.Yaw));
+            _stream.WriteFloat(-MathHelper.ToDegrees(Player.Pitch));
+            _stream.WriteBool(Player.OnGround);
         }
     }
 }

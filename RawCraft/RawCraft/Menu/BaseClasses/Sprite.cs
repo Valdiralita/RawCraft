@@ -5,37 +5,37 @@ namespace RawCraft.Menu.BaseClasses
 {
     class Sprite
     {
-        Vector2 position;
-        Texture2D texture;
+        Vector2 _position;
+        Texture2D _texture;
 
         public Sprite(Texture2D tex)
         {
-            texture = tex;
+            _texture = tex;
         }
 
         public void SetTexture(Texture2D tex)
         {
-            texture = tex;
+            _texture = tex;
         }
 
         public void SetPosition(Vector2 pos)
         {
-            position = pos;
+            _position = pos;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.Draw(_texture, _position, Color.White);
         }
 
         public int GetWidth
         {
-            get { return texture.Width; }
+            get { return _texture.Width; }
         }
 
         public int GetHeight
         {
-            get { return texture.Height; }
+            get { return _texture.Height; }
         }
     }
 }

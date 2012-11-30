@@ -2,27 +2,25 @@
 using RawCraft.Renderer;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
-using RawCraft.Network;
 
 namespace RawCraft.Storage.Map
 {
     public class Chunk
     {
-        public int ChunkX;
-        public int ChunkZ;
+        public readonly int ChunkX;
+        public readonly int ChunkZ;
         public byte[, ,] BlockType = new byte[16, 256, 16];
         public byte[, ,] BlockMetadata = new byte[16, 256, 16];
 
-        private Mesh OpaqueMesh, WaterMesh;
+        private Mesh _opaqueMesh, _waterMesh;
 
-        public Chunk(int X, int Z, int sections, ushort primBit, byte[] Chunk)
+        public Chunk(int x, int z, int sections, ushort primBit, byte[] chunk)
         {
-            ChunkX = X;
-            ChunkZ = Z;
+            ChunkX = x;
+            ChunkZ = z;
 
-            SetChunk(primBit, Chunk, sections);
-            RenderFIFO.Enqueue(this, new bool[4] { true, true, true, true });
+            SetChunk(primBit, chunk, sections);
+            RenderFIFO.Enqueue(this, new[] { true, true, true, true });
         }
 
         internal void SetChunk(ushort primBit, byte[] data, int sections)
@@ -66,26 +64,26 @@ namespace RawCraft.Storage.Map
 
         public void DrawOpaque(Effect effect)
         {
-            if (OpaqueMesh != null)
-                OpaqueMesh.Draw(effect);
+            if (_opaqueMesh != null)
+                _opaqueMesh.Draw(effect);
         }
         public void DrawWater(Effect effect)
         {
-            if (WaterMesh != null)
-                WaterMesh.Draw(effect);
+            if (_waterMesh != null)
+                _waterMesh.Draw(effect);
         }
 
         public void UpdateMesh(GraphicsDevice gd)
         {
-            Mesh[] meshes = VertexIndexGenerator.generate(this, gd);
+            Mesh[] meshes = VertexIndexGenerator.Generate(this, gd);
 
             if (meshes != null)
             {
                 if (meshes.Length > 0)
-                    OpaqueMesh = meshes[0];
+                    _opaqueMesh = meshes[0];
 
                 if (meshes.Length > 1)
-                    WaterMesh = meshes[1];
+                    _waterMesh = meshes[1];
             }
         }
 
@@ -94,17 +92,17 @@ namespace RawCraft.Storage.Map
             RenderFIFO.Enqueue(this, toRender);
         }
 
-        public void ChangeBlock(Vector3 pos, byte id, byte metadata, bool SupressRerender)
+        public void ChangeBlock(Vector3 pos, byte id, byte metadata, bool supressRerender)
         {
             BlockType[(int)pos.X, (int)pos.Y, (int)pos.Z] = id;
             BlockMetadata[(int)pos.X, (int)pos.Y, (int)pos.Z] = metadata;
-            if (!SupressRerender)
+            if (!supressRerender)
             {
-                RenderFIFO.Enqueue(this, new bool[] { 
-                    pos.X == 15 ? true : false, 
-                    pos.X == 0 ? true : false, 
-                    pos.Y == 15 ? true : false, 
-                    pos.Y == 0 ? true : false 
+                RenderFIFO.Enqueue(this, new[] { 
+                    (int)pos.X == 15, 
+                    (int)pos.X == 0, 
+                    (int)pos.Y == 15, 
+                    (int)pos.Y == 0 
                 });
             }
         }
@@ -122,13 +120,13 @@ namespace RawCraft.Storage.Map
                 ChangeBlock(new Vector3(offsetX, data[i][1], offsetZ), id, meta, true);
 
                 if (!toRender[0])
-                    toRender[0] = offsetX == 15 ? true : false;
+                    toRender[0] = offsetX == 15;
                 if (!toRender[1])
-                    toRender[1] = offsetX == 0 ? true : false; 
+                    toRender[1] = offsetX == 0; 
                 if (!toRender[2])
-                    toRender[2] = offsetX == 15 ? true : false;
+                    toRender[2] = offsetX == 15;
                 if (!toRender[3])
-                    toRender[3] = offsetX == 0 ? true : false;
+                    toRender[3] = offsetX == 0;
             }
             EnqueueToRender(toRender);
         }

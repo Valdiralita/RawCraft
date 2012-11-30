@@ -10,18 +10,18 @@ namespace RawCraft.Renderer
 {
     class RenderFIFO
     {
-        private static ConcurrentQueue<Chunk> RenderQueue = new ConcurrentQueue<Chunk>();
-        private static AutoResetEvent queueNotifier = new AutoResetEvent(false);
+        private static ConcurrentQueue<Chunk> _renderQueue = new ConcurrentQueue<Chunk>();
+        private static AutoResetEvent _queueNotifier = new AutoResetEvent(false);
 
         public void MeshGenerateThread(object gd)
         {
-            Chunk chunk;
             while (true)
             {
-                queueNotifier.WaitOne();
-                while (RenderQueue.Count != 0)
+                _queueNotifier.WaitOne();
+                while (_renderQueue.Count != 0)
                 {
-                    if (RenderQueue.TryDequeue(out chunk))
+                    Chunk chunk;
+                    if (_renderQueue.TryDequeue(out chunk))
                     {
                         Debug.RendertimeCounter.Start();
                         chunk.UpdateMesh((GraphicsDevice)gd);
@@ -33,33 +33,33 @@ namespace RawCraft.Renderer
 
        public static int Count
        {
-           get { return RenderQueue.Count; }
+           get { return _renderQueue.Count; }
        }
 
         public static void Enqueue(Chunk c, bool[] toRender)
         {
-            Chunk AdjacentChunk;
+            Chunk adjacentChunk;
 
-            if (!RenderQueue.Contains(c))
-                RenderQueue.Enqueue(c);
+            if (!_renderQueue.Contains(c))
+                _renderQueue.Enqueue(c);
 
-            if (toRender[0] && MapChunks.Map.TryGetValue(new Vector2(c.ChunkX + 1, c.ChunkZ), out AdjacentChunk))        // check if there is a chunk (at the vector2 position) and rerender it
-                if (!RenderQueue.Contains(AdjacentChunk))                                                                   // dont enqueue the chunk if its already in queue
-                    RenderQueue.Enqueue(AdjacentChunk);
+            if (toRender[0] && MapChunks.Map.TryGetValue(new Vector2(c.ChunkX + 1, c.ChunkZ), out adjacentChunk))        // check if there is a chunk (at the vector2 position) and rerender it
+                if (!_renderQueue.Contains(adjacentChunk))                                                                   // dont enqueue the chunk if its already in queue
+                    _renderQueue.Enqueue(adjacentChunk);
 
-            if (toRender[1] && MapChunks.Map.TryGetValue(new Vector2(c.ChunkX - 1, c.ChunkZ), out AdjacentChunk))
-                if (!RenderQueue.Contains(AdjacentChunk))
-                    RenderQueue.Enqueue(AdjacentChunk);
+            if (toRender[1] && MapChunks.Map.TryGetValue(new Vector2(c.ChunkX - 1, c.ChunkZ), out adjacentChunk))
+                if (!_renderQueue.Contains(adjacentChunk))
+                    _renderQueue.Enqueue(adjacentChunk);
 
-            if (toRender[2] && MapChunks.Map.TryGetValue(new Vector2(c.ChunkX, c.ChunkZ + 1), out AdjacentChunk))
-                if (!RenderQueue.Contains(AdjacentChunk))
-                    RenderQueue.Enqueue(AdjacentChunk);
+            if (toRender[2] && MapChunks.Map.TryGetValue(new Vector2(c.ChunkX, c.ChunkZ + 1), out adjacentChunk))
+                if (!_renderQueue.Contains(adjacentChunk))
+                    _renderQueue.Enqueue(adjacentChunk);
 
-            if (toRender[3] && MapChunks.Map.TryGetValue(new Vector2(c.ChunkX, c.ChunkZ - 1), out AdjacentChunk))
-                if (!RenderQueue.Contains(AdjacentChunk))
-                    RenderQueue.Enqueue(AdjacentChunk);
+            if (toRender[3] && MapChunks.Map.TryGetValue(new Vector2(c.ChunkX, c.ChunkZ - 1), out adjacentChunk))
+                if (!_renderQueue.Contains(adjacentChunk))
+                    _renderQueue.Enqueue(adjacentChunk);
 
-            queueNotifier.Set();
+            _queueNotifier.Set();
         }
     }
 }

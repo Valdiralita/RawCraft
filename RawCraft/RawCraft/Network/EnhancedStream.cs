@@ -1,89 +1,85 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.IO;
 using System.Net.Sockets;
 
 namespace RawCraft.Network
 {
     public class EnhancedStream : NetworkStream
     {
-        Socket socket;
-        Encoding enc = new UnicodeEncoding(true, true, true);
-        byte[] buffer, data;
+        Encoding _enc = new UnicodeEncoding(true, true, true);
+        byte[] _buffer, _data;
 
         public EnhancedStream(Socket s) : base(s)
         {
-            socket = s;
         }
 
         public short ReadShort()
         {
-            buffer = new byte[2];
-            Read(buffer, 0, 2);
-            Array.Reverse(buffer);
-            return BitConverter.ToInt16(buffer, 0);
+            _buffer = new byte[2];
+            Read(_buffer, 0, 2);
+            Array.Reverse(_buffer);
+            return BitConverter.ToInt16(_buffer, 0);
         }
 
         public int ReadInt()
         {
-            buffer = new byte[4];
-            Read(buffer, 0, 4);
-            Array.Reverse(buffer);
-            return BitConverter.ToInt32(buffer, 0);
+            _buffer = new byte[4];
+            Read(_buffer, 0, 4);
+            Array.Reverse(_buffer);
+            return BitConverter.ToInt32(_buffer, 0);
         }
 
         public double ReadDouble()
         {
-            buffer = new byte[8];
-            Read(buffer, 0, 8);
-            Array.Reverse(buffer);
-            return BitConverter.ToDouble(buffer, 0);
+            _buffer = new byte[8];
+            Read(_buffer, 0, 8);
+            Array.Reverse(_buffer);
+            return BitConverter.ToDouble(_buffer, 0);
         }
 
         public Int64 ReadLong()
         {
-            buffer = new byte[8];
-            Read(buffer, 0, 8);
-            Array.Reverse(buffer);
-            return BitConverter.ToInt64(buffer, 0);
+            _buffer = new byte[8];
+            Read(_buffer, 0, 8);
+            Array.Reverse(_buffer);
+            return BitConverter.ToInt64(_buffer, 0);
         }
+
         public string ReadString()
         {
             int length = ReadShort();
-            buffer = ReadData(length * 2);
-            return enc.GetString(buffer, 0, buffer.Length);
+            _buffer = ReadData(length * 2);
+            return _enc.GetString(_buffer, 0, _buffer.Length);
         }
 
         public byte[] ReadData(int count)
         {
             if (count > 0)
             {
-                buffer = new byte[count];
-                Read(buffer, 0, count);
-                return buffer;
+                _buffer = new byte[count];
+                Read(_buffer, 0, count);
+                return _buffer;
             }
             return new byte[0];
         }
 
         public float ReadFloat()
         {
-            buffer = new byte[4];
-            Read(buffer, 0, 4);
-            Array.Reverse(buffer);
-            return BitConverter.ToSingle(buffer, 0);
+            _buffer = new byte[4];
+            Read(_buffer, 0, 4);
+            Array.Reverse(_buffer);
+            return BitConverter.ToSingle(_buffer, 0);
         }
 
         public void ReadMetaData() //dummy
         {
-            byte MetaDataType = (byte)ReadByte();
-            while (MetaDataType != 127)
+            byte metaDataType = (byte)ReadByte();
+            while (metaDataType != 127)
             {
-                byte First3Bytes = (byte)(MetaDataType >> 5);
-                byte Last5Bytes = (byte)(MetaDataType & 0x1F);
+                byte first3Bytes = (byte)(metaDataType >> 5);
+                byte last5Bytes = (byte)(metaDataType & 0x1F);
 
-                switch (First3Bytes)
+                switch (first3Bytes)
                 {
                     case 0:
                         ReadByte();
@@ -111,7 +107,7 @@ namespace RawCraft.Network
                     default:
                         throw new Exception();
                 }
-                MetaDataType = (byte)ReadByte();
+                metaDataType = (byte)ReadByte();
             }
         }
 
@@ -123,32 +119,32 @@ namespace RawCraft.Network
                 ReadByte();
                 ReadShort();
 
-                int ByteArrayLength = ReadShort();
+                int byteArrayLength = ReadShort();
 
-                if (ByteArrayLength > 0)
-                    ReadData(ByteArrayLength);
+                if (byteArrayLength > 0)
+                    ReadData(byteArrayLength);
             }
         }
 
         public void WriteShort(short s)
         {
-            data = BitConverter.GetBytes(s);
-            Array.Reverse(data);
-            Write(data, 0, 2);
+            _data = BitConverter.GetBytes(s);
+            Array.Reverse(_data);
+            Write(_data, 0, 2);
         }
 
         public void WriteInt(int i)
         {
-            data = BitConverter.GetBytes(i);
-            Array.Reverse(data);
-            Write(data, 0, 4);
+            _data = BitConverter.GetBytes(i);
+            Array.Reverse(_data);
+            Write(_data, 0, 4);
         }
 
         public void WriteFloat(float f)
         {
-            data = BitConverter.GetBytes(f);
-            Array.Reverse(data);
-            Write(data, 0, 4);
+            _data = BitConverter.GetBytes(f);
+            Array.Reverse(_data);
+            Write(_data, 0, 4);
         }
 
         public void WriteString(string str)
@@ -164,9 +160,9 @@ namespace RawCraft.Network
 
         public void WriteDouble(double p)
         {
-            data = BitConverter.GetBytes(p);
-            Array.Reverse(data);
-            Write(data, 0, 8);
+            _data = BitConverter.GetBytes(p);
+            Array.Reverse(_data);
+            Write(_data, 0, 8);
         }
 
         public void WriteBool(bool b)

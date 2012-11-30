@@ -6,28 +6,28 @@ namespace RawCraft.Menu.BaseClasses
 {
     class Background
     {
-        Texture2D texture;
-        int horizontalTileCount, verticalTileCount;
+        Texture2D _texture;
+        int _horizontalTileCount, _verticalTileCount;
 
         public Background(Texture2D texture)
         {
-            this.texture = texture;
+            _texture = texture;
         }
 
         public void SetTexture(Texture2D tex)
         {
-            texture = tex;
+            _texture = tex;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            horizontalTileCount = Config.Width / texture.Width + 1;
-            verticalTileCount = Config.Height / texture.Height + 1;
+            _horizontalTileCount = Config.Width / _texture.Width + 1;
+            _verticalTileCount = Config.Height / _texture.Height + 1;
 
-            for (int i = 0; i < horizontalTileCount; i++)
+            for (int i = 0; i < _horizontalTileCount; i++)
             {
-                for (int j = 0; j < verticalTileCount; j++)
-                    spriteBatch.Draw(texture, new Vector2(texture.Width * i, texture.Height * j), Color.White);
+                for (int j = 0; j < _verticalTileCount; j++)
+                    spriteBatch.Draw(_texture, new Vector2(_texture.Width * i, _texture.Height * j), Color.White);
             }
         }
     }

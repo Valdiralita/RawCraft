@@ -143,7 +143,6 @@
     <Compile Include="Network\Packets\EncryptionKeyRequest.cs" />
     <Compile Include="Network\Packets\EncryptionKeyResponse.cs" />
     <Compile Include="Network\Packets\Handshake.cs" />
-    <Compile Include="Network\Packets\ServerListPing.cs" />
     <Compile Include="Storage\Blocks\Block.cs" />
     <Compile Include="Storage\Blocks\BlockEnums.cs" />
     <Compile Include="Storage\Blocks\Blocks.cs" />

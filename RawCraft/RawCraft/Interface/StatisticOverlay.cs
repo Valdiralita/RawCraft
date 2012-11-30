@@ -8,19 +8,19 @@ namespace RawCraft.Interface
 {
     class StatisticOverlay : TextOverlay
     {
-        FPSCounter counter;
+        FPSCounter _counter;
         public StatisticOverlay(SpriteFont font, Vector2 vec) : base(font, vec)
         {
         }
 
         public void UpdateText(GameTime gameTime)
         {
-            if (counter == null)
-                counter = new FPSCounter(gameTime);
+            if (_counter == null)
+                _counter = new FPSCounter(gameTime);
 
             base.UpdateText(
-                "FPS: " + counter.FPS +
-                "\nDraw time (in ms): " + counter.DrawTime +
+                "FPS: " + _counter.FPS +
+                "\nDraw time (in ms): " + _counter.DrawTime +
                 "\nX: " + Player.X +
                 "\nY: " + Player.Y +
                 "\nZ: " + Player.Z +
@@ -32,9 +32,9 @@ namespace RawCraft.Interface
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (counter != null)
+            if (_counter != null)
             {
-                counter.UpdateFPS();
+                _counter.UpdateFPS();
                 base.Draw(spriteBatch);
             }
         }

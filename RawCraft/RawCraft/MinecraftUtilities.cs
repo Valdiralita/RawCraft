@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
-using SharpLauncher;
 
 namespace RawCraft
 {
@@ -39,7 +36,7 @@ namespace RawCraft
                 byte[] decrypted = cryptoTransform.TransformFinalBlock(encryptedLogin, 0, encryptedLogin.Length);
                 short userLength = IPAddress.HostToNetworkOrder(BitConverter.ToInt16(decrypted, 0));
                 byte[] user = decrypted.Skip(2).Take(userLength).ToArray();
-                short passLength = IPAddress.HostToNetworkOrder(BitConverter.ToInt16(decrypted, userLength + 2));
+                IPAddress.HostToNetworkOrder(BitConverter.ToInt16(decrypted, userLength + 2));
                 byte[] password = decrypted.Skip(4 + userLength).ToArray();
                 LastLogin result = new LastLogin();
                 result.Username = System.Text.Encoding.UTF8.GetString(user);

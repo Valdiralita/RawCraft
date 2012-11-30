@@ -13,7 +13,7 @@ namespace RawCraft.Menu.BaseClasses
         protected Rectangle Hitbox, HitboxMouse;
         protected string Text;
         protected Color BtnColor = new Color(200, 200, 200, 255);
-        protected bool Clicked;
+        bool _clicked;
 
         public Button(Texture2D left, Texture2D mid, Texture2D right, int width)
         {
@@ -61,14 +61,14 @@ namespace RawCraft.Menu.BaseClasses
                 BtnColor = new Color(255, 255, 255, 255);
 
                 if (mouse.LeftButton == ButtonState.Pressed)
-                    Clicked = true;
+                    _clicked = true;
                 else
-                    Clicked = false;
+                    _clicked = false;
             }
             else
             {
                 BtnColor = new Color(180, 180, 180, 255);
-                Clicked = false;
+                _clicked = false;
             }
 
             TextPosition = Position + new Vector2(Hitbox.Width / 2, Hitbox.Height / 2) - ButtonFont.MeasureString(Text) / 2;
@@ -87,7 +87,7 @@ namespace RawCraft.Menu.BaseClasses
 
         public bool IsClicked
         {
-            get { return Clicked; }
+            get { return _clicked; }
         }
     }
 }

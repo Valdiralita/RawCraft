@@ -1,21 +1,18 @@
-﻿using System;
-using System.IO;
-
-namespace RawCraft.Network.Packets
+﻿namespace RawCraft.Network.Packets
 {
     class ClientStatuses
     {
-        EnhancedStream stream;
+        EnhancedStream _stream;
 
         public ClientStatuses(EnhancedStream s)
         {
-            stream = s;
+            _stream = s;
         }
 
         public void Send(byte payload)
         {
-            stream.WriteByte(0xCD);
-            stream.WriteByte(payload);
+            _stream.WriteByte(0xCD);
+            _stream.WriteByte(payload);
         }
     }
 }

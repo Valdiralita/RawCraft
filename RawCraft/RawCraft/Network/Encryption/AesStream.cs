@@ -1,24 +1,24 @@
-﻿
+﻿// =============================================================
 // Credits and special thanks go to _68x - creator of this file.
+// =============================================================
 
- using System;
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Net.Sockets;
-using System.Text;
 
 namespace RawCraft.Network.Encryption
 {
     public class AesStream : EnhancedStream
     {
-        CryptoStream enc;
-        CryptoStream dec;
+        CryptoStream _enc;
+        CryptoStream _dec;
 
         public AesStream(Socket socket, EnhancedStream stream, byte[] key) : base(socket)
         {
             BaseStream = stream;
-            enc = new CryptoStream(stream, GenerateAES(key).CreateEncryptor(), CryptoStreamMode.Write);
-            dec = new CryptoStream(stream, GenerateAES(key).CreateDecryptor(), CryptoStreamMode.Read);
+            _enc = new CryptoStream(stream, GenerateAES(key).CreateEncryptor(), CryptoStreamMode.Write);
+            _dec = new CryptoStream(stream, GenerateAES(key).CreateDecryptor(), CryptoStreamMode.Read);
         }
         public Stream BaseStream { get; set; }
 
@@ -84,21 +84,21 @@ namespace RawCraft.Network.Encryption
 
         public override int ReadByte()
         {
-            return dec.ReadByte();
+            return _dec.ReadByte();
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            return dec.Read(buffer, offset, count);
+            return _dec.Read(buffer, offset, count);
         }
         public override void WriteByte(byte b)
         {
-            enc.WriteByte(b);
+            _enc.WriteByte(b);
         }
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            enc.Write(buffer, offset, count);
+            _enc.Write(buffer, offset, count);
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using RawCraft.Storage;
-
-namespace RawCraft.Network.Packets
+﻿namespace RawCraft.Network.Packets
 {
     class SpawnPosition
     {

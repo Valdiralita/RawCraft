@@ -1,14 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
-using System.IO;
 using RawCraft.Network.Encryption;
 
 namespace RawCraft.Network.Packets
 {
     class EncryptionKeyRequest
     {
-        byte[] encryptedToken, encryptedSharedSecret;
+        byte[] _encryptedToken, _encryptedSharedSecret;
 
         public EncryptionKeyRequest(EnhancedStream stream, byte[] sharedSecret, string sessionID, string username)
         {
@@ -16,22 +14,22 @@ namespace RawCraft.Network.Packets
             byte[] publicKey = stream.ReadData(stream.ReadShort());
             byte[] token = stream.ReadData(stream.ReadShort());
 
-            encryptedToken = EncryptSHA1.RSAEnc(token, publicKey);
-            encryptedSharedSecret = EncryptSHA1.RSAEnc(sharedSecret, publicKey);
+            _encryptedToken = EncryptSHA1.RSAEnc(token, publicKey);
+            _encryptedSharedSecret = EncryptSHA1.RSAEnc(sharedSecret, publicKey);
             byte[] data = Encoding.UTF8.GetBytes(serverID).Concat(sharedSecret).Concat(publicKey).ToArray();
             string serverSHAHash = EncryptSHA1.JavaHexDigest(data);
 
-            Authentication.Authentication.HTTPRequest(username, sessionID, serverSHAHash);
+            Authentication.Authentication.HttpRequest(username, sessionID, serverSHAHash);
         }
 
         public byte[] GetEncToken()
         {
-            return encryptedToken;
+            return _encryptedToken;
         }
 
         public byte[] GetEncSharedSecret()
         {
-            return encryptedSharedSecret;
+            return _encryptedSharedSecret;
         }
     }
 }

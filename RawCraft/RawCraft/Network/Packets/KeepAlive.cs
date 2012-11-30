@@ -1,23 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.IO;
-
-namespace RawCraft.Network.Packets
+﻿namespace RawCraft.Network.Packets
 {
     class KeepAlive
     {
-        EnhancedStream stream;
+        EnhancedStream _stream;
 
         public KeepAlive(EnhancedStream s)
         {
-            stream = s;
-            Send(stream.ReadData(4));
+            _stream = s;
+            Send(_stream.ReadData(4));
         }
 
         private void Send(byte[] keepAliveID)
         {
-            stream.WriteByte(0);
-            stream.WriteData(keepAliveID);
+            _stream.WriteByte(0);
+            _stream.WriteData(keepAliveID);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework.Graphics;
-using RawCraft.Storage;
+﻿using Microsoft.Xna.Framework.Graphics;
 
 namespace RawCraft.Renderer
 {
@@ -8,16 +6,16 @@ namespace RawCraft.Renderer
     {
         #region Fields
 
-        VertexBuffer vertexBuffer;
-        IndexBuffer indexBuffer;
-        int IndicesCount;
+        VertexBuffer _vertexBuffer;
+        IndexBuffer _indexBuffer;
+        int _indicesCount;
 
         #endregion
 
         public Mesh(GraphicsDevice gd, VertexPositionNormalTexture[] vertices, int[] indices)
         {
-            vertexBuffer = new VertexBuffer(gd, typeof(VertexPositionNormalTexture), vertices.Length, BufferUsage.None);
-            vertexBuffer.SetData(vertices);
+            _vertexBuffer = new VertexBuffer(gd, typeof(VertexPositionNormalTexture), vertices.Length, BufferUsage.None);
+            _vertexBuffer.SetData(vertices);
 
             if (indices.Length < ushort.MaxValue) // saves about 50-60MB ram at view distance of 15 (cpu usage increase was not measurable) 
             {
@@ -28,34 +26,34 @@ namespace RawCraft.Renderer
                     ushortIndices[i] = (ushort)indices[i];
                 }
 
-                indexBuffer = new IndexBuffer(gd, IndexElementSize.SixteenBits, indices.Length, BufferUsage.None);
-                indexBuffer.SetData(ushortIndices);
+                _indexBuffer = new IndexBuffer(gd, IndexElementSize.SixteenBits, indices.Length, BufferUsage.None);
+                _indexBuffer.SetData(ushortIndices);
             }
             else
             {
-                indexBuffer = new IndexBuffer(gd, IndexElementSize.ThirtyTwoBits, indices.Length, BufferUsage.None);
-                indexBuffer.SetData(indices);
+                _indexBuffer = new IndexBuffer(gd, IndexElementSize.ThirtyTwoBits, indices.Length, BufferUsage.None);
+                _indexBuffer.SetData(indices);
             }
-            IndicesCount = indices.Length;
+            _indicesCount = indices.Length;
         }
 
         ~Mesh()
         {
-            if (vertexBuffer != null)
-                vertexBuffer.Dispose();
-            if (indexBuffer != null)
-                indexBuffer.Dispose();
+            if (_vertexBuffer != null)
+                _vertexBuffer.Dispose();
+            if (_indexBuffer != null)
+                _indexBuffer.Dispose();
         }
 
         public void Draw(Effect effect)
         {
-            effect.GraphicsDevice.SetVertexBuffer(vertexBuffer);
-            effect.GraphicsDevice.Indices = indexBuffer;
+            effect.GraphicsDevice.SetVertexBuffer(_vertexBuffer);
+            effect.GraphicsDevice.Indices = _indexBuffer;
 
             foreach (EffectPass effectPass in effect.CurrentTechnique.Passes)
             {
                 effectPass.Apply();
-                effect.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, IndicesCount, 0, IndicesCount / 3);
+                effect.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, _indicesCount, 0, _indicesCount / 3);
             }
         }
     }

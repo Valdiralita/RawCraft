@@ -1,6 +1,6 @@
 ﻿namespace RawCraft.Storage.Blocks
 {
-    class BlockEnum
+    static class BlockEnum
     {
         public enum Blocks
         {

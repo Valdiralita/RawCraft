@@ -1,42 +1,35 @@
 ﻿using System;
 using System.Linq;
-using RawCraft.Storage;
 using RawCraft.Storage.Map;
 using Ionic.Zlib;
 using Microsoft.Xna.Framework;
-using System.IO;
-using RawCraft.Network.Encryption;
 
 namespace RawCraft.Network.Packets
 {
     class MapChunkBulk
     {
-        int chunkCount;
-        byte[] compressedChunks, metaData;
+        int _chunkCount;
+        byte[] _compressedChunks, _metaData;
 
         public MapChunkBulk(EnhancedStream stream)
         {
-            chunkCount = stream.ReadShort();
-            compressedChunks = stream.ReadData(stream.ReadInt());
-            metaData = stream.ReadData(chunkCount * 12);
-            StoreChunks(ZlibStream.UncompressBuffer(compressedChunks));
+            _chunkCount = stream.ReadShort();
+            _compressedChunks = stream.ReadData(stream.ReadInt());
+            _metaData = stream.ReadData(_chunkCount * 12);
+            StoreChunks(ZlibStream.UncompressBuffer(_compressedChunks));
         }
 
         private void StoreChunks(byte[] uncompressed) //todo: better!
         {
             int proceededSections = 0;
             int chunkcount = 0;
-            for (int i = 0; i < chunkCount; i++)
+            for (int i = 0; i < _chunkCount; i++)
             {
-                int x, z, sectioncount;
-                ushort bitmask;
-                byte[] chunkdata;
-
-                x = BitConverter.ToInt32(metaData.Skip(i * 12).Take(4).Reverse().ToArray(), 0);
-                z = BitConverter.ToInt32(metaData.Skip(i * 12 + 4).Take(4).Reverse().ToArray(), 0);
-                bitmask = BitConverter.ToUInt16(metaData.Skip(i * 12 + 8).Take(2).Reverse().ToArray(), 0);
-                sectioncount = Convert.ToString(bitmask, 2).ToCharArray().Count(a => a == '1');
-                chunkdata = uncompressed.Skip(proceededSections * 10240 + chunkcount * 256).Take(10240 * sectioncount + 256).ToArray();
+                int x = BitConverter.ToInt32(_metaData.Skip(i * 12).Take(4).Reverse().ToArray(), 0);
+                int z = BitConverter.ToInt32(_metaData.Skip(i * 12 + 4).Take(4).Reverse().ToArray(), 0);
+                ushort bitmask = BitConverter.ToUInt16(_metaData.Skip(i * 12 + 8).Take(2).Reverse().ToArray(), 0);
+                int sectioncount = Convert.ToString(bitmask, 2).ToCharArray().Count(a => a == '1');
+                byte[] chunkdata = uncompressed.Skip(proceededSections * 10240 + chunkcount * 256).Take(10240 * sectioncount + 256).ToArray();
                 proceededSections += sectioncount;
                 chunkcount++;
 

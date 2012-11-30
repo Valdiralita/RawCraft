@@ -5,32 +5,36 @@ namespace RawCraft.Interface.BaseClasses
 {
     class TextOverlay
     {
-        SpriteFont Font;
-        string Text;
-        Color TextColor = Color.White;
-        Vector2 Position;
+        SpriteFont _font;
+        string _text;
+        private Color _textColor = Color.White;
+        Vector2 _position;
 
         public TextOverlay(SpriteFont font, Vector2 vec)
         {
-            Font = font;
-            Position = vec;
+            _font = font;
+            _position = vec;
         }
 
-        public TextOverlay(SpriteFont font, Vector2 vec, Color color)
+        public TextOverlay(SpriteFont font, Vector2 vec, Color color) : this(font, vec)
         {
-            Font = font;
-            Position = vec;
             TextColor = color;
+        }
+
+        public Color TextColor
+        {
+            get { return _textColor; }
+            set { _textColor = value; }
         }
 
         public virtual void UpdateText(string text)
         {
-            Text = text;
+            _text = text;
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(Font, Text, Position, Color.White);
+            spriteBatch.DrawString(_font, _text, _position, Color.White);
         }
     }
 }

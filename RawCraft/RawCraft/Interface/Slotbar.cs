@@ -1,19 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using RawCraft.Storage;
 using Microsoft.Xna.Framework.Content;
 
 namespace RawCraft.Interface
 {
     class Slotbar
     {
-        Texture2D SlotbarTexture;
-        Vector2 SlotbarPosition;
+        Texture2D _slotbarTexture;
+        Vector2 _slotbarPosition;
 
-        public Slotbar(ContentManager Content, int x, int y)
+        public Slotbar(ContentManager content, int x, int y)
         {
-            SlotbarTexture = Content.Load<Texture2D>("Slotbar");
-            SlotbarPosition = new Vector2(x / 2 - SlotbarTexture.Width / 2, y - SlotbarTexture.Height);
+            _slotbarTexture = content.Load<Texture2D>("Slotbar");
+            _slotbarPosition = new Vector2(x / 2 - _slotbarTexture.Width / 2, y - _slotbarTexture.Height);
         }
 
         public void UpdateSlotbar(GameTime gameTime)
@@ -23,7 +22,7 @@ namespace RawCraft.Interface
 
         public void DrawSlotbar(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(SlotbarTexture, SlotbarPosition, Color.White);
+            spriteBatch.Draw(_slotbarTexture, _slotbarPosition, Color.White);
         }
     }
 }

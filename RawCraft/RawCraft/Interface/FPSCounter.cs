@@ -1,45 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System.Diagnostics;
 
 namespace RawCraft.Interface
 {
     class FPSCounter
     {
-        int fps, fpscounter, time, drawtime;
-        Stopwatch stop;
-        GameTime gameTime;
+        int _fps, _fpscounter, _time, _drawtime;
+        Stopwatch _stop;
+        GameTime _gameTime;
 
         public FPSCounter(GameTime gt)
         {
-            gameTime = gt;
-            stop = new Stopwatch();
+            _gameTime = gt;
+            _stop = new Stopwatch();
         }
 
         public void UpdateFPS()
         {
-            time += gameTime.ElapsedGameTime.Milliseconds;
-            if (time >= 1000)
+            _time += _gameTime.ElapsedGameTime.Milliseconds;
+            if (_time >= 1000)
             {
-                fps = fpscounter;
-                fpscounter = 0;
-                time = time % 1000;
+                _fps = _fpscounter;
+                _fpscounter = 0;
+                _time = _time % 1000;
             }
 
-            drawtime = (int)stop.ElapsedMilliseconds;
-            stop.Restart();
+            _drawtime = (int)_stop.ElapsedMilliseconds;
+            _stop.Restart();
 
-            fpscounter++;
+            _fpscounter++;
         }
 
         public int FPS
         {
             get 
             {
-               return fps; 
+               return _fps; 
             }
         }
 
@@ -47,7 +43,7 @@ namespace RawCraft.Interface
         {
             get 
             {
-               return drawtime; 
+               return _drawtime; 
             }
         }
     }

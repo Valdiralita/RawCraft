@@ -1,22 +1,22 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 using System.Net;
 using System.IO;
-using RawCraft.Storage;
 
 namespace RawCraft.Network.Encryption
 {
     class SessionIDRequest
     {
-        private const string loginUrl = "https://login.minecraft.net?user={0}&password={1}&version=13";
+        private const string LoginUrl = "https://login.minecraft.net?user={0}&password={1}&version=13";
 
-        string username, password;
+        string _username, _password;
         public string SessionID;
 
         public SessionIDRequest(string username, string password)
         {
-            this.username = username;
-            this.password = password;
+            _username = username;
+            _password = password;
         }
 
         public void SendRequest()
@@ -25,19 +25,24 @@ namespace RawCraft.Network.Encryption
 
             try
             {
-                var request = WebRequest.Create(string.Format(loginUrl, username, password));
+                var request = WebRequest.Create(string.Format(LoginUrl, _username, _password));
                 var response = (HttpWebResponse)request.GetResponse();
                 var stream = response.GetResponseStream();
 
-                var responseParts = new string[4];
-
-                string responseString = Encoding.ASCII.GetString(buffer, 0, stream.Read(buffer, 0, buffer.Length));
-                if (!responseString.Contains(':'))
+                if (stream != null)
                 {
-                    throw new InvalidDataException("Bad Login");
-                }
+                    string responseString = Encoding.ASCII.GetString(buffer, 0, stream.Read(buffer, 0, buffer.Length));
+                    if (!responseString.Contains(':'))
+                    {
+                        throw new InvalidDataException("Bad Login");
+                    }
 
-                SessionID = responseString.Split(':')[3];
+                    SessionID = responseString.Split(':')[3];
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
             catch
             {

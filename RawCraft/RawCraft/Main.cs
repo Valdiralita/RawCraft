@@ -14,28 +14,27 @@ using RawCraft.Storage.Blocks;
 using RawCraft.Storage.Map;
 using System.IO;
 using RawCraft.Network;
-using Microsoft.Xna.Framework.Content;
 
 namespace RawCraft
 {
     public class Main : Game
     {
-        GraphicsDeviceManager graphics;
-        Effect effect;
-        Thread networkThread, render;
-        Camera camera;
-        StatisticOverlay statistics;
-        Texture2D terrain;
-        MainMenu mainMenu;
-        DepthStencilState depthState, depthStateOff;
-        GameState currentGameState;
-        SpriteBatch spriteBatch;
+        GraphicsDeviceManager _graphics;
+        Effect _effect;
+        Thread _networkThread, _render;
+        Camera _camera;
+        StatisticOverlay _statistics;
+        Texture2D _terrain;
+        MainMenu _mainMenu;
+        DepthStencilState _depthState, _depthStateOff;
+        GameState _currentGameState;
+        SpriteBatch _spriteBatch;
 
         public Main()
         {
-            graphics = new GraphicsDeviceManager(this);
-            currentGameState = GameState.MainMenu;
-            base.Content.RootDirectory = "Content";
+            _graphics = new GraphicsDeviceManager(this);
+            _currentGameState = GameState.MainMenu;
+            Content.RootDirectory = "Content";
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged; //resize function
         }
@@ -46,31 +45,31 @@ namespace RawCraft
             EventInput.Initialize(Window);
             Blocks.InitialzizeBlocks();
 
-            graphics.PreferredBackBufferWidth = Config.Width;
-            graphics.PreferredBackBufferHeight = Config.Height;
+            _graphics.PreferredBackBufferWidth = Config.Width;
+            _graphics.PreferredBackBufferHeight = Config.Height;
 
             if (!Config.VSync)
             {
                 IsFixedTimeStep = false;
-                graphics.SynchronizeWithVerticalRetrace = false;
+                _graphics.SynchronizeWithVerticalRetrace = false;
             }
-            graphics.ApplyChanges();
+            _graphics.ApplyChanges();
 
-            camera = new Camera(0.3f, 0.002f, GraphicsDevice); //move speed, rotate speed, ...
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            _camera = new Camera(0.3f, 0.002f, GraphicsDevice); //move speed, rotate speed, ...
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            statistics = new StatisticOverlay(base.Content.Load<SpriteFont>("NormalFont"), new Vector2(48, 48)); //debug
-            mainMenu = new MainMenu(base.Content);
+            _statistics = new StatisticOverlay(Content.Load<SpriteFont>("NormalFont"), new Vector2(48, 48)); //debug
+            _mainMenu = new MainMenu(Content);
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            string TerrainPath = "Content/terrain.png";
+            const string terrainPath = "Content/terrain.png";
 
-            if (File.Exists(TerrainPath))
-                terrain = Texture2D.FromStream(GraphicsDevice, File.Open(TerrainPath, FileMode.Open));
+            if (File.Exists(terrainPath))
+                _terrain = Texture2D.FromStream(GraphicsDevice, File.Open(terrainPath, FileMode.Open));
             else
             {
                 if (File.Exists(Path.Combine(MinecraftUtilities.DotMinecraft, "bin", "minecraft.jar")))
@@ -82,7 +81,7 @@ namespace RawCraft
                             var ms = new MemoryStream();
                             file["terrain.png"].Extract(ms);
                             ms.Seek(0, SeekOrigin.Begin);
-                            terrain = Texture2D.FromStream(GraphicsDevice, ms);
+                            _terrain = Texture2D.FromStream(GraphicsDevice, ms);
                         }
                         else
                             throw new FileNotFoundException("Missing terrain.png!");
@@ -100,48 +99,48 @@ namespace RawCraft
             KeyboardState keyboardState = Keyboard.GetState();
             MouseState mouseState = Mouse.GetState();
 
-            switch (currentGameState)
+            switch (_currentGameState)
             {
                 case GameState.Exit:
                     CloseGame();
                     break;
                 case GameState.MainMenu:
-                    currentGameState = mainMenu.Update(mouseState, keyboardState, currentGameState);
+                    _currentGameState = _mainMenu.Update(mouseState, keyboardState, _currentGameState);
                     IsMouseVisible = true;
                     break;
                 case GameState.Options:
                         break;
                 case GameState.NoInterface:
                 case GameState.InGame:
-                    if (networkThread == null)
+                    if (_networkThread == null)
                         Connect();
                     IsMouseVisible = false;
-                    camera.Update();
+                    _camera.Update();
 
-                    effect.Parameters["View"].SetValue(camera.ViewMatrix);
+                    _effect.Parameters["View"].SetValue(_camera.ViewMatrix);
 
                     if (keyboardState.IsKeyDown(Keys.Escape))
                     {
                         Disconnect();
-                        currentGameState = GameState.MainMenu;
+                        _currentGameState = GameState.MainMenu;
                     }
                     break;
             }
-            statistics.UpdateText(gameTime);
+            _statistics.UpdateText(gameTime);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            base.GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            switch (currentGameState)
+            switch (_currentGameState)
             {
                 case GameState.MainMenu:
-                    spriteBatch.Begin();
-                    mainMenu.Draw(spriteBatch);
-                    spriteBatch.End();
+                    _spriteBatch.Begin();
+                    _mainMenu.Draw(_spriteBatch);
+                    _spriteBatch.End();
 
                     break;
                 // case GS.Options:
@@ -152,67 +151,67 @@ namespace RawCraft
                 case GameState.InGame:
                     ApplyEffects();
 
-                    base.GraphicsDevice.DepthStencilState = depthState;
+                    GraphicsDevice.DepthStencilState = _depthState;
                         
                     foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Map)
-                        item.Value.DrawOpaque(effect);
+                        item.Value.DrawOpaque(_effect);
 
-                    base.GraphicsDevice.DepthStencilState = depthStateOff;
+                    GraphicsDevice.DepthStencilState = _depthStateOff;
 
                     foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Map)
-                        item.Value.DrawWater(effect);
+                        item.Value.DrawWater(_effect);
 
                     break;
             }
 
-            spriteBatch.Begin();
-            statistics.Draw(spriteBatch);
-            spriteBatch.End();
+            _spriteBatch.Begin();
+            _statistics.Draw(_spriteBatch);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
         private void ApplyEffects()
         {
-            effect.Parameters["vecViewPos"].SetValue(new Vector3((float)Player.X, (float)Player.Y, (float)Player.Z));
-            base.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-            base.GraphicsDevice.SamplerStates[1] = SamplerState.PointClamp;
+            _effect.Parameters["vecViewPos"].SetValue(new Vector3((float)Player.X, (float)Player.Y, (float)Player.Z));
+            GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+            GraphicsDevice.SamplerStates[1] = SamplerState.PointClamp;
         }
 
         private void InitializeEffect()
         {
-            depthState = new DepthStencilState();
-            depthState.DepthBufferEnable = true;
-            depthState.DepthBufferWriteEnable = true;
-            depthState.ReferenceStencil = 10;
-            depthState.StencilFunction = CompareFunction.LessEqual;
+            _depthState = new DepthStencilState
+                {
+                    DepthBufferEnable = true,
+                    DepthBufferWriteEnable = true,
+                    ReferenceStencil = 10,
+                    StencilFunction = CompareFunction.LessEqual
+                };
 
-            depthStateOff = new DepthStencilState();
-            depthStateOff.DepthBufferEnable = true;
-            depthStateOff.DepthBufferWriteEnable = false;
+            _depthStateOff = new DepthStencilState {DepthBufferEnable = true, DepthBufferWriteEnable = false};
 
-            effect = Content.Load<Effect>("Effect");
-            effect.Parameters["World"].SetValue(Matrix.CreateTranslation(new Vector3(0, 0, 0)));
-            effect.Parameters["Projection"].SetValue(camera.ProjectionMatrix);
-            effect.Parameters["entSkin1"].SetValue(terrain);
+            _effect = Content.Load<Effect>("Effect");
+            _effect.Parameters["World"].SetValue(Matrix.CreateTranslation(new Vector3(0, 0, 0)));
+            _effect.Parameters["Projection"].SetValue(_camera.ProjectionMatrix);
+            _effect.Parameters["entSkin1"].SetValue(_terrain);
 
-            effect.Parameters["vecSunDir"].SetValue(new Vector3(1, 5, 2));
+            _effect.Parameters["vecSunDir"].SetValue(new Vector3(1, 5, 2));
             //effect.Parameters["vecAmbient"].SetValue(new Vector3(150f / 255, 150f / 255, 150f / 255));
-            effect.Parameters["vecAmbient"].SetValue(new Vector3(90f / 255, 115f / 255, 130f / 255));
-            effect.Parameters["vecSunColor"].SetValue(new Vector3(198f / 255, 169f / 255, 134f / 255));
+            _effect.Parameters["vecAmbient"].SetValue(new Vector3(90f / 255, 115f / 255, 130f / 255));
+            _effect.Parameters["vecSunColor"].SetValue(new Vector3(198f / 255, 169f / 255, 134f / 255));
         }
 
         private void Connect()
         {
             TextureCoordinates.InitializeTextures();
 
-            NetworkHandler NetHandler = new NetworkHandler();
-            networkThread = new Thread(NetHandler.NetThread);
-            networkThread.Start();
+            NetworkHandler netHandler = new NetworkHandler();
+            _networkThread = new Thread(netHandler.NetThread);
+            _networkThread.Start();
 
             RenderFIFO fifo = new RenderFIFO();
-            render = new Thread(fifo.MeshGenerateThread);
-            render.Start(base.GraphicsDevice);
+            _render = new Thread(fifo.MeshGenerateThread);
+            _render.Start(GraphicsDevice);
         }
 
         public void CloseGame()
@@ -223,16 +222,16 @@ namespace RawCraft
 
         public void Disconnect() // does not work!
         {
-            if (render != null)
+            if (_render != null)
             {
-                render.Abort(); //nothing to do here
-                render = null;
+                _render.Abort(); //nothing to do here
+                _render = null;
             }
 
-            if (networkThread != null)
+            if (_networkThread != null)
             {
-                networkThread.Abort(); //maybe send a 0xFF
-                networkThread = null;
+                _networkThread.Abort(); //maybe send a 0xFF
+                _networkThread = null;
             }
 
             MapChunks.Disconnect();
@@ -242,8 +241,8 @@ namespace RawCraft
         {
             Config.Height = Window.ClientBounds.Height;
             Config.Width = Window.ClientBounds.Width;
-            graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
-            graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+            _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+            _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Ionic.Zlib;
-using System.IO;
 using RawCraft.Storage.Map;
 using Microsoft.Xna.Framework;
 
@@ -22,9 +21,9 @@ namespace RawCraft.Network.Packets
                 stream.ReadInt())));
         }
 
-        private void Store_Chunk(int x, int z, byte GroundUp, ushort PrimBit, short AddBit, byte[] UncompressedChunkData)
+        private void Store_Chunk(int x, int z, byte groundUp, ushort primBit, short addBit, byte[] uncompressedChunkData)
         {
-            int sectioncount = Convert.ToString(PrimBit, 2).ToCharArray().Count(a => a == '1');
+            int sectioncount = Convert.ToString(primBit, 2).ToCharArray().Count(a => a == '1');
 
             Chunk c;
             if (MapChunks.Map.TryGetValue(new Vector2(x, z), out c))
@@ -33,7 +32,7 @@ namespace RawCraft.Network.Packets
             }
             else
             {
-                c = new Chunk(x, z, sectioncount, (ushort)PrimBit, UncompressedChunkData);
+                c = new Chunk(x, z, sectioncount, primBit, uncompressedChunkData);
                 MapChunks.Map.TryAdd(new Vector2(x, z), c);
             }
         }

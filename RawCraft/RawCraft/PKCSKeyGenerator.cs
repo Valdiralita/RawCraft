@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace SharpLauncher
+namespace RawCraft
 {
     /// <summary>
     /// This class is used to emulate the Java based PBEWithMD5AndDES functionality of the Demo system.
@@ -14,17 +12,17 @@ namespace SharpLauncher
         /// <summary>
         /// Key used in the encryption algorythm.
         /// </summary>
-        private byte[] key = new byte[8];
+        private byte[] _key = new byte[8];
 
         /// <summary>
         /// IV used in the encryption algorythm.
         /// </summary>
-        private byte[] iv = new byte[8];
+        private byte[] _iv = new byte[8];
 
         /// <summary>
         /// DES Provider used in the encryption algorythm.
         /// </summary>
-        private DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+        private DESCryptoServiceProvider _des = new DESCryptoServiceProvider();
 
         /// <summary>
         /// Initializes a new instance of the PKCSKeyGenerator class.
@@ -42,7 +40,7 @@ namespace SharpLauncher
         /// <param name="segments">Fill out segments later.</param>
         public PKCSKeyGenerator(string keystring, byte[] salt, int iterationsMd5, int segments)
         {
-            this.Generate(keystring, salt, iterationsMd5, segments);
+            Generate(keystring, salt, iterationsMd5, segments);
         }
 
         /// <summary>
@@ -52,7 +50,7 @@ namespace SharpLauncher
         {
             get
             {
-                return this.key;
+                return _key;
             }
         }
 
@@ -63,7 +61,7 @@ namespace SharpLauncher
         {
             get
             {
-                return this.iv;
+                return _iv;
             }
         }
 
@@ -74,7 +72,7 @@ namespace SharpLauncher
         {
             get
             {
-                return this.des.CreateEncryptor(this.key, this.iv);
+                return _des.CreateEncryptor(_key, _iv);
             }
         }
 
@@ -85,7 +83,7 @@ namespace SharpLauncher
         {
             get
             {
-                return des.CreateDecryptor(key, iv);
+                return _des.CreateDecryptor(_key, _iv);
             }
         }
 
@@ -100,14 +98,13 @@ namespace SharpLauncher
         public ICryptoTransform Generate(string keystring, byte[] salt, int iterationsMd5, int segments)
         {
             // MD5 bytes
-            int hashLength = 16;
+            const int hashLength = 16;
 
             // to store contatenated Mi hashed results
             byte[] keyMaterial = new byte[hashLength * segments];
 
             // --- get secret password bytes ----
-            byte[] passwordBytes;
-            passwordBytes = Encoding.UTF8.GetBytes(keystring);
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(keystring);
 
             // --- contatenate salt and pswd bytes into fixed data array ---
             byte[] data00 = new byte[passwordBytes.Length + salt.Length];
@@ -149,10 +146,10 @@ namespace SharpLauncher
                 Array.Copy(result, 0, keyMaterial, j * hashLength, result.Length);
             }
 
-            Array.Copy(keyMaterial, 0, this.key, 0, 8);
-            Array.Copy(keyMaterial, 8, this.iv, 0, 8);
+            Array.Copy(keyMaterial, 0, _key, 0, 8);
+            Array.Copy(keyMaterial, 8, _iv, 0, 8);
 
-            return this.Encryptor;
+            return Encryptor;
         }
     }
 }

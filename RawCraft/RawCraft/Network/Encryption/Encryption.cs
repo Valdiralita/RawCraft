@@ -2,7 +2,7 @@
 
 namespace RawCraft.Network.Encryption
 {
-    class EncryptSHA1
+    static class EncryptSHA1
     {
         public static string JavaHexDigest(byte[] data)
         {
@@ -47,12 +47,9 @@ namespace RawCraft.Network.Encryption
             var keyParser = new AsnKeyParser(key);
             var publicKey = keyParser.ParseRSAPublicKey();
 
-            var csp = new CspParameters();
-            csp.ProviderType = 1;
-            csp.KeyNumber = 1;
+            var csp = new CspParameters {ProviderType = 1, KeyNumber = 1};
 
-            var rsa = new RSACryptoServiceProvider(csp);
-            rsa.PersistKeyInCsp = false;
+            var rsa = new RSACryptoServiceProvider(csp) {PersistKeyInCsp = false};
             rsa.ImportParameters(publicKey);
             byte[] enc = rsa.Encrypt(data, false);
             rsa.Clear();
