@@ -14,7 +14,9 @@ namespace RawCraft.Network.Packets
         public MapChunkBulk(EnhancedStream stream)
         {
             _chunkCount = stream.ReadShort();
-            _compressedChunks = stream.ReadData(stream.ReadInt());
+            int datasize = stream.ReadInt();
+            stream.readBool();                  //TODO: implement a check if light nibble array was sent (make nether and end work)
+            _compressedChunks = stream.ReadData(datasize);
             _metaData = stream.ReadData(_chunkCount * 12);
             StoreChunks(ZlibStream.UncompressBuffer(_compressedChunks));
         }

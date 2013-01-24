@@ -12,7 +12,7 @@
         public void Send(string username, string server, int port)
         {
             _stream.WriteByte(0x02); //packet ID
-            _stream.WriteByte(49); // protocol version
+            _stream.WriteByte(51); // protocol version
             _stream.WriteString(username);
             _stream.WriteString(server);
             _stream.WriteInt(port);

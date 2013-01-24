@@ -64,6 +64,9 @@ namespace RawCraft.Network
                     case 0x0D:
                         _playerPositionLook = new PlayerPositionLook(_stream);
                         break;
+                    case 0x10:
+                        HeldItemChange heldItemChange = new HeldItemChange(_stream);
+                        break;
                     case 0x11:
                         UseBed useBed = new UseBed(_stream);
                         break;
@@ -72,9 +75,6 @@ namespace RawCraft.Network
                         break;
                     case 0x14:
                         SpawnNamedEntity spawnNamedEntity = new SpawnNamedEntity(_stream);
-                        break;
-                    case 0x15:
-                        SpawnDroppedItem spawnDroppedItem = new SpawnDroppedItem(_stream);
                         break;
                     case 0x16:
                         CollectItem collectItem = new CollectItem(_stream);

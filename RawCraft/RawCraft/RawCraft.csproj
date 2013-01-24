@@ -122,6 +122,7 @@
     <Compile Include="Interface\FPSCounter.cs" />
     <Compile Include="MinecraftUtilities.cs" />
     <Compile Include="Network\EnhancedStream.cs" />
+    <Compile Include="Network\Packets\HeldItemChange.cs" />
     <Compile Include="Network\Packets\ClientSettings.cs" />
     <Compile Include="PKCSKeyGenerator.cs" />
     <Compile Include="Renderer\VertexPositions.cs" />
@@ -156,7 +157,6 @@
     <Compile Include="Network\Packets\UseBed.cs" />
     <Compile Include="Network\Packets\Animation.cs" />
     <Compile Include="Network\Packets\SpawnNamedEntity.cs" />
-    <Compile Include="Network\Packets\SpawnDroppedItem.cs" />
     <Compile Include="Network\Packets\CollectItem.cs" />
     <Compile Include="Network\Packets\SpawnObjectVehicle.cs" />
     <Compile Include="Network\Packets\SpawnMob.cs" />

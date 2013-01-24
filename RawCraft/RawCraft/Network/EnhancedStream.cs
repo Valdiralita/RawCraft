@@ -13,6 +13,11 @@ namespace RawCraft.Network
         {
         }
 
+        internal bool readBool()
+        {
+            return Convert.ToBoolean(ReadByte());
+        }
+
         public short ReadShort()
         {
             _buffer = new byte[2];

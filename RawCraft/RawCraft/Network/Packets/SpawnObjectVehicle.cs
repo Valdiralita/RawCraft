@@ -9,8 +9,10 @@
             s.ReadInt();
             s.ReadInt();
             s.ReadInt();
+            s.ReadByte();
+            s.ReadByte();
             int throwerID = s.ReadInt();
-            if (throwerID == 0) return;
+            if (throwerID <= 0) return;
             s.ReadShort();
             s.ReadShort();
             s.ReadShort();
