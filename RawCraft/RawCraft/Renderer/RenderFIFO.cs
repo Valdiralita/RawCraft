@@ -5,36 +5,32 @@ using RawCraft.Storage.Map;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System;
 
 namespace RawCraft.Renderer
 {
     class RenderFIFO
     {
+        private static ManualResetEvent _queueNotifier = new ManualResetEvent(false);
         private static ConcurrentQueue<Chunk> _renderQueue = new ConcurrentQueue<Chunk>();
-        private static AutoResetEvent _queueNotifier = new AutoResetEvent(false);
 
-        public void MeshGenerateThread(object gd)
+        public void CreateThreads(object gd)
         {
-            while (true)
+            for (int i = 0; i < 4; i++)
             {
-                _queueNotifier.WaitOne();
-                while (_renderQueue.Count != 0)
-                {
-                    Chunk chunk;
-                    if (_renderQueue.TryDequeue(out chunk))
-                    {
-                        Debug.RendertimeCounter.Start();
-                        chunk.UpdateMesh((GraphicsDevice)gd);
-                        Debug.RendertimeCounter.Stop();
-                    }
-                }
+                Renderer rT = new Renderer(_renderQueue, gd, _queueNotifier, i);
+                Thread _thread = new Thread(rT.RenderThread); 
+                _thread.Priority = ThreadPriority.Lowest;
+                _thread.IsBackground = true;
+                _thread.Start();
             }
         }
 
-       public static int Count
-       {
-           get { return _renderQueue.Count; }
-       }
+        public static int Count
+        {
+            get { return _renderQueue.Count; }
+        }
 
         public static void Enqueue(Chunk c, bool[] toRender)
         {

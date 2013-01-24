@@ -29,6 +29,7 @@ namespace RawCraft
         DepthStencilState _depthState, _depthStateOff;
         GameState _currentGameState;
         SpriteBatch _spriteBatch;
+        RenderFIFO fifo;
 
         public Main()
         {
@@ -207,10 +208,12 @@ namespace RawCraft
 
             NetworkHandler netHandler = new NetworkHandler();
             _networkThread = new Thread(netHandler.NetThread);
+            _networkThread.IsBackground = true;
             _networkThread.Start();
 
-            RenderFIFO fifo = new RenderFIFO();
-            _render = new Thread(fifo.MeshGenerateThread);
+            fifo = new RenderFIFO();
+            _render = new Thread(fifo.CreateThreads);
+            _render.IsBackground = true;
             _render.Start(GraphicsDevice);
         }
 
@@ -222,18 +225,6 @@ namespace RawCraft
 
         public void Disconnect() // does not work!
         {
-            if (_render != null)
-            {
-                _render.Abort(); //nothing to do here
-                _render = null;
-            }
-
-            if (_networkThread != null)
-            {
-                _networkThread.Abort(); //maybe send a 0xFF
-                _networkThread = null;
-            }
-
             MapChunks.Disconnect();
         }
 

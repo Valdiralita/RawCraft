@@ -26,8 +26,7 @@ namespace RawCraft.Interface
                 "\nZ: " + Player.Z +
                 "\nPitch: " + Player.Pitch +
                 "\nYaw: " + Player.Yaw +
-                "\nRenderQueue: " + RenderFIFO.Count +
-                "\nRender Time: " + Debug.RendertimeCounter.ElapsedMilliseconds);
+                "\nRenderQueue: " + RenderFIFO.Count);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

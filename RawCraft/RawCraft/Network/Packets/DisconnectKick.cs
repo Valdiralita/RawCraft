@@ -8,7 +8,6 @@ namespace RawCraft.Network.Packets
         public DisconnectKick(EnhancedStream s)
         {
             string reason = s.ReadString();
-            s.Close();
             Storage.Network.IsConnected = false; 
             throw new Exception("Kicked due to: " + reason);
         }

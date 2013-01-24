@@ -73,9 +73,9 @@ namespace RawCraft.Storage.Map
                 _waterMesh.Draw(effect);
         }
 
-        public void UpdateMesh(GraphicsDevice gd)
+        public void UpdateMesh(VertexIndexGenerator gen, GraphicsDevice gd)
         {
-            Mesh[] meshes = VertexIndexGenerator.Generate(this, gd);
+            Mesh[] meshes = gen.Generate(this, gd);
 
             if (meshes != null)
             {
@@ -122,7 +122,7 @@ namespace RawCraft.Storage.Map
                 if (!toRender[0])
                     toRender[0] = offsetX == 15;
                 if (!toRender[1])
-                    toRender[1] = offsetX == 0; 
+                    toRender[1] = offsetX == 0;
                 if (!toRender[2])
                     toRender[2] = offsetX == 15;
                 if (!toRender[3])

@@ -14,6 +14,7 @@ namespace RawCraft.Renderer
 
         public Mesh(GraphicsDevice gd, VertexPositionNormalTexture[] vertices, int[] indices)
         {
+
             _vertexBuffer = new VertexBuffer(gd, typeof(VertexPositionNormalTexture), vertices.Length, BufferUsage.None);
             _vertexBuffer.SetData(vertices);
 
@@ -35,6 +36,7 @@ namespace RawCraft.Renderer
                 _indexBuffer.SetData(indices);
             }
             _indicesCount = indices.Length;
+
         }
 
         ~Mesh()

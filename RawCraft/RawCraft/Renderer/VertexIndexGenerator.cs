@@ -7,16 +7,24 @@ using RawCraft.Storage.Map;
 
 namespace RawCraft.Renderer
 {
-    static class VertexIndexGenerator
+    public class VertexIndexGenerator
     {
-        static List<VertexPositionNormalTexture> _opaqueVertices;
-        static List<int> _opaqueIndices;
-        static List<VertexPositionNormalTexture> _transparentVertices;
-        static List<int> _transparentIndices;
+        List<VertexPositionNormalTexture> _opaqueVertices;
+        List<int> _opaqueIndices;
+        List<VertexPositionNormalTexture> _transparentVertices;
+        List<int> _transparentIndices;
 
-        static int _x, _y, _z;
-        static byte _id, _meta;
-        static Chunk _chunk;
+        int _x, _y, _z;
+        byte _id, _meta; 
+        Chunk _chunk;
+
+        public VertexIndexGenerator()
+        {
+            _opaqueVertices = new List<VertexPositionNormalTexture>();
+            _opaqueIndices = new List<int>();
+            _transparentVertices = new List<VertexPositionNormalTexture>();
+            _transparentIndices = new List<int>();
+        }
 
         static readonly Vector3[] Normals =
         {
@@ -28,177 +36,176 @@ namespace RawCraft.Renderer
             new Vector3(0, -1, 0)  //1
         };
 
-        public unsafe static Mesh[] Generate(Chunk c, GraphicsDevice gd)
+        public Mesh[] Generate(Chunk c, GraphicsDevice gd)
         {
-            unchecked
+            _x = 0;
+            _y = 0;
+            _z = 0;
+
+            _chunk = c;
+
+            for (; ; _x++)
             {
-                _x = 0;
-                _y = 0;
-                _z = 0;
-
-                _chunk = c;
-
-                _opaqueVertices = new List<VertexPositionNormalTexture>();
-                _opaqueIndices = new List<int>();
-                _transparentVertices = new List<VertexPositionNormalTexture>();
-                _transparentIndices = new List<int>();
-
-                for (; ; _x++)
+                if (_x > 15)
                 {
-                    if (_x > 15)
+                    _z++;
+                    _x = 0;
+                    if (_z > 15)
                     {
-                        _z++;
-                        _x = 0;
-                        if (_z > 15)
+                        _y++;
+                        _z = 0;
+                        if (_y > 255)
                         {
-                            _y++;
-                            _z = 0;
-                            if (_y > 255)
-                            {
-                                break;
-                            }
-                        }
-                    }
-
-                    _id = c.BlockType[_x, _y, _z];
-                    _meta = c.BlockMetadata[_x, _y, _z];
-
-                    if (!Blocks.blocks[_id].NotABlock && !Blocks.blocks[_id].IsTransparent)
-                    {
-                        if (!Blocks.blocks[_id].HasMetadata)
-                        {
-                            if (Blocks.blocks[_id].IsMultitex)
-                            {
-                                if (IsTransparent(0))
-                                    CreateMultiTexBlockSide(0, 0);
-                                if (IsTransparent(1))
-                                    CreateMultiTexBlockSide(1, 1);
-                                if (IsTransparent(2))
-                                    CreateMultiTexBlockSide(2, 2);
-                                if (IsTransparent(3))
-                                    CreateMultiTexBlockSide(3, 3);
-                                if (IsTransparent(4))
-                                    CreateMultiTexBlockSide(4, 4);
-                                if (IsTransparent(5))
-                                    CreateMultiTexBlockSide(5, 5);
-                            }
-                            else
-                            {
-                                if (IsTransparent(0))
-                                    CreateBlockSide(0);
-                                if (IsTransparent(1))
-                                    CreateBlockSide(1);
-                                if (IsTransparent(2))
-                                    CreateBlockSide(2);
-                                if (IsTransparent(3))
-                                    CreateBlockSide(3);
-                                if (IsTransparent(4))
-                                    CreateBlockSide(4);
-                                if (IsTransparent(5))
-                                    CreateBlockSide(5);
-                            }
-                        }
-                        else
-                        {
-                            if (Blocks.blocks[_id].IsMultitex)
-                            {
-                                if (IsTransparent(0))
-                                    CreateMultiTexBlockSide(0, (byte)(0 + _meta * 6));
-                                if (IsTransparent(1))
-                                    CreateMultiTexBlockSide(1, (byte)(1 + _meta * 6));
-                                if (IsTransparent(2))
-                                    CreateMultiTexBlockSide(2, (byte)(2 + _meta * 6));
-                                if (IsTransparent(3))
-                                    CreateMultiTexBlockSide(3, (byte)(3 + _meta * 6));
-                                if (IsTransparent(4))
-                                    CreateMultiTexBlockSide(4, (byte)(4 + _meta * 6));
-                                if (IsTransparent(5))
-                                    CreateMultiTexBlockSide(5, (byte)(5 + _meta * 6));
-                            }
-                            else
-                            {
-                                if (IsTransparent(0))
-                                    CreateBlockSide(0);
-                                if (IsTransparent(1))
-                                    CreateBlockSide(1);
-                                if (IsTransparent(2))
-                                    CreateBlockSide(2);
-                                if (IsTransparent(3))
-                                    CreateBlockSide(3);
-                                if (IsTransparent(4))
-                                    CreateBlockSide(4);
-                                if (IsTransparent(5))
-                                    CreateBlockSide(5);
-                            }
-                        }
-                    }
-                    else if (Blocks.blocks[_id].NotABlock)
-                    {
-                        if (Blocks.blocks[_id].IsXSprite)
-                        {
-                            CreateXSprite();
-                        }
-                        else if (_id == 9)//quick hack for water
-                        {
-                            if (c.BlockType[_x, _y + 1, _z] != 9)
-                                CreateWater(4);
-                        }
-                        else if (_id == 79) //ice 
-                        {
-                            if (!SameBlock(0))
-                                TransparentQuad(0);
-                            if (!SameBlock(1))
-                                TransparentQuad(1);
-                            if (!SameBlock(2))
-                                TransparentQuad(2);
-                            if (!SameBlock(3))
-                                TransparentQuad(3);
-                            if (!SameBlock(4))
-                                TransparentQuad(4);
-                            if (!SameBlock(5))
-                                TransparentQuad(5);
-                        }
-                    }
-                    else if (Blocks.blocks[_id].IsTransparent)
-                    {
-                        if (_id == 18) // leaves
-                        {
-                            CreateBlockSide(0);
-                            CreateBlockSide(1);
-                            CreateBlockSide(2);
-                            CreateBlockSide(3);
-                            CreateBlockSide(4);
-                            CreateBlockSide(5);
-                        }
-                        else if (_id == 20)
-                        {
-                            if (!SameBlock(0))
-                                CreateBlockSide(0);
-                            if (!SameBlock(1))
-                                CreateBlockSide(1);
-                            if (!SameBlock(2))
-                                CreateBlockSide(2);
-                            if (!SameBlock(3))
-                                CreateBlockSide(3);
-                            if (!SameBlock(4))
-                                CreateBlockSide(4);
-                            if (!SameBlock(5))
-                                CreateBlockSide(5);
+                            break;
                         }
                     }
                 }
 
-                Mesh[] meshes = new Mesh[2];
+                _id = c.BlockType[_x, _y, _z];
+                _meta = c.BlockMetadata[_x, _y, _z];
 
-                if (_opaqueIndices.Count > 0)
-                    meshes[0] = new Mesh(gd, _opaqueVertices.ToArray(), _opaqueIndices.ToArray());
-                if (_transparentIndices.Count > 0)
-                    meshes[1] = new Mesh(gd, _transparentVertices.ToArray(), _transparentIndices.ToArray());
-                return meshes;
+                if (!Blocks.blocks[_id].NotABlock && !Blocks.blocks[_id].IsTransparent)
+                {
+                    if (!Blocks.blocks[_id].HasMetadata)
+                    {
+                        if (Blocks.blocks[_id].IsMultitex)
+                        {
+                            if (IsTransparent(0))
+                                CreateMultiTexBlockSide(0, 0);
+                            if (IsTransparent(1))
+                                CreateMultiTexBlockSide(1, 1);
+                            if (IsTransparent(2))
+                                CreateMultiTexBlockSide(2, 2);
+                            if (IsTransparent(3))
+                                CreateMultiTexBlockSide(3, 3);
+                            if (IsTransparent(4))
+                                CreateMultiTexBlockSide(4, 4);
+                            if (IsTransparent(5))
+                                CreateMultiTexBlockSide(5, 5);
+                        }
+                        else
+                        {
+                            if (IsTransparent(0))
+                                CreateBlockSide(0);
+                            if (IsTransparent(1))
+                                CreateBlockSide(1);
+                            if (IsTransparent(2))
+                                CreateBlockSide(2);
+                            if (IsTransparent(3))
+                                CreateBlockSide(3);
+                            if (IsTransparent(4))
+                                CreateBlockSide(4);
+                            if (IsTransparent(5))
+                                CreateBlockSide(5);
+                        }
+                    }
+                    else
+                    {
+                        if (Blocks.blocks[_id].IsMultitex)
+                        {
+                            if (IsTransparent(0))
+                                CreateMultiTexBlockSide(0, (byte)(0 + _meta * 6));
+                            if (IsTransparent(1))
+                                CreateMultiTexBlockSide(1, (byte)(1 + _meta * 6));
+                            if (IsTransparent(2))
+                                CreateMultiTexBlockSide(2, (byte)(2 + _meta * 6));
+                            if (IsTransparent(3))
+                                CreateMultiTexBlockSide(3, (byte)(3 + _meta * 6));
+                            if (IsTransparent(4))
+                                CreateMultiTexBlockSide(4, (byte)(4 + _meta * 6));
+                            if (IsTransparent(5))
+                                CreateMultiTexBlockSide(5, (byte)(5 + _meta * 6));
+                        }
+                        else
+                        {
+                            if (IsTransparent(0))
+                                CreateBlockSide(0);
+                            if (IsTransparent(1))
+                                CreateBlockSide(1);
+                            if (IsTransparent(2))
+                                CreateBlockSide(2);
+                            if (IsTransparent(3))
+                                CreateBlockSide(3);
+                            if (IsTransparent(4))
+                                CreateBlockSide(4);
+                            if (IsTransparent(5))
+                                CreateBlockSide(5);
+                        }
+                    }
+                }
+                else if (Blocks.blocks[_id].NotABlock)
+                {
+                    if (Blocks.blocks[_id].IsXSprite)
+                    {
+                        CreateXSprite();
+                    }
+                    else if (_id == 9)//quick hack for water
+                    {
+                        if (c.BlockType[_x, _y + 1, _z] != 9)
+                            CreateWater(4);
+                    }
+                    else if (_id == 79) //ice 
+                    {
+                        if (!SameBlock(0))
+                            TransparentQuad(0);
+                        if (!SameBlock(1))
+                            TransparentQuad(1);
+                        if (!SameBlock(2))
+                            TransparentQuad(2);
+                        if (!SameBlock(3))
+                            TransparentQuad(3);
+                        if (!SameBlock(4))
+                            TransparentQuad(4);
+                        if (!SameBlock(5))
+                            TransparentQuad(5);
+                    }
+                }
+                else if (Blocks.blocks[_id].IsTransparent)
+                {
+                    if (_id == 18) // leaves
+                    {
+                        CreateBlockSide(0);
+                        CreateBlockSide(1);
+                        CreateBlockSide(2);
+                        CreateBlockSide(3);
+                        CreateBlockSide(4);
+                        CreateBlockSide(5);
+                    }
+                    else if (_id == 20)
+                    {
+                        if (!SameBlock(0))
+                            CreateBlockSide(0);
+                        if (!SameBlock(1))
+                            CreateBlockSide(1);
+                        if (!SameBlock(2))
+                            CreateBlockSide(2);
+                        if (!SameBlock(3))
+                            CreateBlockSide(3);
+                        if (!SameBlock(4))
+                            CreateBlockSide(4);
+                        if (!SameBlock(5))
+                            CreateBlockSide(5);
+                    }
+                }
             }
+
+            Mesh[] meshes = new Mesh[2];
+
+            if (_opaqueIndices.Count > 0)
+                meshes[0] = new Mesh(gd, _opaqueVertices.ToArray(), _opaqueIndices.ToArray());
+            if (_transparentIndices.Count > 0)
+                meshes[1] = new Mesh(gd, _transparentVertices.ToArray(), _transparentIndices.ToArray());
+
+            _opaqueVertices = new List<VertexPositionNormalTexture>();
+            _opaqueIndices = new List<int>();
+            _transparentVertices = new List<VertexPositionNormalTexture>();
+            _transparentIndices = new List<int>();
+
+            return meshes;
         }
 
-        private static void CreateBlockSide(byte side)
+
+        private void CreateBlockSide(byte side)
         {
             Vector2[] tex;
 
@@ -208,7 +215,7 @@ namespace RawCraft.Renderer
             }
         }
 
-        private static void CreateMultiTexBlockSide(byte side, byte texpos)
+        private void CreateMultiTexBlockSide(byte side, byte texpos)
         {
             Vector2[] tex;
 
@@ -218,7 +225,7 @@ namespace RawCraft.Renderer
             }
         }
 
-        private static void CreateQuad(byte side, Vector2[] tex)
+        private void CreateQuad(byte side, Vector2[] tex)
         {
             Vector3 positionOffset = new Vector3(16 * _chunk.ChunkX + _x + 0.5f, _y + 0.5f, _z + 0.5f + 16 * _chunk.ChunkZ);
 
@@ -240,7 +247,7 @@ namespace RawCraft.Renderer
             }
         }
 
-        private static void CreateXSprite()
+        private void CreateXSprite()
         {
             Vector2[] tex;
             if (TextureCoordinates.Textures.TryGetValue(Tuple.Create(_id, _meta), out tex))
@@ -268,7 +275,7 @@ namespace RawCraft.Renderer
             }
         }
 
-        private static void TransparentQuad(byte side) //todo: update
+        private void TransparentQuad(byte side) //todo: update
         {
             Vector2[] tex;
             if (TextureCoordinates.Textures.TryGetValue(Tuple.Create(_id, (byte)0), out tex))
@@ -295,7 +302,7 @@ namespace RawCraft.Renderer
             }
         }
 
-        private static void CreateWater(byte side) //todo: update
+        private void CreateWater(byte side) //todo: update
         {
             Vector2[] tex;
             if (TextureCoordinates.Textures.TryGetValue(Tuple.Create(_id, (byte)0), out tex))
@@ -322,7 +329,7 @@ namespace RawCraft.Renderer
             }
         }
 
-        private static bool IsTransparent(byte side)
+        private bool IsTransparent(byte side)
         {
             Chunk adjacentChunk;
 
@@ -389,7 +396,7 @@ namespace RawCraft.Renderer
             }
         }
 
-        private static bool SameBlock(byte side)
+        private bool SameBlock(byte side)
         {
             Chunk adjacentChunk;
 

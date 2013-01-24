@@ -48,7 +48,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>False</XnaCompressContent>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -61,7 +61,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>true</XnaCompressContent>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>RawCraft.Program</StartupObject>
@@ -125,6 +125,7 @@
     <Compile Include="Network\Packets\HeldItemChange.cs" />
     <Compile Include="Network\Packets\ClientSettings.cs" />
     <Compile Include="PKCSKeyGenerator.cs" />
+    <Compile Include="Renderer\RenderThread.cs" />
     <Compile Include="Renderer\VertexPositions.cs" />
     <Compile Include="Interface\StatisticOverlay.cs" />
     <Compile Include="Interface\BaseClasses\TextOverlay.cs" />
