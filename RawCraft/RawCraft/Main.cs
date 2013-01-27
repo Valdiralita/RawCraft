@@ -29,7 +29,6 @@ namespace RawCraft
         DepthStencilState _depthState, _depthStateOff;
         GameState _currentGameState;
         SpriteBatch _spriteBatch;
-        RenderFIFO fifo;
 
         public Main()
         {
@@ -211,7 +210,7 @@ namespace RawCraft
             _networkThread.IsBackground = true;
             _networkThread.Start();
 
-            fifo = new RenderFIFO();
+            RenderFIFO fifo = new RenderFIFO();
             _render = new Thread(fifo.CreateThreads);
             _render.IsBackground = true;
             _render.Start(GraphicsDevice);

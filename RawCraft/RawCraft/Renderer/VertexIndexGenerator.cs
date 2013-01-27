@@ -38,6 +38,11 @@ namespace RawCraft.Renderer
 
         public Mesh[] Generate(Chunk c, GraphicsDevice gd)
         {
+            _opaqueVertices = new List<VertexPositionNormalTexture>();
+            _opaqueIndices = new List<int>();
+            _transparentVertices = new List<VertexPositionNormalTexture>();
+            _transparentIndices = new List<int>();
+
             _x = 0;
             _y = 0;
             _z = 0;
@@ -196,10 +201,10 @@ namespace RawCraft.Renderer
             if (_transparentIndices.Count > 0)
                 meshes[1] = new Mesh(gd, _transparentVertices.ToArray(), _transparentIndices.ToArray());
 
-            _opaqueVertices = new List<VertexPositionNormalTexture>();
-            _opaqueIndices = new List<int>();
-            _transparentVertices = new List<VertexPositionNormalTexture>();
-            _transparentIndices = new List<int>();
+            _opaqueVertices = null;
+            _opaqueIndices = null;
+            _transparentVertices = null;
+            _transparentIndices = null;
 
             return meshes;
         }

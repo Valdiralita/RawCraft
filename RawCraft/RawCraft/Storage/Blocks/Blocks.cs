@@ -6,7 +6,7 @@
 
         public static void InitialzizeBlocks()
         {
-            blocks = new Block[146];
+            blocks = new Block[158];
             for (int i = 0; i < blocks.Length; i++)
                 blocks[i] = new Block();
 
@@ -264,6 +264,26 @@
             blocks[144].NotABlock = true;
 
             blocks[145].NotABlock = true;
+
+            blocks[146].NotABlock = true;
+
+            blocks[147].NotABlock = true;
+
+            blocks[148].NotABlock = true;
+
+            blocks[149].NotABlock = true;
+
+            blocks[150].NotABlock = true;
+
+            blocks[151].NotABlock = true;
+
+
+            blocks[154].NotABlock = true;
+
+
+            blocks[156].NotABlock = true;
+
+            blocks[157].NotABlock = true;
         }
     }
 }
