@@ -26,7 +26,7 @@ namespace RawCraft
         StatisticOverlay _statistics;
         Texture2D _terrain;
         MainMenu _mainMenu;
-        DepthStencilState _depthState, _depthStateOff;
+        DepthStencilState _depthWriteOn, _depthWriteOff;
         GameState _currentGameState;
         SpriteBatch _spriteBatch;
 
@@ -38,7 +38,7 @@ namespace RawCraft
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += Window_ClientSizeChanged; //resize function
         }
-        
+
         protected override void Initialize()
         {
             VertexPositions.Initialize();
@@ -109,7 +109,7 @@ namespace RawCraft
                     IsMouseVisible = true;
                     break;
                 case GameState.Options:
-                        break;
+                    break;
                 case GameState.NoInterface:
                 case GameState.InGame:
                     if (_networkThread == null)
@@ -154,15 +154,17 @@ namespace RawCraft
                 case GameState.InGame:
                     ApplyEffects();
 
-                    GraphicsDevice.DepthStencilState = _depthState;
-                        
-                    foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Map)
-                        item.Value.DrawOpaque(_effect);
-
-                    GraphicsDevice.DepthStencilState = _depthStateOff;
+                    GraphicsDevice.DepthStencilState = _depthWriteOn;
 
                     foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Map)
-                        item.Value.DrawWater(_effect);
+                        if (_camera._viewFrustum.Intersects(item.Value._boundingBox))
+                            item.Value.DrawOpaque(_effect);
+                    
+                    GraphicsDevice.DepthStencilState = _depthWriteOff;
+
+                    foreach (KeyValuePair<Vector2, Chunk> item in MapChunks.Map)
+                        if (_camera._viewFrustum.Intersects(item.Value._boundingBox))
+                            item.Value.DrawWater(_effect);
 
                     break;
             }
@@ -183,7 +185,7 @@ namespace RawCraft
 
         private void InitializeEffect()
         {
-            _depthState = new DepthStencilState
+            _depthWriteOn = new DepthStencilState
                 {
                     DepthBufferEnable = true,
                     DepthBufferWriteEnable = true,
@@ -191,7 +193,7 @@ namespace RawCraft
                     StencilFunction = CompareFunction.LessEqual
                 };
 
-            _depthStateOff = new DepthStencilState {DepthBufferEnable = true, DepthBufferWriteEnable = false};
+            _depthWriteOff = new DepthStencilState { DepthBufferEnable = true, DepthBufferWriteEnable = false };
 
             _effect = Content.Load<Effect>("Effect");
             _effect.Parameters["World"].SetValue(Matrix.CreateTranslation(new Vector3(0, 0, 0)));

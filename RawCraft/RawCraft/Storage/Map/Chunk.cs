@@ -11,7 +11,7 @@ namespace RawCraft.Storage.Map
         public readonly int ChunkZ;
         public byte[, ,] BlockType = new byte[16, 256, 16];
         public byte[, ,] BlockMetadata = new byte[16, 256, 16];
-
+        public BoundingBox _boundingBox;
         private Mesh _opaqueMesh, _waterMesh;
 
         public Chunk(int x, int z, int sections, ushort primBit, byte[] chunk)
@@ -21,6 +21,7 @@ namespace RawCraft.Storage.Map
 
             SetChunk(primBit, chunk, sections);
             RenderFIFO.Enqueue(this, new[] { true, true, true, true });
+            _boundingBox = new BoundingBox(new Vector3(ChunkX * 16, 0, ChunkZ * 16), new Vector3(ChunkX * 16 + 16, 256, ChunkZ * 16 + 16));
         }
 
         internal void SetChunk(ushort primBit, byte[] data, int sections)
