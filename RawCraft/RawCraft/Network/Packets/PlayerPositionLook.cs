@@ -27,7 +27,7 @@ namespace RawCraft.Network.Packets
             _stream.WriteByte(0x0D);
             _stream.WriteDouble(Player.X);
             _stream.WriteDouble(y);
-            _stream.WriteDouble(y + 0.5);
+            _stream.WriteDouble(y + 1f);
             _stream.WriteDouble(Player.Z);
             _stream.WriteFloat(180 - MathHelper.ToDegrees(Player.Yaw));
             _stream.WriteFloat(-MathHelper.ToDegrees(Player.Pitch));

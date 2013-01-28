@@ -17,7 +17,10 @@ namespace RawCraft.Renderer
 
         public void CreateThreads(object gd)
         {
-            for (int i = 0; i < 4; i++)
+            int threadcount = Environment.ProcessorCount - 1;
+            threadcount = threadcount > 1 ? (threadcount > 4 ? 4 : threadcount) : 1;
+
+            for (int i = 0; i < threadcount; i++)
             {
                 Renderer rT = new Renderer(_renderQueue, gd, _queueNotifier, i);
                 Thread _thread = new Thread(rT.RenderThread); 

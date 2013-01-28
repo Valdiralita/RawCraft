@@ -39,7 +39,7 @@ namespace RawCraft.Network
                         break;
                     case 0x01:
                         LoginRequest loginRequest = new LoginRequest(_stream);
-                        positionUpdater.Change(0, 50);
+                        //positionUpdater.Change(0, 50);
                         ClientSettings clientSettings = new ClientSettings(_stream);
                         clientSettings.Send();
                         break;
