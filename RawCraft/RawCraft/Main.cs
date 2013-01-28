@@ -114,8 +114,11 @@ namespace RawCraft
                 case GameState.InGame:
                     if (_networkThread == null)
                         Connect();
+
                     IsMouseVisible = false;
-                    _camera.Update();
+
+                    if (this.IsActive)
+                        _camera.Update();
 
                     _effect.Parameters["View"].SetValue(_camera.ViewMatrix);
 
