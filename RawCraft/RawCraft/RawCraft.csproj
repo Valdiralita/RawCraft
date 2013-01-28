@@ -214,7 +214,6 @@
     <Compile Include="Network\Packets\LoginRequest.cs" />
     <Compile Include="Network\Packets\ChatMessage.cs" />
     <Compile Include="Storage\Config.cs" />
-    <Compile Include="Storage\Debug.cs" />
     <Compile Include="Storage\Map\Chunk.cs" />
     <Compile Include="Storage\Map\MapChunks.cs" />
     <Compile Include="Network\NetworkHandler.cs" />
