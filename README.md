@@ -3,7 +3,7 @@
 RawCraft is a 3rd party Minecraft client written in C# with XNA.
 The current compatible version is 1.4.7
 
-![](http://img5.fotos-hochladen.net/uploads/unbenanntr2giukf4nh.png)
+![](http://img5.fotos-hochladen.net/uploads/unbenannt5zrlpb93ky.png)
 
 ## Texture Packs
 
