@@ -13,7 +13,7 @@ namespace RawCraft.Renderer
         Vector3 _cameraPosition;
         readonly float _rotateSpeed, _moveSpeed;
         int _centerX, _centerY;
-        public BoundingFrustum _viewFrustum { get; set; }
+        public BoundingFrustum _viewFrustum { get; private set; }
 
         public Camera(float mSpeed, float rSpeed, GraphicsDevice device)
         {
@@ -78,7 +78,7 @@ namespace RawCraft.Renderer
             UpdateMatrices();
             ResetMousePos();
             _cameraPosition = new Vector3((float)Player.X, (float)Player.Stance, (float)Player.Z);
-            _viewFrustum = new BoundingFrustum(ViewMatrix * ProjectionMatrix);
+            _viewFrustum.Matrix = ViewMatrix * ProjectionMatrix;
         }
 
         private void ResetMousePos()
